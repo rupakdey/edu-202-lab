@@ -1,0 +1,236 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 6 — Configure AppProtection in ZPA | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-06"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 6</strong> / Configure AppProtection in ZPA</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 6 · Hands-on</div><h1>Configure AppProtection in ZPA</h1><p>Protect the intentionally vulnerable DVWA application with ZPA AppProtection. You will publish the application, build a protection profile, apply it, generate sample SQLi/XSS events, and compare report-only versus blocking behavior.</p><div class="lab-facts"><span class="fact"><strong>4 tasks</strong></span><span class="fact"><strong>Approx. 30 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Configure application segments and access policies for protected resources.</li><li>Create AppProtection profiles to manage security posture and enforcement levels.</li><li>Apply AppProtection policies to specific application segments.</li><li>Validate security enforcement and monitor violations through diagnostics.</li></ul></div></section>
+<section class="section concept-primer appprotection-primer" id="appprotection-explainer">
+  <div class="section-head stacked">
+    <div class="eyebrow">Technical context</div>
+    <h2>What AppProtection adds to ZPA</h2>
+    <p>ZPA and ZIA solve different problems. <strong>ZIA</strong> is designed for Internet/SaaS traffic and performs inline security inspection at its Service Edge. <strong>ZPA</strong> is designed to connect an authorized user to a specific private application; the base ZPA Service Edge brokers the connection and does not inspect the application payload by default. <strong>AppProtection</strong> adds application-layer inspection to selected ZPA private web applications.</p>
+  </div>
+
+  <div class="grid grid-2 concept-grid appprotection-compare">
+    <article class="card pad zia-card">
+      <div class="concept-kicker">Internet &amp; SaaS</div>
+      <h3>ZIA: inspect traffic going outward</h3>
+      <p><strong>Typical destination:</strong> Internet and SaaS applications.</p>
+      <p><strong>Core role:</strong> proxy/forward traffic through an inspection Service Edge and apply Internet security controls.</p>
+      <p class="micro-note">ZIA can also inspect selected ZPA application traffic through the separate <em>Inspect Traffic with Internet &amp; SaaS</em> capability. That is not what this lab is configuring.</p>
+    </article>
+
+    <article class="card pad zpa-card">
+      <div class="concept-kicker accent">Private applications</div>
+      <h3>ZPA + AppProtection: protect the private app transaction</h3>
+      <p><strong>Typical destination:</strong> private HTTP/HTTPS applications reached through ZPA.</p>
+      <p><strong>Core role:</strong> ZPA first decides whether the user may reach the application. AppProtection can then inspect the authorized web transaction before it reaches the backend application.</p>
+      <p class="micro-note">This is application-centric protection: the primary object being protected is the <strong>private web application</strong>, including against malicious requests from compromised or otherwise authorized users.</p>
+    </article>
+  </div>
+
+  <div class="appprotection-flow" role="img" aria-label="Authorized user traffic is brokered by ZPA access policy, evaluated by AppProtection policy, inspected using the AppProtection profile and controls, then sent to the private web application">
+    <div class="concept-node"><span class="concept-step">1</span><strong>Authorized user</strong><small>Browser / Client Connector reaches a private web app</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node"><span class="concept-step">2</span><strong>ZPA Access Policy</strong><small>Should this user/device reach this application?</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node portal-node"><span class="concept-step">3</span><strong>AppProtection Policy</strong><small>Inspect or bypass? Which profile applies?</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node accent-node"><span class="concept-step">4</span><strong>Profile + Controls</strong><small>Inspect HTTP(S), API, WebSocket and enabled control families</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node"><span class="concept-step">5</span><strong>Private web app</strong><small>Allowed transaction reaches the backend</small></div>
+  </div>
+
+  <div class="grid grid-3 concept-grid compact-cards appprotection-core-grid">
+    <article class="card pad">
+      <div class="concept-kicker">Control</div>
+      <h3>One detection rule</h3>
+      <p>A control identifies a specific suspicious condition or attack pattern and has properties such as severity, paranoia level, and an action. Control families include <strong>OWASP predefined</strong>, <strong>ThreatLabZ</strong>, <strong>API</strong>, <strong>WebSocket</strong>, and custom controls.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker accent">AppProtection Profile</div>
+      <h3>Which controls + how they behave</h3>
+      <p>The profile groups controls, selects the OWASP CRS version, sets the paranoia level/execution behavior, and defines common or overridden actions such as <strong>Allow</strong>, <strong>Block</strong>, or <strong>Redirect</strong>.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker purple">AppProtection Policy</div>
+      <h3>Where the profile applies</h3>
+      <p>The policy matches criteria such as an <strong>application segment</strong>, user/device context, or identity attributes, then chooses <strong>Inspect</strong> or <strong>Bypass Inspection</strong> and associates the appropriate AppProtection profile.</p>
+    </article>
+  </div>
+
+  <div class="grid grid-2 concept-grid appprotection-threat-grid">
+    <article class="card pad">
+      <div class="concept-kicker">What it can detect</div>
+      <h3>Web-application attack patterns</h3>
+      <div class="threat-chips" aria-label="Examples of AppProtection risks">
+        <span>SQL injection</span><span>Cross-site scripting (XSS)</span><span>Path / file traversal</span><span>Protocol anomalies</span><span>Known CVE patterns</span><span>API violations</span><span>WebSocket threats</span>
+      </div>
+      <p class="micro-note">The exact coverage depends on which control families and individual controls are enabled in the profile.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker accent">OWASP Core Rule Set</div>
+      <h3>Reusable WAF-style rules</h3>
+      <p>The <strong>OWASP Core Rule Set (CRS)</strong> is a generic set of web-application firewall rules for detecting common application attacks. In this lab, the predefined OWASP controls are intentionally used against DVWA so you can generate SQL injection and XSS events and watch AppProtection detect them.</p>
+    </article>
+  </div>
+
+  <div class="card pad paranoia-card">
+    <div class="concept-kicker">OWASP paranoia level</div>
+    <h3>Higher level = more aggressive detection and more tuning</h3>
+    <p>Paranoia Level controls how many OWASP CRS rules participate in detection. It is <strong>not the same thing as severity</strong>. Severity describes the significance of an individual control; paranoia changes how aggressively the rule set looks for suspicious input.</p>
+    <div class="paranoia-scale">
+      <div class="paranoia-level pl1"><strong>PL1</strong><span>Baseline</span><small>Least strict · low false-positive rate</small></div>
+      <div class="paranoia-level pl2"><strong>PL2</strong><span>Elevated</span><small>More rules · some tuning expected</small></div>
+      <div class="paranoia-level pl3"><strong>PL3</strong><span>Strict</span><small>Specialized/aggressive rules · more false positives</small></div>
+      <div class="paranoia-level pl4"><strong>PL4</strong><span>Most strict</span><small>Maximum coverage · substantial tuning likely</small></div>
+    </div>
+    <p class="micro-note"><strong>Lab choice:</strong> EDU-202 uses <strong>PL3</strong> so the deliberately vulnerable DVWA application produces useful detection events. In production, choose a level based on application risk and test/tune legitimate traffic before enforcing broadly.</p>
+  </div>
+
+  <div class="callout info compact-callout">
+    <div class="callout-symbol">i</div>
+    <div>
+      <div class="callout-title">How the lab demonstrates enforcement</div>
+      <p>The profile starts with the selected controls set to <strong>Allow</strong>. The SQLi/XSS requests still reach DVWA but are recorded in AppProtection diagnostics. You then change the control action to <strong>Block</strong> and repeat the same attack to prove that AppProtection can stop the transaction before the backend application accepts it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="task" id="task-6-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">6.1</div>
+      <div><h2>Create the DVWA Application Segment</h2><p>Publish DVWA and create the supporting access and DNS configuration.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="6.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, open <strong>App Segments</strong> and select <strong>Add Application Segment</strong>.<div class="search-hint">Search menu → <strong>App Segments</strong></div></div></li>
+<li><div class="step-content">Configure the DVWA application:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>DVWA</strong></td></tr><tr><td>Application</td><td><span class='value'>dvwa-&lt;XYZ&gt;.patraining.safemarch.com</span></td></tr><tr><td>Access Type</td><td><strong>Browser Access and App Protection</strong></td></tr><tr><td>Certificate Type</td><td><strong>Managed</strong></td></tr><tr><td>External URL</td><td>Prefix <strong>dvwa</strong>; choose any available suffix</td></tr><tr><td>Internal URL</td><td>HTTP / <strong>80</strong></td></tr><tr><td>Client Connector Access</td><td>Default Port Range = Web Server</td></tr><tr><td>Segment Group</td><td><strong>CorpApps</strong></td></tr><tr><td>Server Group</td><td><strong>CorpServers</strong></td></tr></tbody></table><p class="micro-note"><strong>XYZ</strong> is the last three digits of your tenant ID. Example: ZS000205 → <span class="value">dvwa-205.patraining.safemarch.com</span>.</p> Review and save.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the DVWA application segment with Browser Access and App Protection enabled.">
+        <img src="assets/images/reference/edu202-p107-x415.jpg" alt="DVWA AppProtection application segment">
+      </button>
+      <figcaption>Create the DVWA application segment with Browser Access and App Protection enabled.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Create an Access Policy rule named <strong>dvwa_allow_policy</strong> with action <strong>Allow Access</strong> and application criteria <strong>DVWA</strong>. Save it.<div class="search-hint">Search menu → <strong>Access Policy</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Allow access to the new DVWA application segment.">
+        <img src="assets/images/reference/edu202-p111-x428.jpg" alt="DVWA allow access policy">
+      </button>
+      <figcaption>Allow access to the new DVWA application segment.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">On <strong>Corp: Win Svr</strong>, open <strong>Server Manager → Tools → DNS</strong>. In the <span class="value">patraining.safemarch.com</span> forward lookup zone, create a new Host (A) record.</div></li>
+<li><div class="step-content">Set <strong>Name = dvwa-&lt;XYZ&gt;</strong> and <strong>IP address = 10.0.0.128</strong>, then add the host. The FQDN is populated automatically.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the internal DNS record that points the DVWA hostname to the Docker-hosted application.">
+        <img src="assets/images/reference/edu202-p115-x439.jpg" alt="DVWA DNS host record">
+      </button>
+      <figcaption>Create the internal DNS record that points the DVWA hostname to the Docker-hosted application.</figcaption>
+    </figure>
+
+    <div class="dns-context-block" id="dvwa-dns-context">
+      <div class="section-head stacked compact-subhead">
+        <div class="eyebrow">Why this DNS record matters</div>
+        <h3>Why does DVWA resolve to 10.0.0.128 instead of the Docker host 10.0.0.2?</h3>
+        <p>The Browser Access External Domain is the <strong>user-facing</strong> name that brings the user to ZPA. The internal FQDN <span class="value">dvwa-&lt;XYZ&gt;.patraining.safemarch.com</span> serves a different purpose: the App Connector resolves it through corporate DNS so it can reach the real DVWA backend. In this lab, the DVWA container itself owns <strong>10.0.0.128:80</strong>, so the A record must resolve to that address rather than the Docker host IP.</p>
+      </div>
+
+      <figure class="figure concept-figure dns-flow-figure">
+        <button data-lightbox data-caption="DVWA Browser Access and backend DNS flow. The external Browser Access domain gets the user to ZPA; the App Connector separately resolves the internal DVWA FQDN to the container address 10.0.0.128 and opens the backend HTTP connection there.">
+          <img src="assets/images/lab06/dvwa-dns-packet-flow.png" alt="Diagram showing the Browser Access front-end path and the App Connector resolving the internal DVWA DNS name to container IP 10.0.0.128">
+        </button>
+        <figcaption><strong>Two naming jobs:</strong> the External Domain sends the user to ZPA; internal DNS tells the App Connector where the DVWA backend actually lives.</figcaption>
+      </figure>
+
+      <div class="grid grid-2 concept-grid compact-cards">
+        <article class="card pad"><div class="concept-kicker">DNS does not forward HTTP</div><h3>It only resolves the destination</h3><p>The A record maps the internal application FQDN to <strong>10.0.0.128</strong>. After resolution, the App Connector opens the actual backend connection to <strong>10.0.0.128:80</strong>.</p></article>
+        <article class="card pad"><div class="concept-kicker accent">Why not 10.0.0.2?</div><h3>The container owns the application IP</h3><p><strong>10.0.0.2</strong> is the Docker host. The DVWA container is reachable at <strong>10.0.0.128</strong> on the lab Docker network, and the lab is not relying on a host-side published port to proxy 10.0.0.2:80 to the container.</p></article>
+      </div>
+    </div>
+
+    <ol class="steps" start="6"><li><div class="step-content">Confirm the DNS entry exists. Allow roughly <strong>3–5 minutes</strong> for the change to propagate in the lab environment.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the DVWA DNS record is present.">
+        <img src="assets/images/reference/edu202-p118-x450.jpg" alt="DVWA DNS entry verification">
+      </button>
+      <figcaption>Verify the DVWA DNS record is present.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The DVWA application segment, access policy, and internal DNS record are in place.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-6-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">6.2</div>
+      <div><h2>Set Up the AppProtection Profile</h2><p>Select security controls and begin in report-only behavior.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="6.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Private App Protection → Protection Profiles</strong> and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Protection Profiles</strong></div></div></li>
+<li><div class="step-content">Create a profile named <strong>DVWA_Protection_Profile</strong>. Description is optional; select <strong>Next</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the &lt;strong&gt;DVWA_Protection_Profile&lt;/strong&gt;.">
+        <img src="assets/images/reference/edu202-p120-x455.jpg" alt="AppProtection profile general settings">
+      </button>
+      <figcaption>Create the <strong>DVWA_Protection_Profile</strong>.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">On <strong>Controls</strong>, select <strong>OWASP_CRS/4.8.0</strong> and select all controls in that set. Also select all controls under ThreatLabZ, WebSocket, API, and Active Directory controls.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Select the OWASP CRS and the other AppProtection control families required by the lab.">
+        <img src="assets/images/reference/edu202-p122-x461.jpg" alt="AppProtection controls">
+      </button>
+      <figcaption>Select the OWASP CRS and the other AppProtection control families required by the lab.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Set <strong>Predefined Paranoia Level = 3</strong>. PL3 enables a stricter OWASP CRS rule set than PL1/PL2 and is more likely to require false-positive tuning in production.</div></li>
+<li><div class="step-content">Under <strong>Override Controls</strong>, choose <strong>Override All Controls</strong> and set the transaction action to <strong>Allow</strong> for the selected control families. Continue and save the profile.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Set paranoia level 3 and configure the profile for report-only behavior.">
+        <img src="assets/images/reference/edu202-p125-x470.jpg" alt="AppProtection paranoia level and override controls">
+      </button>
+      <figcaption>Set paranoia level 3 and configure the profile for report-only behavior.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Save the completed AppProtection profile.">
+        <img src="assets/images/reference/edu202-p127-x477.jpg" alt="AppProtection profile review">
+      </button>
+      <figcaption>Save the completed AppProtection profile.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p><strong>DVWA_Protection_Profile</strong> contains the selected security controls but initially allows matching traffic so attacks can be observed and logged.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-6-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">6.3</div>
+      <div><h2>Apply the AppProtection Policy</h2><p>Attach the protection profile to the DVWA application.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="6.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Private App Protection → Protection Policies</strong> and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Protection Policies</strong></div></div></li>
+<li><div class="step-content">Configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>DVWA_AppProtection_policy</strong></td></tr><tr><td>Description</td><td>Optional</td></tr><tr><td>Rule Action</td><td><strong>Inspect</strong></td></tr><tr><td>AppProtection Profile</td><td><strong>DVWA_Protection_Profile</strong></td></tr><tr><td>Application criteria</td><td><strong>DVWA</strong></td></tr></tbody></table> Save the policy.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Apply the DVWA protection profile to the DVWA application segment.">
+        <img src="assets/images/reference/edu202-p129-x483.jpg" alt="DVWA AppProtection policy">
+      </button>
+      <figcaption>Apply the DVWA protection profile to the DVWA application segment.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Traffic to the DVWA application is inspected using <strong>DVWA_Protection_Profile</strong>.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-6-4">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">6.4</div>
+      <div><h2>Test and Verify AppProtection</h2><p>Generate attacks, inspect the logs, switch to Block, and retest.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="6.4"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Log out of Zscaler Client Connector on <strong>Corp: Client PC 1</strong>. Open the Experience Center, locate <strong>Browser Access</strong>, and copy the External Domain for the DVWA application.<div class="search-hint">Search menu → <strong>Browser Access</strong></div></div></li>
+<li><div class="step-content">Open the External Domain in a new browser session, authenticate with the lab-access identity if prompted, then sign in to DVWA with <span class="value">admin</span> / <span class="value">password</span>.</div></li>
+<li><div class="step-content">Select <strong>Create / Reset Database</strong>. After the reset, sign in to DVWA again.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open DVWA through Browser Access and initialize the lab database.">
+        <img src="assets/images/reference/edu202-p130-x487.jpg" alt="DVWA Browser Access and database reset">
+      </button>
+      <figcaption>Open DVWA through Browser Access and initialize the lab database.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Run the SQL Injection test: open <strong>SQL Injection</strong>, enter <span class="value">1' or '1'='1</span> in User ID, and submit. The attack should succeed because the control action is currently Allow.</div></li>
+<li><div class="step-content">Run the stored XSS test: open <strong>XSS (Stored)</strong>, set Name to <span class="value">JSAttack</span>, enter <span class="value">&lt;script&gt;alert("You've been HACKED!")&lt;/script&gt;</span>, and select <strong>Sign Guestbook</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Generate SQL injection and stored-XSS events while the AppProtection controls are in report-only mode.">
+        <img src="assets/images/reference/edu202-p133-x498.jpg" alt="DVWA SQL injection and XSS test">
+      </button>
+      <figcaption>Generate SQL injection and stored-XSS events while the AppProtection controls are in report-only mode.</figcaption>
+    </figure><ol class="steps" start="6"><li><div class="step-content">Open Private Application <strong>Diagnostics</strong>, set <strong>Log Type = AppProtection</strong>, and review <strong>Security Profile Violations</strong>. Confirm the attacks were logged while still reaching the application.<div class="search-hint">Search menu → <strong>Diagnostics</strong></div></div></li>
+<li><div class="step-content">Edit <strong>DVWA_Protection_Profile</strong> and change the selected control action from <strong>Allow</strong> to <strong>Block</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review AppProtection violations, then change the protection profile from Allow to Block.">
+        <img src="assets/images/reference/edu202-p136-x508.jpg" alt="AppProtection violations and block action">
+      </button>
+      <figcaption>Review AppProtection violations, then change the protection profile from Allow to Block.</figcaption>
+    </figure><ol class="steps" start="8"><li><div class="step-content">Return to DVWA and repeat the SQL injection test.</div></li>
+<li><div class="step-content">Confirm the malicious request is now blocked, then return to AppProtection diagnostics and verify the blocked event appears in Security Profile Violations.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="After changing the control action to Block, the attack should be denied and recorded in diagnostics.">
+        <img src="assets/images/reference/edu202-p139-x520.jpg" alt="Blocked AppProtection attack and diagnostics">
+      </button>
+      <figcaption>After changing the control action to Block, the attack should be denied and recorded in diagnostics.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The same test attack is first allowed/logged in report-only mode and then blocked/logged after the protection profile action changes to <strong>Block</strong>.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 6 complete</div><p>You have completed the activities defined for <strong>Configure AppProtection in ZPA</strong>.</p></div></div><div class="page-nav"><a href="lab-05.html"><small>Previous</small><strong>← Lab 5</strong></a><a class="next" href="lab-07.html"><small>Next</small><strong>Lab 7 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

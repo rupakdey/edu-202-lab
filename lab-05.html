@@ -1,0 +1,244 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 5 — Understand Privileged Remote Access | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-05"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 5</strong> / Understand Privileged Remote Access</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 5 · Hands-on</div><h1>Understand Privileged Remote Access</h1><p>Build a browser-based Privileged Remote Access workflow for Windows RDP and Linux SSH targets. You will define PRA application segments, portal/console objects, stored credentials, policies, and then verify live sessions.</p><div class="lab-facts"><span class="fact"><strong>7 tasks</strong></span><span class="fact"><strong>Approx. 50 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Configure a Privileged Portal and Privileged Console within Zscaler&#x27;s Privileged Remote Access (PRA) to</li><li>enable clientless browser-based access to a Linux server using SSH, without installing the Zscaler Client</li><li>Connector or browser plugins.</li><li>Configure a Privileged Application Segment to define and restrict access to only the target Linux and</li><li>Windows systems.</li><li>Provision Privileged Policies to assign access rights to a specific external vendor user for a limited time frame.</li><li>Configure Privileged Credentials to provide the vendor with predefined credentials or require the vendor to</li><li>authenticate with their own credentials during console access.</li><li>Validate privileged remote access by signing in as the assigned vendor user and establishing secure SSH</li><li>and RDP sessions to the Linux server and the Windows server through the browser-based PRA portal.</li></ul></div></section>
+<section class="section concept-primer compact-concept" id="pra-explainer">
+  <div class="section-head stacked">
+    <div class="eyebrow">Technical concept</div>
+    <h2>Privileged Remote Access in one view</h2>
+    <p><strong>PRA</strong> extends ZPA for privileged administrative access to systems such as Windows and Linux servers. A user can launch RDP or SSH from a browser-based portal without receiving broad network access, while the organization controls credentials and session capabilities centrally.</p>
+  </div>
+
+  <div class="pra-flow" role="img" aria-label="Privileged Remote Access flow from a user browser to a PRA portal, privileged console, ZPA and App Connector, and finally an RDP or SSH target">
+    <div class="concept-node"><span class="concept-step">1</span><strong>User browser</strong><small>Authenticate to PRA</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node portal-node"><span class="concept-step">2</span><strong>Privileged Portal</strong><small>Catalog of resources the user is allowed to launch</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node"><span class="concept-step">3</span><strong>Privileged Console</strong><small>Browser session for RDP / SSH / VNC</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node accent-node"><span class="concept-step">4</span><strong>ZPA + App Connector</strong><small>Policy-enforced private path</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node"><span class="concept-step">5</span><strong>Privileged target</strong><small>Windows / Linux server</small></div>
+  </div>
+
+  <div class="grid grid-3 concept-grid pra-core-grid">
+    <article class="card pad">
+      <div class="concept-kicker">Portal</div>
+      <h3>Where the user starts</h3>
+      <p>The <strong>Privileged Portal</strong> is the authenticated web entry point. It shows only the privileged consoles/resources that policy allows that user to access.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker accent">Console</div>
+      <h3>How the session is presented</h3>
+      <p>A <strong>Privileged Console</strong> represents the browser-based session to a specific PRA-enabled application, such as an RDP or SSH target.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker purple">Privileged credential</div>
+      <h3>How target authentication can be controlled</h3>
+      <p>ZPA can store or manage credentials used by the console. This lets an organization grant access without necessarily revealing the target-system password to the user.</p>
+    </article>
+  </div>
+
+  <div class="pra-policy-strip">
+    <div class="policy-chip"><strong>Access policy</strong><span>Who may reach the PRA application?</span></div>
+    <div class="policy-chip"><strong>Credentials policy</strong><span>Which credential is mapped to which console/target?</span></div>
+    <div class="policy-chip"><strong>Consoles policy</strong><span>What can the user do during the session?</span></div>
+  </div>
+
+  <div class="grid grid-2 concept-grid compact-cards">
+    <article class="card pad">
+      <div class="concept-kicker">Session controls</div>
+      <h3>Control high-risk actions</h3>
+      <p>Consoles policies can govern capabilities such as clipboard copy/paste, file upload/download, session recording, and whether permitted users can join, monitor, or share a live privileged session.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker accent">Security outcome</div>
+      <h3>Privilege without network exposure</h3>
+      <p>The user receives access to the approved administrative session—not general routed access to the server network. This makes PRA useful for vendors, contractors, and controlled administrator workflows.</p>
+    </article>
+  </div>
+
+  <div class="callout info compact-callout">
+    <div class="callout-symbol">i</div>
+    <div><div class="callout-title">How the Lab 5 objects fit together</div>
+    <p><strong>Application Segment</strong> defines the RDP/SSH target → <strong>Portal</strong> is the user entry point → <strong>Console</strong> exposes the target in the browser → <strong>Privileged Credential + Credentials Policy</strong> handle target login → <strong>Consoles Policy</strong> controls session behavior.</p></div>
+  </div>
+</section>
+<section class="task" id="task-5-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.1</div>
+      <div><h2>Create the Application Segments</h2><p>Define the Windows RDP and Linux SSH targets and permit access.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>App Segments</strong> and add a Privileged Remote Access segment for the Windows server.<div class="search-hint">Search menu → <strong>App Segments</strong></div></div></li>
+<li><div class="step-content">Configure the RDP segment:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_RDP1_win Svr</strong></td></tr><tr><td>Application</td><td><strong>10.0.0.1</strong></td></tr><tr><td>Access Type</td><td><strong>Privileged Remote Access</strong></td></tr><tr><td>Protocol / Port</td><td>RDP / <strong>3389</strong></td></tr><tr><td>Connection Security</td><td>Any</td></tr><tr><td>Client Connector Ports</td><td>RDP 3389; UDP 3389</td></tr><tr><td>Segment Group</td><td><strong>CorpApps</strong></td></tr><tr><td>Server Group</td><td><strong>CorpServers</strong></td></tr></tbody></table> Leave Common Configuration at default, review, and save.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the Windows PRA application segment.">
+        <img src="assets/images/reference/edu202-p077-x326.jpg" alt="Windows PRA RDP application segment">
+      </button>
+      <figcaption>Create the Windows PRA application segment.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Associate the segment with &lt;strong&gt;CorpApps&lt;/strong&gt; and &lt;strong&gt;CorpServers&lt;/strong&gt;.">
+        <img src="assets/images/reference/edu202-p079-x332.jpg" alt="PRA RDP segment group and server group">
+      </button>
+      <figcaption>Associate the segment with <strong>CorpApps</strong> and <strong>CorpServers</strong>.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Create an Access Policy rule:<div class="search-hint">Search menu → <strong>Access Policy</strong></div><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Rule Name</td><td><strong>PRA_Allow_Access</strong></td></tr><tr><td>Rule Action</td><td><strong>Allow Access</strong></td></tr><tr><td>App Connector Selection</td><td>All App Connector Groups</td></tr><tr><td>Applications</td><td><strong>PRA_RDP1_win Svr</strong></td></tr></tbody></table> Save the rule.</div></li>
+<li><div class="step-content">Create a second PRA segment for the Log Streaming Connector:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_SSH2_Log_Streaming_Connector_PC</strong></td></tr><tr><td>Application</td><td><strong>10.0.0.20</strong></td></tr><tr><td>Access Type</td><td><strong>Privileged Remote Access</strong></td></tr><tr><td>Protocol / Port</td><td>SSH / <strong>22</strong></td></tr><tr><td>Client Connector Ports</td><td>SSH 22</td></tr><tr><td>Segment Group</td><td><strong>CorpApps</strong></td></tr><tr><td>Server Group</td><td><strong>CorpServers</strong></td></tr></tbody></table> Save it, then edit <strong>PRA_Allow_Access</strong> and add the new SSH segment to the Applications criteria.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the &lt;strong&gt;PRA_Allow_Access&lt;/strong&gt; policy and target the PRA segments.">
+        <img src="assets/images/reference/edu202-p082-x341.jpg" alt="PRA access policy">
+      </button>
+      <figcaption>Create the <strong>PRA_Allow_Access</strong> policy and target the PRA segments.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Add the SSH application segment to the same PRA access rule.">
+        <img src="assets/images/reference/edu202-p085-x349.jpg" alt="PRA SSH application segment in access policy">
+      </button>
+      <figcaption>Add the SSH application segment to the same PRA access rule.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Both the Windows RDP and Linux SSH targets are defined as PRA application segments and are permitted by <strong>PRA_Allow_Access</strong>.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-5-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.2</div>
+      <div><h2>Create the Portal</h2><p>Create the browser-based PRA entry point.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Privileged Portals</strong> and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Privileged Portals</strong></div></div></li>
+<li><div class="step-content">Configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Privileged_Portal</strong></td></tr><tr><td>Certificate Type</td><td><strong>Managed</strong></td></tr><tr><td>Portal URL</td><td><strong>praportal</strong></td></tr><tr><td>Domain Suffix</td><td>Select any available suffix</td></tr><tr><td>User Portal for Portal Links</td><td>None</td></tr></tbody></table> Select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the managed &lt;strong&gt;Privileged_Portal&lt;/strong&gt;.">
+        <img src="assets/images/reference/edu202-p087-x354.jpg" alt="Privileged Remote Access portal configuration">
+      </button>
+      <figcaption>Create the managed <strong>Privileged_Portal</strong>.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The <strong>Privileged_Portal</strong> is available as the browser-based entry point for PRA users.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-5-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.3</div>
+      <div><h2>Create the Consoles</h2><p>Expose the PRA targets as browser-accessible consoles.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Privileged Consoles</strong> and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Privileged Consoles</strong></div></div></li>
+<li><div class="step-content">Choose <strong>Privileged_Portal</strong> and select both PRA application segments created in Task 5.1. Continue to the Consoles tab.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Associate the PRA portal with the Windows and Linux application segments.">
+        <img src="assets/images/reference/edu202-p088-x357.jpg" alt="Privileged console application selection">
+      </button>
+      <figcaption>Associate the PRA portal with the Windows and Linux application segments.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Verify the generated console details: SSH should use port <strong>22</strong>; RDP should use port <strong>3389</strong> with RDP connection security. Select <strong>Next</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review the generated SSH and RDP console settings.">
+        <img src="assets/images/reference/edu202-p089-x360.jpg" alt="PRA console details">
+      </button>
+      <figcaption>Review the generated SSH and RDP console settings.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Review the configuration and select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review the console configuration before saving.">
+        <img src="assets/images/reference/edu202-p091-x366.jpg" alt="PRA console review">
+      </button>
+      <figcaption>Review the console configuration before saving.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Confirm the consoles are available for the portal.">
+        <img src="assets/images/reference/edu202-p091-x367.jpg" alt="PRA console list">
+      </button>
+      <figcaption>Confirm the consoles are available for the portal.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The portal contains SSH and RDP consoles for the two PRA application segments.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-5-4">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.4</div>
+      <div><h2>Create Privileged Credentials</h2><p>Store credentials for the Windows and Linux targets.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.4"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Privileged Credentials</strong> and create the Windows credential:<div class="search-hint">Search menu → <strong>Privileged Credentials</strong></div><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_windows</strong></td></tr><tr><td>Type</td><td>UserName-Password</td></tr><tr><td>Username</td><td><span class='value'>administrator</span></td></tr><tr><td>Password</td><td><span class='value'>Admin-123!</span></td></tr></tbody></table> Save it.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the stored Windows PRA credential.">
+        <img src="assets/images/reference/edu202-p093-x372.jpg" alt="PRA Windows credential">
+      </button>
+      <figcaption>Create the stored Windows PRA credential.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Create the Linux credential:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_Log_Streamming_Connector</strong></td></tr><tr><td>Type</td><td>UserName-Password</td></tr><tr><td>Username</td><td><span class='value'>admin</span></td></tr><tr><td>Password</td><td><span class='value'>zscaler</span></td></tr></tbody></table> Save it.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the stored Linux PRA credential.">
+        <img src="assets/images/reference/edu202-p094-x377.jpg" alt="PRA Linux credential">
+      </button>
+      <figcaption>Create the stored Linux PRA credential.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Stored credentials exist for both the Windows and Linux PRA targets.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-5-5">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.5</div>
+      <div><h2>Create the Privileged Credential Policy</h2><p>Map each stored credential to the correct target.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.5"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Credentials Policy</strong> and create the RDP credential policy:<div class="search-hint">Search menu → <strong>Credentials Policy</strong></div><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_Credential_policy_RDP</strong></td></tr><tr><td>Privileged Credential</td><td><strong>PRA_windows</strong></td></tr><tr><td>Application / IP criteria</td><td><strong>10.0.0.1</strong></td></tr></tbody></table> Save it.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Map the Windows credential to the RDP target.">
+        <img src="assets/images/reference/edu202-p095-x380.jpg" alt="PRA RDP credential policy">
+      </button>
+      <figcaption>Map the Windows credential to the RDP target.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Create the SSH credential policy:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_Credential_policy_SSH</strong></td></tr><tr><td>Privileged Credential</td><td><strong>PRA_Log_Streamming_Connector</strong></td></tr><tr><td>Application / IP criteria</td><td><strong>10.0.0.20</strong></td></tr></tbody></table> Save it.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Map the Linux credential to the SSH target.">
+        <img src="assets/images/reference/edu202-p096-x383.jpg" alt="PRA SSH credential policy">
+      </button>
+      <figcaption>Map the Linux credential to the SSH target.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Confirm both credential policies are present.">
+        <img src="assets/images/reference/edu202-p097-x386.jpg" alt="PRA credential policy list">
+      </button>
+      <figcaption>Confirm both credential policies are present.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Each PRA target is associated with the correct stored credential through a credential policy.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-5-6">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.6</div>
+      <div><h2>Create the Consoles Policy</h2><p>Apply session-control behavior to the PRA consoles.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.6"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Consoles Policy</strong> and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Consoles Policy</strong></div></div></li>
+<li><div class="step-content">Configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>PRA_Console_Policy</strong></td></tr><tr><td>Clipboard Copy</td><td>Enable</td></tr><tr><td>Record Session</td><td>Enable</td></tr><tr><td>Join Session</td><td>Enable</td></tr><tr><td>Share Session</td><td>Monitor</td></tr><tr><td>Application criteria</td><td>Select both PRA application segments from Task 5.1</td></tr></tbody></table> Select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the PRA console policy and apply it to both PRA application segments.">
+        <img src="assets/images/reference/edu202-p099-x391.jpg" alt="PRA console policy">
+      </button>
+      <figcaption>Create the PRA console policy and apply it to both PRA application segments.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The PRA consoles use the configured session controls and apply to both lab targets.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-5-7">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">5.7</div>
+      <div><h2>Test and Verify</h2><p>Launch RDP and SSH through the portal and verify the live sessions.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="5.7"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, log out of Zscaler Client Connector.</div></li>
+<li><div class="step-content">Open the Experience Center, locate <strong>Privileged Portals</strong>, and select <strong>Launch</strong> for <strong>Privileged_Portal</strong>. Authenticate with your student tenant account if prompted.<div class="search-hint">Search menu → <strong>Privileged Portals</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Launch the privileged portal from the Experience Center.">
+        <img src="assets/images/reference/edu202-p100-x394.jpg" alt="Launch PRA portal">
+      </button>
+      <figcaption>Launch the privileged portal from the Experience Center.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Select the Windows target <strong>10.0.0.1</strong> and start the RDP session through the browser.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open the Windows target from the privileged portal.">
+        <img src="assets/images/reference/edu202-p102-x401.jpg" alt="PRA RDP browser session">
+      </button>
+      <figcaption>Open the Windows target from the privileged portal.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">In the admin portal, open <strong>Privileged Remote Access → Live Sessions</strong> and verify the active RDP session.<div class="search-hint">Search menu → <strong>Live Sessions</strong></div></div></li>
+<li><div class="step-content">Return to the privileged portal, select the Log Streaming Connector <strong>10.0.0.20</strong>, and open the SSH session.</div></li>
+<li><div class="step-content">Return to <strong>Live Sessions</strong> and verify the active SSH session.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the active PRA session in diagnostics / Live Sessions.">
+        <img src="assets/images/reference/edu202-p103-x404.jpg" alt="PRA live RDP session">
+      </button>
+      <figcaption>Verify the active PRA session in diagnostics / Live Sessions.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Verify the SSH session to the Log Streaming Connector.">
+        <img src="assets/images/reference/edu202-p105-x410.jpg" alt="PRA live SSH session">
+      </button>
+      <figcaption>Verify the SSH session to the Log Streaming Connector.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The browser-based PRA portal can establish both RDP and SSH sessions, and the sessions are visible in PRA Live Sessions.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 5 complete</div><p>You have completed the activities defined for <strong>Understand Privileged Remote Access</strong>.</p></div></div><div class="page-nav"><a href="lab-04.html"><small>Previous</small><strong>← Lab 4</strong></a><a class="next" href="lab-06.html"><small>Next</small><strong>Lab 6 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

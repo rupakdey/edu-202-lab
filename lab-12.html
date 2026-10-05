@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 12 — Manage Incidents with Zscaler Workflow Automation | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-12"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 12</strong> / Manage Incidents with Zscaler Workflow Automation</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 12 · Solutions Demo Center</div><h1>Manage Incidents with Zscaler Workflow Automation</h1><p>Use the Solutions Demo Center to investigate DLP incidents and workflow automation. You will switch Client Connector to the SDC identity, review incident evidence, update metadata, test notification/escalation, and inspect automated workflow logic.</p><div class="lab-facts"><span class="fact"><strong>5 tasks</strong></span><span class="fact"><strong>Approx. 20 Minutes</strong></span><span class="fact"><strong>Read-only SDC</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Change the status and priority of data protection incidents.</li><li>Escalate incidents to appropriate stakeholders for review.</li><li>Notify end users via email to provide coaching or request justification.</li><li>Identify incident metadata, trigger data, and violation content.</li><li>View and understand automated workflow templates and mappings.</li></ul></div></section><section class="task" id="task-12-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">12.1</div>
+      <div><h2>Enroll with Zscaler Client Connector</h2><p>Switch Client Connector from the learner tenant to the SDC IT identity.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="12.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, open Zscaler Client Connector and select <strong>Log Out</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Log out of the learner-tenant Client Connector session before enrolling with the SDC identity.">
+        <img src="assets/images/reference/edu202-p239-x844.jpg" alt="Zscaler Client Connector logout">
+      </button>
+      <figcaption>Log out of the learner-tenant Client Connector session before enrolling with the SDC identity.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Sign in to Client Connector with the <strong>IT department</strong> SDC identity supplied for the course. At the IdP prompt, use the IT department username and the SDC session password.</div></li>
+<li><div class="step-content">Allow Client Connector a few minutes to initialize. Confirm <strong>Internet Security = ON</strong> and <strong>Network Type = Off-Trusted Network</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Confirm Client Connector is enrolled with the SDC IT identity and Internet Security is ON.">
+        <img src="assets/images/reference/edu202-p241-x849.jpg" alt="SDC Client Connector status">
+      </button>
+      <figcaption>Confirm Client Connector is enrolled with the SDC IT identity and Internet Security is ON.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Corp: Client PC 1 is enrolled with the SDC IT identity and Internet Security is active.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-12-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">12.2</div>
+      <div><h2>View Current DLP Incidents</h2><p>Open an incident and inspect its metadata and trigger data.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="12.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Sign in to the Experience Center with the SDC administrator credentials and open <strong>Workflow Automation → Incidents</strong>.<div class="search-hint">Search menu → <strong>Incidents</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open the Workflow Automation incident list.">
+        <img src="assets/images/reference/edu202-p242-x852.jpg" alt="ZWA Incidents list">
+      </button>
+      <figcaption>Open the Workflow Automation incident list.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Open the first incident by selecting its <strong>Transaction ID</strong>. Review the metadata in <strong>Overview</strong> and <strong>Violation Details</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open an incident and review its overview metadata.">
+        <img src="assets/images/reference/edu202-p243-x855.jpg" alt="ZWA incident details">
+      </button>
+      <figcaption>Open an incident and review its overview metadata.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Scroll to <strong>Violation Content</strong> and expand <strong>View Trigger Data</strong> to inspect the content that triggered the DLP violation.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Expand the incident trigger data.">
+        <img src="assets/images/reference/edu202-p244-x858.jpg" alt="ZWA incident violation content">
+      </button>
+      <figcaption>Expand the incident trigger data.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Review the trigger data and incident metadata together.">
+        <img src="assets/images/reference/edu202-p245-x861.jpg" alt="ZWA trigger data">
+      </button>
+      <figcaption>Review the trigger data and incident metadata together.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>You can identify the incident metadata, violation details, and the data that triggered the DLP incident.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-12-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">12.3</div>
+      <div><h2>Modify Incident Metadata</h2><p>Update the incident status and priority, then review the audit trail.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="12.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">From the Incident Details page, open <strong>Actions</strong>, set <strong>Status = Investigating</strong>, and enter <span class="value">Test</span> in the Note field.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Change the incident status to Investigating and add the test note.">
+        <img src="assets/images/reference/edu202-p246-x864.jpg" alt="ZWA incident status update">
+      </button>
+      <figcaption>Change the incident status to Investigating and add the test note.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Select <strong>Assign Priority</strong> and set <strong>Priority = High</strong> if it is not already High.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Set the incident priority to High.">
+        <img src="assets/images/reference/edu202-p247-x867.jpg" alt="ZWA incident priority">
+      </button>
+      <figcaption>Set the incident priority to High.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Refresh the browser. Confirm the new Status and Priority, then review <strong>State Changes</strong> to see the history entries.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Confirm the metadata updates and review State Changes.">
+        <img src="assets/images/reference/edu202-p248-x870.jpg" alt="ZWA incident state changes">
+      </button>
+      <figcaption>Confirm the metadata updates and review State Changes.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The selected incident is marked <strong>Investigating</strong>, has <strong>High</strong> priority, and the changes are recorded in State Changes.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-12-4">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">12.4</div>
+      <div><h2>Test User Notification and Escalation Workflows</h2><p>Notify the end user, add an approver, and test incident escalation.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="12.4"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">From Incident Details, open <strong>Actions → Notify User</strong>. Choose a language, enter <span class="value">Please justify uploading this document for testing purposes of HandsOnLab</span>, and submit.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Send an end-user justification notification from the incident.">
+        <img src="assets/images/reference/edu202-p249-x873.jpg" alt="ZWA Notify User action">
+      </button>
+      <figcaption>Send an end-user justification notification from the incident.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Review <strong>State Changes</strong> and confirm the notification action is recorded. You can continue even if the originator does not respond during the lab.</div></li>
+<li><div class="step-content">Open <strong>Workflow Automation → Approvers</strong>, add yourself with your name and email address, and save.<div class="search-hint">Search menu → <strong>Approvers</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Add yourself as an approver for the escalation test.">
+        <img src="assets/images/reference/edu202-p252-x882.jpg" alt="ZWA Approvers configuration">
+      </button>
+      <figcaption>Add yourself as an approver for the escalation test.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Return to the incident, open <strong>Actions → Escalate</strong>, select your newly created approver, and save.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Escalate the incident to the approver you added.">
+        <img src="assets/images/reference/edu202-p254-x889.jpg" alt="ZWA incident escalation">
+      </button>
+      <figcaption>Escalate the incident to the approver you added.</figcaption>
+    </figure><ol class="steps" start="5"><li><div class="step-content">Open your personal email, find the DLP Incident Notification (check spam if needed), follow the link, select <strong>Approved</strong>, enter a reason, and submit. Confirm the notification/escalation actions are recorded in State Changes.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Complete the approval from the notification email and verify the incident history.">
+        <img src="assets/images/reference/edu202-p256-x895.jpg" alt="ZWA escalation approval">
+      </button>
+      <figcaption>Complete the approval from the notification email and verify the incident history.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The lab incident records both the end-user notification and the approver escalation workflow.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-12-5">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">12.5</div>
+      <div><h2>Explore Automated Workflows</h2><p>Review workflow templates and the mappings that determine when they run.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="12.5"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Workflow Automation → Workflow Templates</strong>. In the <strong>Auto Escalate</strong> row, select the View Workflow Template icon and review the flow logic.<div class="search-hint">Search menu → <strong>Workflow Templates</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open the Auto Escalate workflow template and review its logic.">
+        <img src="assets/images/reference/edu202-p258-x900.jpg" alt="ZWA workflow template">
+      </button>
+      <figcaption>Open the Auto Escalate workflow template and review its logic.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Open <strong>Workflow Automation → Workflow Mapping</strong> and expand the first mapping to review its triggering attributes and conditions.<div class="search-hint">Search menu → <strong>Workflow Mapping</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Expand a workflow mapping to inspect the trigger criteria.">
+        <img src="assets/images/reference/edu202-p259-x903.jpg" alt="ZWA workflow mapping">
+      </button>
+      <figcaption>Expand a workflow mapping to inspect the trigger criteria.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Explore the available attributes and logical constructs. Because the SDC access is read-only for this activity, do not save changes; select <strong>Reset</strong> when finished.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review the available mapping attributes and logic.">
+        <img src="assets/images/reference/edu202-p261-x909.jpg" alt="ZWA workflow mapping conditions">
+      </button>
+      <figcaption>Review the available mapping attributes and logic.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Reset the read-only mapping after exploring the configuration.">
+        <img src="assets/images/reference/edu202-p262-x912.jpg" alt="ZWA workflow mapping reset">
+      </button>
+      <figcaption>Reset the read-only mapping after exploring the configuration.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>You can explain how a Workflow Template defines actions and how Workflow Mapping conditions determine when that workflow runs.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 12 complete</div><p>You have completed the activities defined for <strong>Manage Incidents with Zscaler Workflow Automation</strong>.</p></div></div><div class="page-nav"><a href="lab-11.html"><small>Previous</small><strong>← Lab 11</strong></a><a class="next" href="index.html"><small>Next</small><strong>Course Index →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

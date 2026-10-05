@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 4 — Zero Trust Browser ZIA | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-04"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 4</strong> / Zero Trust Browser ZIA</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 4 · Hands-on</div><h1>Zero Trust Browser ZIA</h1><p>Use Browser Isolation to make social-networking access view-only, then create a granular Cloud App Control exception so LinkedIn is allowed normally while other matching sites remain isolated.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span><span class="fact"><strong>Approx. 20 Minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Create an Isolation Profile that allows view-only access (no download, upload, copy, or paste).</li><li>Configure a URL Filtering rule that isolates selected Social Networking URL categories.</li><li>Create a granular Cloud App Control policy that allows LinkedIn to bypass isolation while other social</li><li>networking sites remain isolated.</li><li>Verify isolation behavior by testing access to social networking sites (for example, x.com, instagram.com,</li><li>linkedin.com, and facebook.com).</li></ul></div></section><section class="task" id="task-4-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">4.1</div>
+      <div><h2>Build an Isolation Profile</h2><p>Define the user restrictions and isolation experience.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="4.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open the Internet &amp; SaaS <strong>Isolation Profiles</strong> page and select <strong>Add Profile</strong>.<div class="search-hint">Search menu → <strong>Isolation profile</strong></div></div></li>
+<li><div class="step-content">Configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>isolate_profile-social_networking-internet</strong></td></tr><tr><td>Description</td><td>Isolate Social Networking Sites to view only</td></tr><tr><td>Other General settings</td><td>Leave at default</td></tr></tbody></table> Select <strong>Next</strong>.</div></li>
+<li><div class="step-content">On <strong>Company Settings</strong>, keep the defaults and continue.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the social-networking isolation profile.">
+        <img src="assets/images/reference/edu202-p060-x266.jpg" alt="Isolation profile general settings">
+      </button>
+      <figcaption>Create the social-networking isolation profile.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">On <strong>Security</strong>, enable <strong>Original URL</strong>. Leave the remaining settings at default and select <strong>Next</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Enable the Security setting required by the lab profile.">
+        <img src="assets/images/reference/edu202-p062-x272.jpg" alt="Isolation profile security settings">
+      </button>
+      <figcaption>Enable the Security setting required by the lab profile.</figcaption>
+    </figure><ol class="steps" start="5"><li><div class="step-content">On <strong>Regions</strong>, select any two regions close to the user and continue.</div></li>
+<li><div class="step-content">On <strong>Isolation Experience</strong>, enable <strong>Watermarking</strong> and choose a preferred <strong>Date & Timestamp</strong>. Leave the other settings at default.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Select nearby isolation regions and configure the user experience.">
+        <img src="assets/images/reference/edu202-p064-x278.jpg" alt="Isolation regions and experience settings">
+      </button>
+      <figcaption>Select nearby isolation regions and configure the user experience.</figcaption>
+    </figure><ol class="steps" start="7"><li><div class="step-content">Review the profile and select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review and save the isolation profile.">
+        <img src="assets/images/reference/edu202-p066-x284.jpg" alt="Isolation profile review">
+      </button>
+      <figcaption>Review and save the isolation profile.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The <strong>isolate_profile-social_networking-internet</strong> profile is available for policy use.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-4-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">4.2</div>
+      <div><h2>Implement an Isolation Policy</h2><p>Apply Browser Isolation to Social Networking URL categories.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="4.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>URL Filtering</strong> and select <strong>Add URL Filtering Rule</strong>. In the new Experience Center, the direct path is <strong>Internet Access → Policy → URL Filtering</strong>.<div class="search-hint">Search menu → <strong>URL Filtering</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Start a new URL Filtering rule for isolation.">
+        <img src="assets/images/reference/edu202-p067-x287.jpg" alt="URL Filtering policy page">
+      </button>
+      <figcaption>Start a new URL Filtering rule for isolation.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Configure the rule:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Rule Order</td><td><strong>1</strong></td></tr><tr><td>Rule Name</td><td><strong>isolate-outbound-socialsite</strong></td></tr><tr><td>URL Categories</td><td>Social Networking; Social Networking Adult</td></tr><tr><td>Protocols</td><td>HTTP, HTTPS</td></tr><tr><td>User Agents</td><td>Chrome, Firefox, Microsoft Edge, Microsoft Internet Explorer, Safari</td></tr><tr><td>Web Traffic Action</td><td><strong>Isolate</strong></td></tr><tr><td>Isolation Profile</td><td><strong>isolate_profile-social_networking-internet</strong></td></tr></tbody></table> Save the rule and <strong>Activate</strong> the changes.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Apply the isolation profile to the selected social-networking categories.">
+        <img src="assets/images/reference/edu202-p069-x293.jpg" alt="Isolation URL Filtering rule">
+      </button>
+      <figcaption>Apply the isolation profile to the selected social-networking categories.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Verify Zscaler Client Connector is signed in, then open <span class="value">x.com</span>, <span class="value">instagram.com</span>, <span class="value">linkedin.com</span>, and <span class="value">facebook.com</span>. Incognito mode can make the test easier to repeat.</div></li>
+<li><div class="step-content">Confirm each site opens in an isolated session. If the watermark is not obvious, check the isolation URL / browser-isolation indicators.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Test one of the Social Networking sites after activating the rule.">
+        <img src="assets/images/reference/edu202-p071-x301.jpg" alt="Isolated social networking site">
+      </button>
+      <figcaption>Test one of the Social Networking sites after activating the rule.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Confirm the session is being rendered through Browser Isolation.">
+        <img src="assets/images/reference/edu202-p071-x303.jpg" alt="Browser isolation test result">
+      </button>
+      <figcaption>Confirm the session is being rendered through Browser Isolation.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The selected Social Networking categories open through Browser Isolation using the new isolation profile.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-4-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">4.3</div>
+      <div><h2>Add a Cloud App Policy Exception</h2><p>Allow LinkedIn without removing isolation from other social-networking sites.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="4.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Cloud App Policy</strong> and add a <strong>Social Networking</strong> rule.<div class="search-hint">Search menu → <strong>Cloud App Policy</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Start a Social Networking Cloud App Policy rule.">
+        <img src="assets/images/reference/edu202-p072-x310.jpg" alt="Cloud App Control Social Networking rule">
+      </button>
+      <figcaption>Start a Social Networking Cloud App Policy rule.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Configure the exception:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Rule Order</td><td><strong>1</strong></td></tr><tr><td>Rule Name</td><td><strong>allow-outbound-linkedin-any</strong></td></tr><tr><td>Cloud Application</td><td><strong>LinkedIn</strong></td></tr><tr><td>Viewing</td><td><strong>Allow</strong></td></tr><tr><td>Description</td><td>Not isolating the LinkedIn Social Networking Site</td></tr></tbody></table> Save and <strong>Activate</strong> the change.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Allow LinkedIn through Cloud App Policy while the URL Filtering isolation rule remains in place.">
+        <img src="assets/images/reference/edu202-p074-x316.jpg" alt="LinkedIn Cloud App Policy allow rule">
+      </button>
+      <figcaption>Allow LinkedIn through Cloud App Policy while the URL Filtering isolation rule remains in place.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Open <span class="value">linkedin.com</span> and confirm it is allowed without isolation.</div></li>
+<li><div class="step-content">Open the other social-networking sites again and confirm they remain isolated.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="LinkedIn should bypass isolation after the Cloud App Policy rule is active.">
+        <img src="assets/images/reference/edu202-p075-x319.jpg" alt="LinkedIn not isolated">
+      </button>
+      <figcaption>LinkedIn should bypass isolation after the Cloud App Policy rule is active.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Other matching social-networking sites should continue to use isolation.">
+        <img src="assets/images/reference/edu202-p075-x321.jpg" alt="Other social networking site remains isolated">
+      </button>
+      <figcaption>Other matching social-networking sites should continue to use isolation.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>LinkedIn is allowed normally while the broader social-networking categories continue to be isolated.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 4 complete</div><p>You have completed the activities defined for <strong>Zero Trust Browser ZIA</strong>.</p></div></div><div class="page-nav"><a href="lab-03.html"><small>Previous</small><strong>← Lab 3</strong></a><a class="next" href="lab-05.html"><small>Next</small><strong>Lab 5 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

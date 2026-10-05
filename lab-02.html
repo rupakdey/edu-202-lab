@@ -1,0 +1,387 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 2 — Configure Browser Access for Third Parties | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-02"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 2</strong> / Configure Browser Access for Third Parties</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 2 · Hands-on</div><h1>Configure Browser Access for Third Parties</h1><p>Provide a third-party user with secure, clientless access to the internal Safemarch HVAC application. You will provision the connector path, publish the application with Browser Access, apply an access policy, and validate the connection from a remote Linux client.</p><div class="lab-facts"><span class="fact"><strong>4 tasks</strong></span><span class="fact"><strong>Approx. 20 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Provision an App Connector to connect the internal HVAC application to the Zero Trust Exchange.</li><li>Publish the HVAC application with Browser Access and define the required access policy.</li><li>Validate Browser Access by testing the end-to-end connection without Zscaler Client Connector.</li></ul></div></section>
+<section class="section concept-primer compact-concept" id="browser-access-explainer">
+  <div class="section-head stacked">
+    <div class="eyebrow">Technical concept</div>
+    <h2>Why ZPA Browser Access exists</h2>
+    <p><strong>Browser Access</strong> provides clientless access to private web applications. The user authenticates in a normal browser, ZPA applies access policy, and an App Connector reaches the private application—without requiring Zscaler Client Connector on the user device.</p>
+  </div>
+
+  <div class="browser-access-flow" role="img" aria-label="Browser Access flow from an unmanaged or third-party device through identity authentication and ZPA to an App Connector and private web application">
+    <div class="concept-node"><span class="concept-step">1</span><strong>User browser</strong><small>Contractor / unmanaged device<br>No Client Connector required</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node"><span class="concept-step">2</span><strong>Identity + ZPA policy</strong><small>Authenticate user<br>Allow only the published application</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node accent-node"><span class="concept-step">3</span><strong>App Connector</strong><small>Outbound connection<br>Reaches the private application</small></div>
+    <div class="concept-arrow">→</div>
+    <div class="concept-node"><span class="concept-step">4</span><strong>Private web app</strong><small>HTTP / HTTPS<br>No network-level access granted</small></div>
+  </div>
+
+  <div class="grid grid-2 concept-grid compact-cards">
+    <article class="card pad">
+      <div class="concept-kicker">Where it adds value</div>
+      <h3>Third-party and unmanaged-device access</h3>
+      <p>Use Browser Access when installing Client Connector is not practical—for example, contractors, partners, BYOD devices, or platforms you do not manage. Access remains <strong>application-specific</strong> rather than exposing the private network.</p>
+    </article>
+    <article class="card pad">
+      <div class="concept-kicker accent">What it supports</div>
+      <h3>Private web applications</h3>
+      <p>Browser Access is designed for HTTP/HTTPS applications. Users access an external Browser Access URL, authenticate, and are connected only to applications allowed by ZPA policy.</p>
+    </article>
+  </div>
+
+  <div class="section-head stacked cert-head">
+    <div class="eyebrow">Certificate choice</div>
+    <h3>Managed vs. Unmanaged / Custom certificate</h3>
+    <p>The certificate presented to the user protects the Browser Access HTTPS endpoint. The difference is mainly <strong>who owns the certificate and public-DNS lifecycle</strong>.</p>
+  </div>
+  <div class="grid grid-2 concept-grid compact-cards certificate-choice-grid">
+    <article class="card pad cert-card managed-cert">
+      <div class="concept-kicker accent">Managed</div>
+      <h3>Zscaler manages the public-facing certificate</h3>
+      <p>You choose an available external domain prefix/suffix and Zscaler manages the Browser Access certificate and related CNAME workflow. This is the simplest choice for a lab or when you do not need to preserve an existing public hostname.</p>
+    </article>
+    <article class="card pad cert-card custom-cert">
+      <div class="concept-kicker purple">Unmanaged / Custom</div>
+      <h3>Your organization manages the certificate</h3>
+      <p>You provide/select the web-server certificate and manage its issuance, renewal, and public DNS. Use this when you need an organization-controlled domain, certificate, or PKI workflow.</p>
+    </article>
+  </div>
+
+  <div class="callout info compact-callout">
+    <div class="callout-symbol">i</div>
+    <div><div class="callout-title">How this maps to Lab 2</div>
+    <p>The HVAC application uses <strong>Browser Access + Managed certificate</strong>, so the learner can focus on publishing and securing the private application rather than building a certificate/DNS lifecycle manually.</p></div>
+  </div>
+</section>
+<section class="task" id="task-2-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">2.1</div>
+      <div>
+        <h2>Provision an App Connector Group</h2>
+        <p>Create the connector group that will represent the on-premises application environment.</p>
+      </div>
+      <label class="task-complete"><input type="checkbox" data-task-check="2.1"> Mark complete</label>
+    </header>
+
+    <div class="task-body">
+      <ol class="steps">
+        <li><div class="step-content">On <strong>Corp: Client PC 1</strong>, sign in as <span class="value">student</span> with password <span class="value">Admin-123!</span>, then open the Experience Center.</div></li>
+        <li><div class="step-content">Open <strong>App Connector Groups</strong>.<div class="search-hint">Search menu → <strong>App Connector Groups</strong></div></div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="App Connector Groups in the source Experience Center layout. Use Search menu by feature name if the current menu placement differs.">
+          <img src="assets/images/lab02/app-connector-groups-navigation.jpg" alt="Experience Center App Connector Groups page">
+        </button>
+        <figcaption>Open <strong>App Connector Groups</strong>. <span>The source screenshot uses an older menu layout.</span></figcaption>
+      </figure>
+
+      <ol class="steps" start="3">
+        <li><div class="step-content">Select <strong>Add</strong> and configure the group:
+          <table class="credentials settings-table">
+            <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Name</td><td><strong>OnPrem</strong></td></tr>
+              <tr><td>Status</td><td><strong>Enabled</strong></td></tr>
+              <tr><td>Description</td><td>Optional</td></tr>
+              <tr><td>Signing Certificate</td><td><strong>Connector</strong></td></tr>
+              <tr><td>Other Configurations</td><td>Leave at default</td></tr>
+              <tr><td>App Connector Location</td><td>Select the location closest to you / your current city</td></tr>
+            </tbody>
+          </table>
+        </div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Add App Connector Group example for the OnPrem group.">
+          <img src="assets/images/lab02/add-app-connector-group.jpg" alt="Add App Connector Group form showing OnPrem settings">
+        </button>
+        <figcaption>Example <strong>OnPrem</strong> App Connector Group settings.</figcaption>
+      </figure>
+
+      <ol class="steps" start="4">
+        <li><div class="step-content">Select <strong>Next</strong>, keep the remaining settings at their defaults, and accept the maintenance-window acknowledgement if it appears.</div></li>
+        <li><div class="step-content">Select <strong>Save</strong> and confirm that <strong>OnPrem</strong> appears in the App Connector Groups list.</div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="OnPrem App Connector Group created successfully.">
+          <img src="assets/images/lab02/onprem-app-connector-group.jpg" alt="App Connector Groups list showing OnPrem">
+        </button>
+        <figcaption><strong>OnPrem</strong> should appear in the App Connector Groups list.</figcaption>
+      </figure>
+
+      <div class="callout success">
+        <div class="callout-symbol">✓</div>
+        <div><div class="callout-title">Expected result</div><p>The enabled <strong>OnPrem</strong> App Connector Group exists and is ready for connector enrollment.</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+<section class="task" id="task-2-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">2.2</div>
+      <div>
+        <h2>Activate the App Connector</h2>
+        <p>Generate an enrollment token, register the connector with the OnPrem group, and verify its status.</p>
+      </div>
+      <label class="task-complete"><input type="checkbox" data-task-check="2.2"> Mark complete</label>
+    </header>
+
+    <div class="task-body">
+      <ol class="steps">
+        <li><div class="step-content">Open the <strong>Corp: ZPA App Connector</strong> VM. The connector displays an OAuth token when it first starts. If you need shell access, sign in with:
+          <table class="credentials settings-table">
+            <tbody>
+              <tr><td>Username</td><td><span class="value">admin</span></td></tr>
+              <tr><td>Password</td><td><span class="value">zscaler</span></td></tr>
+            </tbody>
+          </table>
+          To display the current token from the shell, run:
+          <div class="source-code"><code>cat /etc/issue</code><button class="copy-btn" data-copy="cat /etc/issue">Copy</button></div>
+        </div></li>
+      </ol>
+
+      <figure class="figure compact">
+        <button data-lightbox data-caption="App Connector console displaying the OAuth enrollment token.">
+          <img src="assets/images/lab02/connector-oauth-token.jpg" alt="ZPA App Connector console showing an OAuth token">
+        </button>
+        <figcaption>Record the OAuth token shown by the connector.</figcaption>
+      </figure>
+
+      <ol class="steps" start="2">
+        <li><div class="step-content">Generate a fresh token by stopping the service, deleting the existing token files, and starting the service again:
+          <div class="source-code"><code>sudo systemctl stop zpa-connector</code><button class="copy-btn" data-copy="sudo systemctl stop zpa-connector">Copy</button></div>
+          <div class="source-code"><code>sudo find /opt/zscaler/var/ -type f -name '*' -delete</code><button class="copy-btn" data-copy="sudo find /opt/zscaler/var/ -type f -name '*' -delete">Copy</button></div>
+          <div class="source-code"><code>sudo systemctl start zpa-connector</code><button class="copy-btn" data-copy="sudo systemctl start zpa-connector">Copy</button></div>
+          <p class="micro-note">Use the newly displayed OAuth token. If a token is expired or rejected, repeat this step.</p>
+        </div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Token regeneration sequence and the newly generated OAuth token on the App Connector console.">
+          <img src="assets/images/lab02/connector-token-regeneration.jpg" alt="App Connector CLI commands used to regenerate the OAuth token">
+        </button>
+        <figcaption>The service restart produces a new enrollment token.</figcaption>
+      </figure>
+
+      <ol class="steps" start="3">
+        <li><div class="step-content">In the Experience Center, open <strong>App Connectors</strong> and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>App Connectors</strong></div></div></li>
+        <li><div class="step-content">Configure the connector:
+          <table class="credentials settings-table">
+            <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Group</td><td><strong>OnPrem</strong></td></tr>
+              <tr><td>Enrollment Token</td><td>Enter the token generated above, then select <strong>Add</strong></td></tr>
+              <tr><td>Signing Certificate</td><td><strong>Connector</strong></td></tr>
+            </tbody>
+          </table>
+          Select <strong>Save</strong>.
+        </div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Register the App Connector with the OnPrem group, OAuth token, and Connector signing certificate.">
+          <img src="assets/images/lab02/add-app-connector.jpg" alt="Add App Connectors form with OnPrem group and enrollment token">
+        </button>
+        <figcaption>Register the connector with the <strong>OnPrem</strong> group.</figcaption>
+      </figure>
+
+      <ol class="steps" start="5">
+        <li><div class="step-content">Confirm that the connector appears in the list. Open the connector to review details such as Host OS, Public Service Edge, location, IP addresses, and uptime.</div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="App Connector list and connector details after enrollment.">
+          <img src="assets/images/lab02/app-connector-details.jpg" alt="App Connector list and details pane">
+        </button>
+        <figcaption>The connector should appear in the tenant. Connection Health can take about 30 seconds to change from <strong>Disconnected</strong> to <strong>Connected</strong>.</figcaption>
+      </figure>
+
+      <div class="callout success">
+        <div class="callout-symbol">✓</div>
+        <div><div class="callout-title">Expected result</div><p>The App Connector is registered in the <strong>OnPrem</strong> group and appears in the tenant. After a short delay, Connection Health should report <strong>Connected</strong>.</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+<section class="task" id="task-2-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">2.3</div>
+      <div>
+        <h2>Create the HVAC Application and Access Policy</h2>
+        <p>Publish the internal HVAC service through Browser Access and allow web-browser access to it.</p>
+      </div>
+      <label class="task-complete"><input type="checkbox" data-task-check="2.3"> Mark complete</label>
+    </header>
+
+    <div class="task-body">
+      <ol class="steps">
+        <li><div class="step-content">Open <strong>App Segments</strong> and select <strong>Add Application Segment</strong>.<div class="search-hint">Search menu → <strong>App Segments</strong></div></div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="App Segments page with Add Application Segment highlighted.">
+          <img src="assets/images/lab02/app-segments-add.jpg" alt="App Segments page showing Add Application Segment">
+        </button>
+        <figcaption>Start a new application segment for the HVAC service.</figcaption>
+      </figure>
+
+      <ol class="steps" start="2">
+        <li><div class="step-content">Define the HVAC application:
+          <table class="credentials settings-table">
+            <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Name</td><td><strong>HVAC</strong></td></tr>
+              <tr><td>Status</td><td><strong>Enabled</strong></td></tr>
+              <tr><td>Application</td><td><span class="value">&lt;Student ID&gt;.hvac.safemarch.com</span></td></tr>
+              <tr><td>Access Type</td><td><strong>Browser Access</strong></td></tr>
+              <tr><td>Certificate Type</td><td><strong>Managed</strong></td></tr>
+              <tr><td>External URL</td><td>Domain Prefix = <strong>hvac</strong>; choose any available domain suffix</td></tr>
+              <tr><td>Internal URL</td><td>Protocol = <strong>HTTP</strong>; Port = <strong>80</strong></td></tr>
+              <tr><td>Client Connector Access</td><td>TCP Port Range = <strong>80–80</strong></td></tr>
+            </tbody>
+          </table>
+          Select <strong>Next</strong>.
+        </div></li>
+
+        <li><div class="step-content">Create the supporting groups:
+          <table class="credentials settings-table">
+            <thead><tr><th>Object</th><th>Settings</th></tr></thead>
+            <tbody>
+              <tr><td>Segment Group</td><td><strong>CorpApps</strong> · Enabled</td></tr>
+              <tr><td>Server Group</td><td><strong>CorpServers</strong> · App Connector Group = <strong>OnPrem</strong></td></tr>
+            </tbody>
+          </table>
+          Continue through <strong>Next → Review → Save</strong>.
+        </div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="HVAC Application Segment review showing CorpApps, CorpServers, and the OnPrem App Connector Group.">
+          <img src="assets/images/lab02/hvac-segment-review.jpg" alt="HVAC application segment review page">
+        </button>
+        <figcaption>Review the HVAC segment before saving.</figcaption>
+      </figure>
+
+      <ol class="steps" start="4">
+        <li><div class="step-content">Create the access rule. After saving the segment, select <strong>Edit Policy</strong>, or open <strong>Access Policy</strong> from the Experience Center.<div class="search-hint">Search menu → <strong>Access Policy</strong></div></div></li>
+        <li><div class="step-content">Select <strong>Add</strong> and configure:
+          <table class="credentials settings-table">
+            <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Rule Name</td><td><strong>Allow HVAC</strong></td></tr>
+              <tr><td>Rule Action</td><td><strong>Allow Access</strong></td></tr>
+              <tr><td>Application Segment</td><td><strong>HVAC</strong></td></tr>
+              <tr><td>Client Type</td><td><strong>Web Browser</strong></td></tr>
+            </tbody>
+          </table>
+          Select <strong>Save</strong>.
+        </div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Allow HVAC access policy with the HVAC application segment and Web Browser client type.">
+          <img src="assets/images/lab02/allow-hvac-policy.jpg" alt="Add Access Policy page for Allow HVAC">
+        </button>
+        <figcaption>The policy allows browser-based access to the <strong>HVAC</strong> application segment.</figcaption>
+      </figure>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Allow HVAC visible in the Access Policy list with Allow Access action and Web Browser criteria.">
+          <img src="assets/images/lab02/allow-hvac-policy-list.jpg" alt="Access Policy list showing Allow HVAC">
+        </button>
+        <figcaption>Confirm that <strong>Allow HVAC</strong> is present and enabled.</figcaption>
+      </figure>
+
+      <div class="callout success">
+        <div class="callout-symbol">✓</div>
+        <div><div class="callout-title">Expected result</div><p>The <strong>HVAC</strong> Browser Access application is published through <strong>CorpServers / OnPrem</strong>, and the <strong>Allow HVAC</strong> policy permits Web Browser access.</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+<section class="task" id="task-2-4">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">2.4</div>
+      <div>
+        <h2>Test Browser Access to the HVAC Application</h2>
+        <p>Validate the clientless connection from the remote Linux system.</p>
+      </div>
+      <label class="task-complete"><input type="checkbox" data-task-check="2.4"> Mark complete</label>
+    </header>
+
+    <div class="task-body">
+      <ol class="steps">
+        <li><div class="step-content">Open <strong>Browser Access</strong> in the Experience Center and copy the <strong>External Domain</strong> for the HVAC application.<div class="search-hint">Search menu → <strong>Browser Access</strong></div></div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Browser Access application list with the HVAC external domain.">
+          <img src="assets/images/lab02/browser-access-external-domain.jpg" alt="Browser Access page showing the HVAC external domain">
+        </button>
+        <figcaption>Copy the generated <strong>External Domain</strong> for the HVAC application.</figcaption>
+      </figure>
+
+      <ol class="steps" start="2">
+        <li><div class="step-content">Open <strong>Remote: Linux Client PC</strong> and sign in:
+          <table class="credentials settings-table">
+            <tbody>
+              <tr><td>Username</td><td><span class="value">Admin</span></td></tr>
+              <tr><td>Password</td><td><span class="value">Admin-123!</span></td></tr>
+            </tbody>
+          </table>
+        </div></li>
+        <li><div class="step-content">Open Terminal and verify DNS resolution for the copied external domain:
+          <div class="source-code"><code>dig &lt;External-Domain&gt;</code><button class="copy-btn" data-copy="dig &lt;External-Domain&gt;">Copy</button></div>
+          Confirm that the response contains Zscaler public addresses and Zscaler/GSLB hostnames.
+        </div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="DNS lookup of the Browser Access external domain from the remote Linux client.">
+          <img src="assets/images/lab02/hvac-dns-lookup.jpg" alt="Terminal dig output for the HVAC Browser Access external domain">
+        </button>
+        <figcaption>The external domain should resolve through Zscaler.</figcaption>
+      </figure>
+
+      <div class="callout info">
+        <div class="callout-symbol">i</div>
+        <div>
+          <div class="callout-title">If DNS resolution fails</div>
+          <p>Flush the Linux DNS cache with <span class="value">sudo systemd-resolve --flush-caches</span> (password <span class="value">Admin-123!</span>) or restart the VM, then retry the lookup.</p>
+        </div>
+      </div>
+
+      <ol class="steps" start="4">
+        <li><div class="step-content">Open Chrome and browse to the copied External Domain. If a privacy warning appears in the lab environment, select <strong>Advanced</strong> and continue.</div></li>
+        <li><div class="step-content">Authenticate to the HVAC application:
+          <table class="credentials settings-table">
+            <tbody>
+              <tr><td>Username</td><td><span class="value">hvac@&lt;Student FQDN&gt;</span></td></tr>
+              <tr><td>Password</td><td><span class="value">Admin-123!</span></td></tr>
+            </tbody>
+          </table>
+        </div></li>
+        <li><div class="step-content">Confirm that the <strong>Safemarch HVAC Control</strong> page opens.</div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Safemarch HVAC application opened successfully through Browser Access.">
+          <img src="assets/images/lab02/safemarch-hvac-page.jpg" alt="Safemarch HVAC Control application page">
+        </button>
+        <figcaption>Successful Browser Access connection to the Safemarch HVAC application.</figcaption>
+      </figure>
+
+      <div class="callout success">
+        <div class="callout-symbol">✓</div>
+        <div><div class="callout-title">Expected result</div><p>The remote Linux client resolves the Browser Access URL through Zscaler and can sign in to the Safemarch HVAC application without Zscaler Client Connector.</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 2 complete</div><p>You have completed the activities defined for <strong>Configure Browser Access for Third Parties</strong>.</p></div></div><div class="page-nav"><a href="lab-01.html"><small>Previous</small><strong>← Lab 1</strong></a><a class="next" href="lab-03.html"><small>Next</small><strong>Lab 3 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

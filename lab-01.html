@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 1 — Connect to the Virtual Lab | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-01"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 1</strong> / Connect to the Virtual Lab</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 1 · Hands-on</div><h1>Connect to the Virtual Lab</h1><p>Connect to your Skytap environment, start the lab systems, and sign in to the Zscaler Experience Center. You will also become familiar with the Skytap credential helper used throughout the course.</p><div class="lab-facts"><span class="fact"><strong>2 tasks</strong></span><span class="fact"><strong>Approx. 10 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Connect to Skytap and start all VMs.</li><li>Use the Skytap sign-in and credential helper.</li><li>Sign in to the Experience Center with your session-specific Zscaler administrator account.</li></ul></div></section><section class="task" id="task-1-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">1.1</div>
+      <div>
+        <h2>Test Your Lab Access and Start Your Environment</h2>
+        <p>Open your assigned Skytap pod and confirm the lab systems are ready.</p>
+      </div>
+      <label class="task-complete"><input type="checkbox" data-task-check="1.1"> Mark complete</label>
+    </header>
+
+    <div class="task-body">
+      <ol class="steps">
+        <li><div class="step-content"><strong>Open the unique Skytap Portal URL</strong> supplied with your lab access information.</div></li>
+        <li><div class="step-content"><strong>Select all VMs</strong> and click <strong>Play</strong> if they are not already running.</div></li>
+        <li><div class="step-content"><strong>Wait for the lab systems to show Running.</strong> The environment starts systems in stages, so this can take a few minutes.</div></li>
+      </ol>
+
+      <figure class="figure compact">
+        <button data-lightbox data-caption="Skytap pod with the EDU-202 lab systems selected and running.">
+          <img src="assets/images/lab01/skytap-vms-running.jpg" alt="Skytap portal showing the EDU-202 virtual machines">
+        </button>
+        <figcaption>Select the required VMs and confirm they reach the <strong>Running</strong> state.</figcaption>
+      </figure>
+
+      <ol class="steps" start="4">
+        <li><div class="step-content">Open a VM from the Skytap portal. In the VM toolbar, select the <strong>Keys / Credentials</strong> icon to view the stored username and password.</div></li>
+        <li><div class="step-content">Use the <strong>Insert Credentials</strong> control when you want Skytap to enter the stored credentials into the foreground sign-in screen.</div></li>
+      </ol>
+
+      <figure class="figure compact">
+        <button data-lightbox data-caption="Skytap credential helper. Use the insert control beside the credential to populate the active VM sign-in screen.">
+          <img src="assets/images/lab01/skytap-keys-credentials.jpg" alt="Skytap Keys and Credentials panel">
+        </button>
+        <figcaption>Skytap credential helper.</figcaption>
+      </figure>
+
+      <div class="callout success">
+        <div class="callout-symbol">✓</div>
+        <div>
+          <div class="callout-title">Expected result</div>
+          <p>The Skytap pod is accessible, the required lab systems are running, and you can open a VM and use the Skytap credential helper.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+<section class="task" id="task-1-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">1.2</div>
+      <div>
+        <h2>Sign In to the Experience Center</h2>
+        <p>Sign in to Corp: Client PC 1 and authenticate to your assigned Zscaler tenant.</p>
+      </div>
+      <label class="task-complete"><input type="checkbox" data-task-check="1.2"> Mark complete</label>
+    </header>
+
+    <div class="task-body">
+      <ol class="steps">
+        <li><div class="step-content">Open <strong>Corp: Client PC 1</strong>. Use the Skytap toolbar to send <strong>Ctrl-Alt-Del</strong>, then open the <strong>Keys / Credentials</strong> panel and insert the local <strong>student</strong> credentials.</div></li>
+      </ol>
+
+      <figure class="figure compact">
+        <button data-lightbox data-caption="Corp Client PC 1 sign-in with the Skytap credential helper open.">
+          <img src="assets/images/lab01/client-pc-insert-credentials.jpg" alt="Windows student sign-in with the Skytap credentials panel">
+        </button>
+        <figcaption>Use the Skytap credential helper to sign in to the Windows client.</figcaption>
+      </figure>
+
+      <ol class="steps" start="2">
+        <li><div class="step-content">Open a browser and go to <span class="inline-value"><span class="value">https://console.zscaler.com</span><button class="copy-btn" data-copy="https://console.zscaler.com">Copy</button></span>.</div></li>
+        <li><div class="step-content">Sign in with your session-specific Zscaler administrator account:
+          <table class="credentials settings-table">
+            <tbody>
+              <tr><td>Username</td><td><span class="value">student@&lt;Student FQDN&gt;</span></td></tr>
+              <tr><td>Password</td><td>Use the password supplied with your lab access information.</td></tr>
+            </tbody>
+          </table>
+          <p class="micro-note"><strong>&lt;Student FQDN&gt;</strong> is your assigned lab domain. Example: if the FQDN is <span class="value">zs000834.labtenant.com</span>, the login is <span class="value">student@zs000834.labtenant.com</span>.</p>
+        </div></li>
+      </ol>
+
+      <figure class="figure compact">
+        <button data-lightbox data-caption="ZIdentity sign-in page using the learner-specific student administrator account.">
+          <img src="assets/images/lab01/zidentity-student-signin.jpg" alt="Zscaler identity sign-in page with student administrator account">
+        </button>
+        <figcaption>Authenticate with the administrator account assigned to your session.</figcaption>
+      </figure>
+
+      <ol class="steps" start="4">
+        <li><div class="step-content">Confirm that the <strong>Experience Center</strong> loads successfully.</div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Experience Center landing page from the source guide. Menu placement may differ in the current Experience Center; use the written guidance in this web edition.">
+          <img src="assets/images/lab01/experience-center-dashboard.jpg" alt="Experience Center landing page">
+        </button>
+        <figcaption>Experience Center landing page. <span>Source UI shown; menu placement may differ in the current navigation.</span></figcaption>
+      </figure>
+
+      <ol class="steps" start="5">
+        <li><div class="step-content">Use <strong>Search menu</strong> when you need to locate a feature quickly. This is especially useful when a source-guide screenshot shows the older menu layout.</div></li>
+      </ol>
+
+      <figure class="figure">
+        <button data-lightbox data-caption="Experience Center Search menu. Search by feature name when menu placement differs from the source guide.">
+          <img src="assets/images/lab01/experience-center-search.jpg" alt="Experience Center search menu">
+        </button>
+        <figcaption>Search by feature name instead of relying on an older screenshot's menu location.</figcaption>
+      </figure>
+
+      <div class="callout success">
+        <div class="callout-symbol">✓</div>
+        <div>
+          <div class="callout-title">Expected result</div>
+          <p>You are signed in to <strong>Corp: Client PC 1</strong> and the Zscaler Experience Center for your assigned tenant is open and ready for the remaining labs.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 1 complete</div><p>You have completed the activities defined for <strong>Connect to the Virtual Lab</strong>.</p></div></div><div class="page-nav"><a href="index.html"><small>Previous</small><strong>← Course Index</strong></a><a class="next" href="lab-02.html"><small>Next</small><strong>Lab 2 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

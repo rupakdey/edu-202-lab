@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 10 — Automation Using Zscaler APIs | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-10"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 10</strong> / Automation Using Zscaler APIs</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 10 · Hands-on</div><h1>Automation Using Zscaler APIs</h1><p>Use Postman and Zscaler OneAPI to authenticate with OAuth 2.0, test API access, and programmatically create a ZPA App Connector Group.</p><div class="lab-facts"><span class="fact"><strong>5 tasks</strong></span><span class="fact"><strong>Approx. 20 Minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Access Postman to prepare for API testing.</li><li>Import the Zscaler OneAPI Postman collection.</li><li>Gather the required variables for OneAPI authentication (for example, base URL, client ID, client secret, and</li><li>customer ID).</li><li>Authenticate and Test OneAPI Endpoints in POSTMAN and verify connectivity by running OneAPI requests.</li><li>Create an App Connector Group via the OneAPI management endpoint to automate ZPA infrastructure setup.</li></ul></div></section><section class="task" id="task-10-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">10.1</div>
+      <div><h2>Access Postman to Call an API</h2><p>Open Postman and prepare the client used for OneAPI requests.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="10.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Use the pre-installed Postman on <strong>Corp: Client PC 1</strong>, or open <span class="value">https://www.postman.com/</span> in a browser.</div></li>
+<li><div class="step-content">Create a free Postman account or sign in to an existing account.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open Postman for the OneAPI exercises.">
+        <img src="assets/images/reference/edu202-p199-x705.jpg" alt="Postman launch">
+      </button>
+      <figcaption>Open Postman for the OneAPI exercises.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Sign in or create the Postman account used for the lab.">
+        <img src="assets/images/reference/edu202-p200-x710.jpg" alt="Postman account sign-in">
+      </button>
+      <figcaption>Sign in or create the Postman account used for the lab.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Postman is open and ready to import the Zscaler OneAPI collection.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-10-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">10.2</div>
+      <div><h2>Import the OneAPI Collection into Postman</h2><p>Load the current Zscaler OneAPI request collection.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="10.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <span class="value">https://automate.zscaler.com/docs/tools/postman/adding-oneapi-postman-collection</span> and download the latest Zscaler OneAPI Postman collection.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Download the current Zscaler OneAPI Postman collection.">
+        <img src="assets/images/reference/edu202-p201-x714.jpg" alt="OneAPI Postman collection download">
+      </button>
+      <figcaption>Download the current Zscaler OneAPI Postman collection.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">In Postman, use <strong>File → Import</strong> and import the downloaded collection.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Import the downloaded collection into Postman.">
+        <img src="assets/images/reference/edu202-p201-x715.jpg" alt="Postman import collection">
+      </button>
+      <figcaption>Import the downloaded collection into Postman.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Confirm the <strong>Zscaler OneAPI</strong> collection appears in the Collections pane.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the OneAPI collection is available in Postman.">
+        <img src="assets/images/reference/edu202-p202-x719.jpg" alt="Zscaler OneAPI collection in Postman">
+      </button>
+      <figcaption>Verify the OneAPI collection is available in Postman.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The OneAPI collection is imported and visible in Postman.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-10-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">10.3</div>
+      <div><h2>Gather Variables for OneAPI Authentication</h2><p>Collect the tenant and OAuth values needed by Postman.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="10.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Obtain the Authentication Service base URL. Open the <strong>Service Portal / Authentication Service</strong> from the Experience Center and copy the tenant base URL shown in the browser address.<div class="search-hint">Search menu → <strong>Service Portal</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Capture the Authentication Service base URL for your tenant.">
+        <img src="assets/images/reference/edu202-p203-x723.jpg" alt="Authentication Service base URL">
+      </button>
+      <figcaption>Capture the Authentication Service base URL for your tenant.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Create a OneAPI client. Open <strong>API Clients</strong>, select <strong>Add API Client</strong>, and configure:<div class="search-hint">Search menu → <strong>API Clients</strong></div><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>TestClient</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Access Token Validity</td><td>90 Minutes</td></tr><tr><td>Validation Type</td><td><strong>Secret</strong></td></tr></tbody></table> Add the client.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the enabled &lt;strong&gt;TestClient&lt;/strong&gt; OneAPI client.">
+        <img src="assets/images/reference/edu202-p205-x732.jpg" alt="OneAPI API client">
+      </button>
+      <figcaption>Create the enabled <strong>TestClient</strong> OneAPI client.</figcaption>
+    </figure><div class="callout warning"><div class="callout-symbol">!</div><div>
+      <div class="callout-title">Save the client secret now</div><p>The generated secret is shown only at creation time. Copy it to a temporary local text file before saving the API client.</p></div></div><ol class="steps" start="3"><li><div class="step-content">On Resources, assign the roles required by the source lab: <strong>Super Admin</strong> for ZCC and ZIA, and <strong>API Full Access</strong> for ZPA. Save the client and record its <strong>Client ID</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Assign the required service roles and record the generated Client ID.">
+        <img src="assets/images/reference/edu202-p207-x738.jpg" alt="OneAPI client resource roles and client ID">
+      </button>
+      <figcaption>Assign the required service roles and record the generated Client ID.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Obtain the ZPA Customer ID from <strong>Linked Services</strong>; locate the ZPA Tenant ID / Customer ID and record it.<div class="search-hint">Search menu → <strong>Linked Services</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Record the ZPA Tenant ID / Customer ID from Linked Services.">
+        <img src="assets/images/reference/edu202-p209-x746.jpg" alt="ZPA Customer ID">
+      </button>
+      <figcaption>Record the ZPA Tenant ID / Customer ID from Linked Services.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>You have the four values required by the next task: Authentication Service base URL, Client ID, Client Secret, and ZPA Customer ID.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-10-4">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">10.4</div>
+      <div><h2>Authenticate and Test OneAPI Endpoints</h2><p>Obtain a token and verify successful API requests.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="10.4"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">In Postman, select the OneAPI collection and open <strong>Variables</strong>. Populate:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>authServiceBaseUrl</td><td>Authentication Service base URL from Task 10.3</td></tr><tr><td>clientSecret</td><td>Generated client secret</td></tr><tr><td>clientID</td><td>Generated Client ID</td></tr><tr><td>customerid</td><td>ZPA Customer ID</td></tr></tbody></table></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Populate the OneAPI collection variables with your tenant-specific values.">
+        <img src="assets/images/reference/edu202-p210-x749.jpg" alt="Postman OneAPI variables">
+      </button>
+      <figcaption>Populate the OneAPI collection variables with your tenant-specific values.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Select <strong>Get New Access Token</strong>, then select <strong>Use Token</strong> in Manage Access Tokens.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Request and apply the OneAPI access token in Postman.">
+        <img src="assets/images/reference/edu202-p211-x753.jpg" alt="Postman OAuth access token">
+      </button>
+      <figcaption>Request and apply the OneAPI access token in Postman.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">In the Experience Center, open OneAPI <strong>Tokens</strong> and verify a recently issued token for your Client ID.<div class="search-hint">Search menu → <strong>Tokens</strong></div></div></li>
+<li><div class="step-content">In Postman, run <strong>Zscaler Client Connector → Get All Enrolled Devices</strong>. Select <strong>Send</strong> and confirm HTTP <strong>200 OK</strong>. Then run <strong>Download device details as a CSV file</strong> and confirm the response succeeds.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the active token and run the Client Connector GET request.">
+        <img src="assets/images/reference/edu202-p212-x758.jpg" alt="OneAPI active token and GET request">
+      </button>
+      <figcaption>Verify the active token and run the Client Connector GET request.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Successful OneAPI request returns HTTP 200.">
+        <img src="assets/images/reference/edu202-p214-x765.jpg" alt="OneAPI successful response">
+      </button>
+      <figcaption>Successful OneAPI request returns HTTP 200.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Postman authenticates successfully and OneAPI requests return successful responses.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-10-5">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">10.5</div>
+      <div><h2>Create an App Connector Group with OneAPI</h2><p>Use the ZPA OneAPI endpoint to create and verify a new connector group.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="10.5"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">In the Experience Center, review the existing <strong>App Connector Groups</strong> so you can later confirm the API-created group is new.<div class="search-hint">Search menu → <strong>App Connector Groups</strong></div></div></li>
+<li><div class="step-content">In Postman, open <strong>ZPA → Enrollment Certificate Controller → Get all configured enrollment certificate details for the specific customer</strong> and select <strong>Send</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Retrieve the available ZPA enrollment certificate details.">
+        <img src="assets/images/reference/edu202-p215-x768.jpg" alt="ZPA enrollment certificate GET request">
+      </button>
+      <figcaption>Retrieve the available ZPA enrollment certificate details.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">In the response body, locate the certificate <strong>Id</strong>. You will use this value as <span class="value">signingCertId</span>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Copy the enrollment certificate ID from the response.">
+        <img src="assets/images/reference/edu202-p217-x774.jpg" alt="ZPA signing certificate ID">
+      </button>
+      <figcaption>Copy the enrollment certificate ID from the response.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Open <strong>ZPA → Connector Group Controller → Add a new App Connector Group for Specified Customer</strong>.</div></li>
+<li><div class="step-content">In the request body, use the following payload and replace <span class="value">signingCertId</span> with the ID obtained above:<div class="source-code"><code>{
+  &quot;name&quot;: &quot;ZPALAB APPC Group&quot;,
+  &quot;description&quot;: &quot;App Connector training Lab at San Jose&quot;,
+  &quot;latitude&quot;: &quot;37.3382032&quot;,
+  &quot;longitude&quot;: &quot;-121.886286&quot;,
+  &quot;location&quot;: &quot;San Jose, CA, USA&quot;,
+  &quot;signingCertId&quot;: &quot;7651&quot;
+}</code><button class="copy-btn" data-copy="{
+  &quot;name&quot;: &quot;ZPALAB APPC Group&quot;,
+  &quot;description&quot;: &quot;App Connector training Lab at San Jose&quot;,
+  &quot;latitude&quot;: &quot;37.3382032&quot;,
+  &quot;longitude&quot;: &quot;-121.886286&quot;,
+  &quot;location&quot;: &quot;San Jose, CA, USA&quot;,
+  &quot;signingCertId&quot;: &quot;7651&quot;
+}">Copy</button></div></div></li>
+<li><div class="step-content">Ensure the API client is active and the access token has not expired. Select <strong>Send</strong> and confirm HTTP <strong>201 Created</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Send the App Connector Group POST request and confirm HTTP 201 Created.">
+        <img src="assets/images/reference/edu202-p220-x784.jpg" alt="OneAPI create App Connector Group request">
+      </button>
+      <figcaption>Send the App Connector Group POST request and confirm HTTP 201 Created.</figcaption>
+    </figure><ol class="steps" start="7"><li><div class="step-content">Return to <strong>App Connector Groups</strong> in the Experience Center and confirm <strong>ZPALAB APPC Group</strong> exists.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the API-created App Connector Group in the Experience Center.">
+        <img src="assets/images/reference/edu202-p222-x790.jpg" alt="API-created ZPA App Connector Group">
+      </button>
+      <figcaption>Verify the API-created App Connector Group in the Experience Center.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>OneAPI creates <strong>ZPALAB APPC Group</strong>, and the group is visible in the ZPA App Connector Groups list.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 10 complete</div><p>You have completed the activities defined for <strong>Automation Using Zscaler APIs</strong>.</p></div></div><div class="page-nav"><a href="lab-09.html"><small>Previous</small><strong>← Lab 9</strong></a><a class="next" href="sdc-access.html"><small>Next</small><strong>SDC Access →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 7 — Zero Trust Browser ZPA | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-07"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 7</strong> / Zero Trust Browser ZPA</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 7 · Hands-on</div><h1>Zero Trust Browser ZPA</h1><p>Apply ZPA Browser Isolation to the DVWA private application. You will build a render-only profile, target DVWA with an isolation policy, and compare user behavior before and after isolation.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Create an Isolation Profile configured for render-only access.</li><li>Create an Isolation Policy that applies the profile to a specific application segment.</li><li>Validate that users can view content in isolation, but cannot perform restricted actions.</li></ul></div></section><section class="task" id="task-7-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">7.1</div>
+      <div><h2>Create the Isolation Profile</h2><p>Build the render-only isolation profile used for the private application.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="7.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><div class="callout info"><div class="callout-symbol">i</div><div>
+      <div class="callout-title">Before you isolate DVWA</div><p>Open DVWA once before applying the isolation policy and note that copy/paste and file upload work normally. You will repeat the same actions after isolation is enabled.</p></div></div><ol class="steps"><li><div class="step-content">Open the Private Access <strong>Browser Isolation Profiles</strong> page and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Isolation profile</strong></div></div></li>
+<li><div class="step-content">Set <strong>Name = render_only_profile</strong> and continue. ZPA isolation profile names cannot include special characters and cannot duplicate ZIA isolation profile names.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the &lt;strong&gt;render_only_profile&lt;/strong&gt;.">
+        <img src="assets/images/reference/edu202-p142-x529.jpg" alt="ZPA isolation profile general settings">
+      </button>
+      <figcaption>Create the <strong>render_only_profile</strong>.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">On <strong>Company Settings</strong>, leave the defaults.</div></li>
+<li><div class="step-content">On the render-only settings page, enable <strong>View Office Files in Isolation</strong> only.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Enable the render-only behavior required by the lab.">
+        <img src="assets/images/reference/edu202-p144-x535.jpg" alt="ZPA isolation render-only settings">
+      </button>
+      <figcaption>Enable the render-only behavior required by the lab.</figcaption>
+    </figure><ol class="steps" start="5"><li><div class="step-content">On <strong>Regions</strong>, select all regions and continue.</div></li>
+<li><div class="step-content">On the Isolation Banner page, leave the defaults. Watermarking is optional.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Apply the profile to all isolation regions and keep the banner defaults.">
+        <img src="assets/images/reference/edu202-p146-x543.jpg" alt="ZPA isolation region and banner settings">
+      </button>
+      <figcaption>Apply the profile to all isolation regions and keep the banner defaults.</figcaption>
+    </figure><ol class="steps" start="7"><li><div class="step-content">Review the profile, select <strong>Save</strong>, and confirm <strong>render_only_profile</strong> appears in the profile list.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Confirm the render-only profile is created.">
+        <img src="assets/images/reference/edu202-p148-x551.jpg" alt="ZPA isolation profile list">
+      </button>
+      <figcaption>Confirm the render-only profile is created.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The <strong>render_only_profile</strong> is ready to apply to a private application.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-7-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">7.2</div>
+      <div><h2>Create the Isolation Policy</h2><p>Apply the render-only profile to the DVWA application.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="7.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Isolation Policy</strong> for Private Access and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Isolation Policy</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Start a new ZPA isolation policy.">
+        <img src="assets/images/reference/edu202-p149-x554.jpg" alt="ZPA isolation policy page">
+      </button>
+      <figcaption>Start a new ZPA isolation policy.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Policy Name</td><td><strong>isolate_policy_render_only</strong></td></tr><tr><td>Isolation Profile</td><td><strong>render_only_profile</strong></td></tr><tr><td>Application criteria</td><td>Select the <strong>DVWA</strong> application segment</td></tr></tbody></table> Select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Apply &lt;strong&gt;render_only_profile&lt;/strong&gt; to the DVWA application segment.">
+        <img src="assets/images/reference/edu202-p150-x557.jpg" alt="ZPA isolation policy settings">
+      </button>
+      <figcaption>Apply <strong>render_only_profile</strong> to the DVWA application segment.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Confirm <strong>isolate_policy_render_only</strong> appears in the policy list with DVWA in its criteria.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the isolation policy is present and targets DVWA.">
+        <img src="assets/images/reference/edu202-p151-x560.jpg" alt="ZPA isolation policy list">
+      </button>
+      <figcaption>Verify the isolation policy is present and targets DVWA.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>DVWA is targeted by the render-only ZPA isolation policy.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-7-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">7.3</div>
+      <div><h2>Test and Verify</h2><p>Confirm that DVWA remains viewable while restricted actions are blocked.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="7.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Disconnect from Zscaler Client Connector to simulate a third-party browser-only user.</div></li>
+<li><div class="step-content">Open DVWA using either <span class="value">dvwa.patraining.safemarch.com</span> or the DVWA External Domain from <strong>Browser Access</strong>. Authenticate through the IdP if prompted.<div class="search-hint">Search menu → <strong>Browser Access</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open DVWA as a browser-only user after the isolation policy is active.">
+        <img src="assets/images/reference/edu202-p152-x564.jpg" alt="DVWA through ZPA Browser Isolation">
+      </button>
+      <figcaption>Open DVWA as a browser-only user after the isolation policy is active.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Sign in to DVWA and repeat the actions you tested before isolation: copy/paste text and attempt a file upload/download or print action.</div></li>
+<li><div class="step-content">Confirm the application remains viewable, but restricted actions such as download, upload, copy, paste, and print are unavailable.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the isolated DVWA session remains usable for viewing.">
+        <img src="assets/images/reference/edu202-p153-x568.jpg" alt="DVWA isolated session">
+      </button>
+      <figcaption>Verify the isolated DVWA session remains usable for viewing.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Restricted data-transfer actions should be unavailable in the isolated session.">
+        <img src="assets/images/reference/edu202-p153-x570.jpg" alt="DVWA render-only restrictions">
+      </button>
+      <figcaption>Restricted data-transfer actions should be unavailable in the isolated session.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>DVWA opens through Browser Isolation and is usable for viewing, while the configured data-transfer actions are restricted.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 7 complete</div><p>You have completed the activities defined for <strong>Zero Trust Browser ZPA</strong>.</p></div></div><div class="page-nav"><a href="lab-06.html"><small>Previous</small><strong>← Lab 6</strong></a><a class="next" href="lab-08.html"><small>Next</small><strong>Lab 8 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

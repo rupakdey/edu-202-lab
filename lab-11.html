@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 11 — Analyze Data and View Integrated Reports and Snapshots | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-11"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 11</strong> / Analyze Data and View Integrated Reports and Snapshots</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 11 · Solutions Demo Center</div><h1>Analyze Data and View Integrated Reports and Snapshots</h1><p>Use the pre-populated Solutions Demo Center to analyze ZDX data and reporting. You will explore Data Explorer, download a QBR report, interact with system-generated reports, and open a shareable ZDX Snapshot.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span><span class="fact"><strong>Approx. 15 Minutes</strong></span><span class="fact"><strong>Read-only SDC</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Analyze user experience and performance data using Data Explorer.</li><li>Download and review QBR reports for trend insights.</li><li>Review system-generated reports and create ZDX Snapshots to share view-only findings.</li></ul></div></section><section class="task" id="task-11-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">11.1</div>
+      <div><h2>Analyze Data Explorer for Application and Network Performance</h2><p>Build a query and inspect the resulting application and network metrics.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="11.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Using the SDC administrator session, open ZDX <strong>Data Explorer</strong>. If prompted, enable <strong>Switch to Existing Reports</strong>.<div class="search-hint">Search menu → <strong>Data Explorer</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open Data Explorer in the SDC environment.">
+        <img src="assets/images/reference/edu202-p225-x798.jpg" alt="ZDX Data Explorer">
+      </button>
+      <figcaption>Open Data Explorer in the SDC environment.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Select <strong>View</strong> and build a custom view by choosing the data source, probes, metrics, filters, operations, view type, and overlays you want to analyze. Select <strong>Run Query</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Configure the Data Explorer view and run the query.">
+        <img src="assets/images/reference/edu202-p226-x802.jpg" alt="ZDX Data Explorer query builder">
+      </button>
+      <figcaption>Configure the Data Explorer view and run the query.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Review the resulting application/network charts. Drag across a chart to zoom into a specific time range and inspect the details.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review the charts returned by the query.">
+        <img src="assets/images/reference/edu202-p228-x808.jpg" alt="ZDX Data Explorer charts">
+      </button>
+      <figcaption>Review the charts returned by the query.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Zoom into a time range to inspect performance details.">
+        <img src="assets/images/reference/edu202-p229-x811.jpg" alt="ZDX Data Explorer zoom">
+      </button>
+      <figcaption>Zoom into a time range to inspect performance details.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>You can create a Data Explorer view, run a query, and inspect application/network performance over a selected time range.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-11-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">11.2</div>
+      <div><h2>View QBR Reports for ZDX User Insights</h2><p>Download and review an existing Quarterly Business Review report.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="11.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Quarterly Business Reviews</strong> in ZDX and review the available reports.<div class="search-hint">Search menu → <strong>Quarterly Business Reviews</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open the QBR report list.">
+        <img src="assets/images/reference/edu202-p230-x814.jpg" alt="ZDX Quarterly Business Review reports">
+      </button>
+      <figcaption>Open the QBR report list.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Select the <strong>Download</strong> icon for a report, open the downloaded PowerPoint, and review the report contents.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Download a QBR report from the SDC tenant.">
+        <img src="assets/images/reference/edu202-p231-x818.jpg" alt="Download ZDX QBR report">
+      </button>
+      <figcaption>Download a QBR report from the SDC tenant.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Review the generated QBR presentation.">
+        <img src="assets/images/reference/edu202-p232-x821.jpg" alt="ZDX QBR PowerPoint">
+      </button>
+      <figcaption>Review the generated QBR presentation.</figcaption>
+    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
+      <div class="callout-title">QBR generation</div><p>The source guide notes that a new QBR report is generated on the first weekend of each month and stored as a PowerPoint file in the Zscaler cloud.</p></div></div><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>You can download and review a pre-generated ZDX QBR report.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-11-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">11.3</div>
+      <div><h2>View Integrated Reports and Generate Snapshots</h2><p>Explore system-generated reports and share a view-only Snapshot.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="11.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>System Generated Reports</strong> and select the <strong>View</strong> icon for a report.<div class="search-hint">Search menu → <strong>System Generated Reports</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open a system-generated ZDX report.">
+        <img src="assets/images/reference/edu202-p233-x825.jpg" alt="ZDX system generated reports">
+      </button>
+      <figcaption>Open a system-generated ZDX report.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">For a Cloud Path End-to-End report, experiment with available filters such as Departments, Zscaler Locations, Geolocations, or Applications. Select graph points to view latency tooltips, drag across a range to zoom, and use <strong>Zoom Out</strong> to reset.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Interact with the report filters and Cloud Path graph.">
+        <img src="assets/images/reference/edu202-p234-x829.jpg" alt="ZDX Cloud Path report">
+      </button>
+      <figcaption>Interact with the report filters and Cloud Path graph.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Open <strong>ZDX Snapshots</strong>, copy the link for an active snapshot, and paste it into a new browser window.<div class="search-hint">Search menu → <strong>ZDX Snapshots</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Copy the link for an active ZDX Snapshot.">
+        <img src="assets/images/reference/edu202-p236-x835.jpg" alt="ZDX Snapshot link">
+      </button>
+      <figcaption>Copy the link for an active ZDX Snapshot.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Confirm the snapshot opens with the green Snapshot indicator. Snapshot pages provide view-only sharing with some interactive controls disabled.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="The green indicator identifies a ZDX Snapshot view.">
+        <img src="assets/images/reference/edu202-p237-x838.jpg" alt="ZDX Snapshot view">
+      </button>
+      <figcaption>The green indicator identifies a ZDX Snapshot view.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>You can interact with system-generated reports and open a view-only ZDX Snapshot through its shareable link.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 11 complete</div><p>You have completed the activities defined for <strong>Analyze Data and View Integrated Reports and Snapshots</strong>.</p></div></div><div class="page-nav"><a href="sdc-access.html"><small>Previous</small><strong>← SDC Access</strong></a><a class="next" href="lab-12.html"><small>Next</small><strong>Lab 12 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 9 — Zscaler Digital Experience — Configure Alerts &amp; Diagnostics | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-09"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 9</strong> / Zscaler Digital Experience — Configure Alerts &amp; Diagnostics</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 9 · Hands-on</div><h1>Zscaler Digital Experience — Configure Alerts &amp; Diagnostics</h1><p>Use ZDX to detect and investigate degraded user experience. You will create an application alert with thresholds, then run a five-minute diagnostic session with Deep Tracing and the Mail Server probes.</p><div class="lab-facts"><span class="fact"><strong>2 tasks</strong></span><span class="fact"><strong>Approx. 15 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Configure ZDX alerting in your Experience Center tenant to detect user experience degradation (e.g. Page</li><li>Fetch Time, ZDX score) for a business-critical application.</li><li>Validate that the alert rule and ZDX Diagnostics Session report provide actionable evidence for NOC</li><li>troubleshooting/escalation.:</li><li>○ Device resource health (CPU/memory),</li><li>○ Wi-Fi signal/roaming and local network details,</li><li>○ DNS resolution performance,</li><li>○ Application performance breakdown</li></ul></div></section><section class="task" id="task-9-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">9.1</div>
+      <div><h2>Create an Alert Rule</h2><p>Alert when Mail Server experience crosses the defined thresholds.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="9.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, sign in to Zscaler Client Connector with your assigned student account.</div></li>
+<li><div class="step-content">Open ZDX <strong>Alerts</strong> and select <strong>Alert Rules and Templates</strong>.<div class="search-hint">Search menu → <strong>Alerts</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open ZDX Alert Rules and Templates.">
+        <img src="assets/images/reference/edu202-p182-x655.jpg" alt="ZDX Alerts page">
+      </button>
+      <figcaption>Open ZDX Alert Rules and Templates.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Select <strong>Add Alert Rule</strong> and configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>alert_mailserver</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Type</td><td>Application</td></tr><tr><td>Severity</td><td>Medium</td></tr></tbody></table> Select <strong>Next</strong>.</div></li>
+<li><div class="step-content">On Filters, select the <strong>Mail Server</strong> application and its probe. Add a <strong>Geolocation</strong> filter and choose a region in Asia (for example, India).</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Target the Mail Server application/probe and add the geolocation filter.">
+        <img src="assets/images/reference/edu202-p185-x664.jpg" alt="ZDX alert filters">
+      </button>
+      <figcaption>Target the Mail Server application/probe and add the geolocation filter.</figcaption>
+    </figure><ol class="steps" start="5"><li><div class="step-content">Set the alert criteria and actions:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Page Fetch Time</td><td><strong>&gt; 800 ms</strong></td></tr><tr><td>ZDX Score</td><td><strong>&lt; 50</strong></td></tr><tr><td>Alert Only if Repeated</td><td>2</td></tr><tr><td>Number of Active Devices</td><td>1</td></tr><tr><td>Delivery Method</td><td>Email</td></tr><tr><td>Recipient</td><td>Any dummy email address for the lab</td></tr></tbody></table> Continue to Review.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Configure the Mail Server alert thresholds and email action.">
+        <img src="assets/images/reference/edu202-p187-x670.jpg" alt="ZDX alert criteria and actions">
+      </button>
+      <figcaption>Configure the Mail Server alert thresholds and email action.</figcaption>
+    </figure><ol class="steps" start="6"><li><div class="step-content">Review and save the rule. Confirm <strong>alert_mailserver</strong> appears in the alert-rule list.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the &lt;strong&gt;alert_mailserver&lt;/strong&gt; rule is present.">
+        <img src="assets/images/reference/edu202-p190-x679.jpg" alt="ZDX alert rule list">
+      </button>
+      <figcaption>Verify the <strong>alert_mailserver</strong> rule is present.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The enabled <strong>alert_mailserver</strong> rule monitors Mail Server experience against the defined thresholds.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-9-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">9.2</div>
+      <div><h2>Configure a Diagnostic Session</h2><p>Capture focused device, application, and network telemetry for troubleshooting.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="9.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open ZDX <strong>Diagnostics</strong> and select <strong>Start New Diagnostic Session</strong>.<div class="search-hint">Search menu → <strong>Diagnostics</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Start a new ZDX diagnostic session.">
+        <img src="assets/images/reference/edu202-p191-x682.jpg" alt="ZDX Diagnostics page">
+      </button>
+      <figcaption>Start a new ZDX diagnostic session.</figcaption>
+    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
+      <div class="callout-title">If Start New Diagnostic Session is missing</div><p>Open Client Connector <strong>User Privacy</strong>, enable <strong>Collect Machine Hostname Information</strong>, refresh, and return to Diagnostics.</p></div></div><ol class="steps" start="2"><li><div class="step-content">Create the session:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>diagnostics_session_student&lt;StudentID&gt;</strong></td></tr><tr><td>User</td><td>Your assigned Student Admin user</td></tr><tr><td>Device</td><td>Select that user’s device</td></tr><tr><td>Tracing</td><td><strong>Deep Tracing</strong></td></tr><tr><td>Duration</td><td><strong>5 minutes</strong></td></tr></tbody></table> Select <strong>Next</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Configure the student diagnostic session and enable Deep Tracing.">
+        <img src="assets/images/reference/edu202-p193-x688.jpg" alt="ZDX diagnostic session settings">
+      </button>
+      <figcaption>Configure the student diagnostic session and enable Deep Tracing.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Select <strong>Mail Server</strong>, then select <strong>Mail Server_Web</strong> and <strong>Mail Server_Cloud</strong>. Under Cloud Path thresholds, set <strong>Packet Loss = 20%</strong> and <strong>Latency = 10 ms</strong>. Select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Attach the Mail Server probes and set the Cloud Path thresholds.">
+        <img src="assets/images/reference/edu202-p195-x694.jpg" alt="ZDX diagnostic probes and thresholds">
+      </button>
+      <figcaption>Attach the Mail Server probes and set the Cloud Path thresholds.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">Confirm the session appears in the progress table. Continue to the next lab; after approximately five minutes, return to Diagnostics, locate the completed session in History, and open its report.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open the completed diagnostic-session report from History.">
+        <img src="assets/images/reference/edu202-p197-x700.jpg" alt="ZDX diagnostic session report">
+      </button>
+      <figcaption>Open the completed diagnostic-session report from History.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>A completed diagnostics report is available for the selected student device and Mail Server probes.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 9 complete</div><p>You have completed the activities defined for <strong>Zscaler Digital Experience — Configure Alerts &amp; Diagnostics</strong>.</p></div></div><div class="page-nav"><a href="lab-08.html"><small>Previous</small><strong>← Lab 8</strong></a><a class="next" href="lab-10.html"><small>Next</small><strong>Lab 10 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

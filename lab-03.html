@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 3 — Configure Log Streaming | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-03"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 3</strong> / Configure Log Streaming</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 3 · Hands-on</div><h1>Configure Log Streaming</h1><p>Stream private-application activity to the on-premises SIEM. You will provision a dedicated connector, define the log receiver, enable SSH access for verification, and confirm live User Activity events.</p><div class="lab-facts"><span class="fact"><strong>4 tasks</strong></span><span class="fact"><strong>Approx. 20 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Provision a dedicated App Connector to establish a high-performance path for log traffic.</li><li>Configure a log receiver to define log types and the destination syslog server.</li><li>Enable secure SSH access to the SIEM server for administrative verification.</li><li>Verify the log feed by monitoring the live syslog file on the destination server.</li></ul></div></section><section class="task" id="task-3-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">3.1</div>
+      <div><h2>Provision a Dedicated App Connector for Log Streaming</h2><p>Create a separate connector path for Log Streaming Service.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="3.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>App Connector Groups</strong> in the Experience Center.<div class="search-hint">Search menu → <strong>App Connector Groups</strong></div></div></li>
+<li><div class="step-content">Create an enabled App Connector Group named <strong>Log Streaming</strong>. Use the same remaining settings you used for the <strong>OnPrem</strong> group in Lab 2, then save it.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the dedicated &lt;strong&gt;Log Streaming&lt;/strong&gt; App Connector Group.">
+        <img src="assets/images/reference/edu202-p042-x208.jpg" alt="Log Streaming App Connector Group configuration">
+      </button>
+      <figcaption>Create the dedicated <strong>Log Streaming</strong> App Connector Group.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Open the <strong>Corp: Log Streaming Connector</strong> VM. The connector displays an OAuth enrollment token when it first boots. If you need shell access, sign in with <span class="value">admin</span> / <span class="value">zscaler</span> and run:<div class="source-code"><code>cat /etc/issue</code><button class="copy-btn" data-copy="cat /etc/issue">Copy</button></div></div></li></ol><figure class="figure compact">
+      <button data-lightbox data-caption="Record the OAuth enrollment token displayed by the Log Streaming Connector.">
+        <img src="assets/images/reference/edu202-p043-x213.jpg" alt="Log Streaming Connector OAuth token">
+      </button>
+      <figcaption>Record the OAuth enrollment token displayed by the Log Streaming Connector.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">If you need a fresh token, regenerate it by stopping the connector, deleting the existing token files, and starting the service again:<div class="source-code"><code>sudo systemctl stop zpa-connector</code><button class="copy-btn" data-copy="sudo systemctl stop zpa-connector">Copy</button></div><div class="source-code"><code>sudo find /opt/zscaler/var/ -type f -name &#x27;*&#x27; -delete</code><button class="copy-btn" data-copy="sudo find /opt/zscaler/var/ -type f -name &#x27;*&#x27; -delete">Copy</button></div><div class="source-code"><code>sudo systemctl start zpa-connector</code><button class="copy-btn" data-copy="sudo systemctl start zpa-connector">Copy</button></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="A service restart generates a new connector enrollment token.">
+        <img src="assets/images/reference/edu202-p044-x216.jpg" alt="Connector token regeneration">
+      </button>
+      <figcaption>A service restart generates a new connector enrollment token.</figcaption>
+    </figure><ol class="steps" start="5"><li><div class="step-content">Open <strong>App Connectors</strong> in the Experience Center and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>App Connectors</strong></div></div></li>
+<li><div class="step-content">Register the connector with <table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Group</td><td><strong>Log Streaming</strong></td></tr><tr><td>Enrollment Token</td><td>Enter the token generated on the connector VM</td></tr><tr><td>Signing Certificate</td><td><strong>Connector</strong></td></tr></tbody></table> Select <strong>Save</strong>.</div></li>
+<li><div class="step-content">Confirm the connector appears in the list. If the token is rejected or expired, generate a new token and retry.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="The dedicated Log Streaming connector should appear in the tenant after enrollment.">
+        <img src="assets/images/reference/edu202-p046-x224.jpg" alt="Log Streaming App Connector in connector list">
+      </button>
+      <figcaption>The dedicated Log Streaming connector should appear in the tenant after enrollment.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>A dedicated <strong>Log Streaming</strong> connector is enrolled and available for Log Streaming Service traffic.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-3-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">3.2</div>
+      <div><h2>Add a Log Receiver</h2><p>Send ZPA User Activity events to the lab SIEM over syslog.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="3.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Log Receivers</strong> in the Experience Center.<div class="search-hint">Search menu → <strong>Log Receivers</strong></div></div></li>
+<li><div class="step-content">Select <strong>Add Log Receiver</strong> and configure the General settings:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Syslog-UserActivity</strong></td></tr><tr><td>Domain / IP</td><td><span class='value'>siem.patraining.safemarch.com</span></td></tr><tr><td>TCP Port</td><td><strong>514</strong></td></tr><tr><td>App Connector Groups</td><td><strong>Log Streaming</strong></td></tr></tbody></table></div></li>
+<li><div class="step-content">Select <strong>Next</strong>. On Log Selection, set <strong>Log Type = User Activity</strong> and <strong>Log Template = CSV</strong>. Leave Log Stream Content at its defaults.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Configure the receiver destination and select &lt;strong&gt;User Activity&lt;/strong&gt; logs.">
+        <img src="assets/images/reference/edu202-p048-x230.jpg" alt="Log Receiver configuration">
+      </button>
+      <figcaption>Configure the receiver destination and select <strong>User Activity</strong> logs.</figcaption>
+    </figure><ol class="steps" start="4"><li><div class="step-content">On the <strong>Policy</strong> tab, leave the default settings and select <strong>Next</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Keep the default Log Receiver policy settings for this lab.">
+        <img src="assets/images/reference/edu202-p049-x233.jpg" alt="Log Receiver policy tab">
+      </button>
+      <figcaption>Keep the default Log Receiver policy settings for this lab.</figcaption>
+    </figure><ol class="steps" start="5"><li><div class="step-content">Review the configuration and select <strong>Save</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Review and save the &lt;strong&gt;Syslog-UserActivity&lt;/strong&gt; receiver.">
+        <img src="assets/images/reference/edu202-p050-x236.jpg" alt="Log Receiver review page">
+      </button>
+      <figcaption>Review and save the <strong>Syslog-UserActivity</strong> receiver.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The <strong>Syslog-UserActivity</strong> receiver streams ZPA User Activity logs to the SIEM host on TCP/514 through the Log Streaming connector group.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-3-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">3.3</div>
+      <div><h2>Add SSH Access to the SIEM Server</h2><p>Publish SSH access so you can verify the received logs.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="3.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>App Segments</strong> and create a new segment for SSH access to the SIEM server.<div class="search-hint">Search menu → <strong>App Segments</strong></div></div></li>
+<li><div class="step-content">Configure the segment:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>SSH to SIEM</strong></td></tr><tr><td>Application</td><td><span class='value'>siem.patraining.safemarch.com</span></td></tr><tr><td>Default Port Range</td><td><strong>SSH</strong></td></tr><tr><td>Segment Group</td><td><strong>CorpApps</strong></td></tr><tr><td>Server Group</td><td><strong>CorpServers</strong></td></tr></tbody></table> Continue through the wizard and save the segment.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Define the &lt;strong&gt;SSH to SIEM&lt;/strong&gt; application segment.">
+        <img src="assets/images/reference/edu202-p052-x241.jpg" alt="SSH to SIEM application segment">
+      </button>
+      <figcaption>Define the <strong>SSH to SIEM</strong> application segment.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Associate the SIEM segment with the existing &lt;strong&gt;CorpApps&lt;/strong&gt; and &lt;strong&gt;CorpServers&lt;/strong&gt; objects.">
+        <img src="assets/images/reference/edu202-p053-x244.jpg" alt="SIEM segment group and server group">
+      </button>
+      <figcaption>Associate the SIEM segment with the existing <strong>CorpApps</strong> and <strong>CorpServers</strong> objects.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Open the Access Policy editor—either from <strong>Edit Policy</strong> after saving the segment or by opening <strong>Access Policy</strong> directly.<div class="search-hint">Search menu → <strong>Access Policy</strong></div></div></li>
+<li><div class="step-content">Create an <strong>Allow Access</strong> rule for the <strong>SSH to SIEM</strong> application and your lab user, then save it.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create an access rule that permits your lab user to reach the SIEM SSH application.">
+        <img src="assets/images/reference/edu202-p054-x247.jpg" alt="SSH to SIEM access policy">
+      </button>
+      <figcaption>Create an access rule that permits your lab user to reach the SIEM SSH application.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Confirm the SSH access rule is present in the policy list.">
+        <img src="assets/images/reference/edu202-p055-x250.jpg" alt="SSH access policy list">
+      </button>
+      <figcaption>Confirm the SSH access rule is present in the policy list.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Your lab user is authorized to reach <span class='value'>siem.patraining.safemarch.com</span> over SSH through ZPA.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-3-4">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">3.4</div>
+      <div><h2>Verify the Log Feed</h2><p>Connect to the SIEM and confirm User Activity records arrive.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="3.4"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, open Zscaler Client Connector and sign in with your assigned student account.</div></li>
+<li><div class="step-content">Confirm that <strong>Internet Security</strong> and <strong>Private Access</strong> are available for the user.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Sign in to Zscaler Client Connector with the student account.">
+        <img src="assets/images/reference/edu202-p056-x253.jpg" alt="Zscaler Client Connector sign-in">
+      </button>
+      <figcaption>Sign in to Zscaler Client Connector with the student account.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Confirm the required service entitlements are active in Client Connector.">
+        <img src="assets/images/reference/edu202-p056-x254.jpg" alt="Client Connector service status">
+      </button>
+      <figcaption>Confirm the required service entitlements are active in Client Connector.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Open Command Prompt and connect to the SIEM host:<div class="source-code"><code>ssh zscaler@siem.patraining.safemarch.com</code><button class="copy-btn" data-copy="ssh zscaler@siem.patraining.safemarch.com">Copy</button></div> When prompted, enter <span class="value">Zscaler123!</span> and accept the host key if required.</div></li>
+<li><div class="step-content">Monitor the live syslog feed:<div class="source-code"><code>tail -f /var/log/syslog</code><button class="copy-btn" data-copy="tail -f /var/log/syslog">Copy</button></div></div></li>
+<li><div class="step-content">Look for entries containing <strong>User Activity</strong> and <strong>zpa-lss</strong>. If no events appear, generate activity by refreshing the HVAC application from Lab 2.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Use SSH to reach the SIEM host through the ZPA application segment.">
+        <img src="assets/images/reference/edu202-p058-x260.jpg" alt="SSH session to SIEM host">
+      </button>
+      <figcaption>Use SSH to reach the SIEM host through the ZPA application segment.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="User Activity events should appear in the live syslog feed.">
+        <img src="assets/images/reference/edu202-p058-x261.jpg" alt="Live ZPA log stream in syslog">
+      </button>
+      <figcaption>User Activity events should appear in the live syslog feed.</figcaption>
+    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
+      <div class="callout-title">Finish the SSH session</div><p>Press <strong>Ctrl+C</strong> to stop <span class='value'>tail -f</span>, then type <span class='value'>exit</span> to close SSH.</p></div></div><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The SIEM host receives live <strong>User Activity</strong> events from ZPA Log Streaming Service.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 3 complete</div><p>You have completed the activities defined for <strong>Configure Log Streaming</strong>.</p></div></div><div class="page-nav"><a href="lab-02.html"><small>Previous</small><strong>← Lab 2</strong></a><a class="next" href="lab-04.html"><small>Next</small><strong>Lab 4 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>

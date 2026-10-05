@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 8 — Configure Cloud Applications Monitoring | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-08"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 8</strong> / Configure Cloud Applications Monitoring</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 8 · Hands-on</div><h1>Configure Cloud Applications Monitoring</h1><p>Create repeatable ZDX monitoring for a custom cloud application. You will define the target population, create a Mail Server application, and attach both Web and Cloud Path probes.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span><span class="fact"><strong>Approx. 20 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Configure a custom application in your Experience Center tenant to monitor a business-critical SaaS</li><li>destination used by remote users.</li><li>Provision a Web probe for the custom application to measure application availability and web transaction</li><li>performance.</li><li>Provision a Cloud Path probe for the same custom application to measure network-path health (latency,</li><li>loss, and jitter).</li></ul></div></section><section class="task" id="task-8-1">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">8.1</div>
+      <div><h2>Add an End User Collection</h2><p>Define which users and devices will run the custom probes.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="8.1"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, sign in to the Experience Center with your assigned tenant account.</div></li>
+<li><div class="step-content">Open ZDX <strong>End User</strong> probe collections.<div class="search-hint">Search menu → <strong>End User</strong></div></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Open the End User probe collection configuration.">
+        <img src="assets/images/reference/edu202-p155-x575.jpg" alt="ZDX End User collection page">
+      </button>
+      <figcaption>Open the End User probe collection configuration.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Select <strong>Add</strong> and create an End User Collection named <strong>Custom Application</strong>.</div></li>
+<li><div class="step-content">Leave all <strong>Exclusion Criteria</strong> as <strong>None</strong>.</div></li>
+<li><div class="step-content">Set all <strong>Probing Criteria</strong> to All: User Groups, Users, Location Groups, Zscaler Locations, Departments, and Devices. Select <strong>Add</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Configure the &lt;strong&gt;Custom Application&lt;/strong&gt; End User Collection.">
+        <img src="assets/images/reference/edu202-p157-x582.jpg" alt="ZDX End User collection settings">
+      </button>
+      <figcaption>Configure the <strong>Custom Application</strong> End User Collection.</figcaption>
+    </figure><figure class="figure">
+      <button data-lightbox data-caption="Use All for the probing criteria and None for exclusion criteria.">
+        <img src="assets/images/reference/edu202-p158-x585.jpg" alt="ZDX probing and exclusion criteria">
+      </button>
+      <figcaption>Use All for the probing criteria and None for exclusion criteria.</figcaption>
+    </figure><ol class="steps" start="6"><li><div class="step-content">Confirm <strong>Custom Application</strong> appears in the End User Collections list.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the End User Collection is created.">
+        <img src="assets/images/reference/edu202-p160-x591.jpg" alt="ZDX End User collection list">
+      </button>
+      <figcaption>Verify the End User Collection is created.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The <strong>Custom Application</strong> End User Collection targets all users/devices with no exclusions.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-8-2">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">8.2</div>
+      <div><h2>Create a Custom Application</h2><p>Create the Mail Server application that the probes will monitor.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="8.2"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Open the <strong>Custom Application</strong> collection from Task 8.1 and select <strong>Add Application</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Add an application to the Custom Application End User Collection.">
+        <img src="assets/images/reference/edu202-p161-x594.jpg" alt="ZDX Add Application">
+      </button>
+      <figcaption>Add an application to the Custom Application End User Collection.</figcaption>
+    </figure><ol class="steps" start="2"><li><div class="step-content">Create the application:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server</strong></td></tr><tr><td>Status</td><td><strong>Disabled</strong></td></tr><tr><td>Application Type</td><td><strong>Custom</strong></td></tr></tbody></table> Select <strong>Add</strong>.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the disabled custom application named &lt;strong&gt;Mail Server&lt;/strong&gt;.">
+        <img src="assets/images/reference/edu202-p162-x597.jpg" alt="ZDX custom Mail Server application">
+      </button>
+      <figcaption>Create the disabled custom application named <strong>Mail Server</strong>.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Confirm <strong>Mail Server</strong> is listed under the collection.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Verify the Mail Server application is present.">
+        <img src="assets/images/reference/edu202-p163-x600.jpg" alt="ZDX Mail Server application list">
+      </button>
+      <figcaption>Verify the Mail Server application is present.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>The disabled <strong>Mail Server</strong> custom application exists and is ready for probe configuration.</p></div></div></div>
+  </article>
+</section>
+<section class="task" id="task-8-3">
+  <article class="card task-shell">
+    <header class="task-head">
+      <div class="task-num">8.3</div>
+      <div><h2>Create Custom Probes</h2><p>Add Web and Cloud Path probes to measure application and network experience.</p></div>
+      <label class="task-complete"><input type="checkbox" data-task-check="8.3"> Mark complete</label>
+    </header>
+    <div class="task-body"><ol class="steps"><li><div class="step-content">Under <strong>Mail Server</strong>, select <strong>Add Probe → End User Web</strong>, then select <strong>Next</strong>.</div></li>
+<li><div class="step-content">Configure the Web probe:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server_Web</strong></td></tr><tr><td>Application</td><td>Mail Server</td></tr><tr><td>Run Frequency</td><td>5 minutes</td></tr><tr><td>Probing Criteria</td><td>All users, groups, locations, location groups, departments, devices</td></tr><tr><td>Exclusion Criteria</td><td>None</td></tr><tr><td>Destination URL</td><td><span class='value'>https://mail.google.com</span></td></tr><tr><td>Number of Attempts</td><td>2</td></tr><tr><td>Timeout</td><td>60 seconds</td></tr><tr><td>Follow Redirect</td><td>Enabled</td></tr><tr><td>Maximum Redirects</td><td>5</td></tr></tbody></table> Continue through the wizard.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Create the &lt;strong&gt;Mail Server_Web&lt;/strong&gt; End User Web probe.">
+        <img src="assets/images/reference/edu202-p164-x603.jpg" alt="ZDX Mail Server web probe settings">
+      </button>
+      <figcaption>Create the <strong>Mail Server_Web</strong> End User Web probe.</figcaption>
+    </figure><ol class="steps" start="3"><li><div class="step-content">Review the Web probe and select <strong>Submit</strong>.</div></li>
+<li><div class="step-content">Edit the <strong>Mail Server</strong> application, set <strong>Status = Enabled</strong>, and select <strong>Update</strong>. ZDX enables the associated Web probe automatically.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Submit the Web probe and enable the custom application.">
+        <img src="assets/images/reference/edu202-p170-x620.jpg" alt="ZDX web probe review and application enablement">
+      </button>
+      <figcaption>Submit the Web probe and enable the custom application.</figcaption>
+    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
+      <div class="callout-title">Metrics can take time</div><p>Depending on the ZDX plan and environment, a newly enabled application can take roughly <strong>15–30 minutes</strong> before metrics appear. Continue with the lab and return later if needed.</p></div></div><ol class="steps" start="5"><li><div class="step-content">Add a second probe: <strong>Add Probe → End User Cloud Path</strong>.</div></li>
+<li><div class="step-content">Configure the Cloud Path probe:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server_Cloud</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Application</td><td>Mail Server</td></tr><tr><td>Probe Type</td><td>Cloud Path</td></tr><tr><td>Follow Web Probe</td><td><strong>Mail Server_Web</strong></td></tr><tr><td>Run Frequency</td><td>5 minutes</td></tr><tr><td>Probing Criteria</td><td>All</td></tr><tr><td>Exclusion Criteria</td><td>None</td></tr><tr><td>Protocol</td><td>ICMP</td></tr><tr><td>Packet Count</td><td>5</td></tr><tr><td>Interval</td><td>1000 ms</td></tr><tr><td>Timeout</td><td>1000 ms</td></tr><tr><td>Cloud Path Host</td><td><span class='value'>mail.google.com</span></td></tr></tbody></table></div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Configure the &lt;strong&gt;Mail Server_Cloud&lt;/strong&gt; Cloud Path probe.">
+        <img src="assets/images/reference/edu202-p175-x635.jpg" alt="ZDX Mail Server cloud path probe">
+      </button>
+      <figcaption>Configure the <strong>Mail Server_Cloud</strong> Cloud Path probe.</figcaption>
+    </figure><ol class="steps" start="7"><li><div class="step-content">Review and select <strong>Submit</strong>. Confirm both <strong>Mail Server_Web</strong> and <strong>Mail Server_Cloud</strong> appear under Mail Server.</div></li></ol><figure class="figure">
+      <button data-lightbox data-caption="Confirm both Web and Cloud Path probes exist for Mail Server.">
+        <img src="assets/images/reference/edu202-p180-x650.jpg" alt="ZDX Mail Server probes list">
+      </button>
+      <figcaption>Confirm both Web and Cloud Path probes exist for Mail Server.</figcaption>
+    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
+      <div class="callout-title">Expected result</div><p>Mail Server has an enabled Web probe and Cloud Path probe, providing application and network-path monitoring.</p></div></div></div>
+  </article>
+</section>
+<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 8 complete</div><p>You have completed the activities defined for <strong>Configure Cloud Applications Monitoring</strong>.</p></div></div><div class="page-nav"><a href="lab-07.html"><small>Previous</small><strong>← Lab 7</strong></a><a class="next" href="lab-09.html"><small>Next</small><strong>Lab 9 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>
