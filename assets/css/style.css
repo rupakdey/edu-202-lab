@@ -661,3 +661,9 @@ p { margin:0 0 1rem; }
   line-height: 1.25;
 }
 .search-hint strong { color: var(--text); }
+
+/* v10: normal explanatory text under stacked section headings uses full width */
+.section-head.stacked > p {
+  max-width: none !important;
+  width: 100%;
+}
