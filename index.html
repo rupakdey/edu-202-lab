@@ -16,7 +16,7 @@
     type="image/svg+xml"
     href="assets/images/shared/favicon.svg"
   >
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261105-topology">
 
   <script>
     try {
@@ -211,18 +211,13 @@
     <!-- When paired high-contrast SVGs are available, render them with
          templates/components/theme-topology.html. Never reproduce an
          unreadable PDF topology after a faithful replacement. -->
-     <!-- Optional technical topology figure for courses with separate light/dark SVGs.
-     Both SVGs MUST depict identical facts and topology relationships.
-     The shared CSS selects one, and the existing lightbox opens that variant.
-     If the course only has one accessible topology, use an ordinary .topology-figure. -->
 <figure class="figure topology-figure technical-diagram diagram-vector theme-topology">
-  <button type="button" class="theme-topology-light" data-lightbox
-    data-caption="EDU-202 logical lab topology. Select to enlarge. — light version">
-    <img src="assets/images/rev35/edu202-topology-light.svg" alt="EDU-202 remote public network and corporate data center, with documented VM addresses" loading="lazy">
-  </button>
-  <button type="button" class="theme-topology-dark" data-lightbox
-    data-caption="EDU-202 logical lab topology. Select to enlarge. — dark version">
-    <img src="assets/images/rev35/edu202-topology-dark.svg" alt="EDU-202 remote public network and corporate data center, with documented VM addresses" loading="lazy">
+  <button type="button" data-lightbox
+    data-caption="EDU-202 logical lab topology. Select to enlarge.">
+    <img src="assets/images/rev35/edu202-topology-light.svg"
+      data-theme-light-src="assets/images/rev35/edu202-topology-light.svg"
+      data-theme-dark-src="assets/images/rev35/edu202-topology-dark.svg"
+      alt="EDU-202 remote public network and corporate data center, with documented VM addresses" loading="lazy">
   </button>
   <figcaption>EDU-202 logical lab topology. Select to enlarge.</figcaption>
 </figure>
@@ -415,7 +410,7 @@
 
 <!-- Course data must load before the reusable site behavior. -->
 <script src="assets/js/course-data.js" defer></script>
-<script src="assets/js/site.js" defer></script>
+<script src="assets/js/site.js?v=20261105-topology" defer></script>
 
 </body>
 </html>

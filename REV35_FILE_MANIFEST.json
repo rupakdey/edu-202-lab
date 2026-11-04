@@ -30,6 +30,11 @@
     "bytes": 3543
   },
   {
+    "path": "NOV05_TOPOLOGY_DISPLAY_FIX.md",
+    "sha256": "16ac7756236693dffac61bf458501a1fef22b5efafb4c4a53f81c4894cd150f4",
+    "bytes": 667
+  },
+  {
     "path": "QA_CHECKLIST.md",
     "sha256": "7e0b35ebc1ad35feb978c214e68dbca6331ae0fd189353b7bf40468ab87581fe",
     "bytes": 5530
@@ -766,8 +771,8 @@
   },
   {
     "path": "assets/js/site.js",
-    "sha256": "e4d4acb51126a64c058fef531e06517b81cfeaea8232c397c66f6ed839d3ffac",
-    "bytes": 16727
+    "sha256": "acd12f04cda1479fc5d14548ac1891fade4d6d655ac3850c25247c07e440dc4e",
+    "bytes": 17551
   },
   {
     "path": "course-template.yaml",
@@ -791,63 +796,63 @@
   },
   {
     "path": "index.html",
-    "sha256": "cd608033c2e06215d750e16151c95fc53192ee6ee4a37113a81e310c27546386",
-    "bytes": 22176
+    "sha256": "7550cff33f271261e7e92be56b787120c878f8f153621a3db25e3b4a5fb7d483",
+    "bytes": 21662
   },
   {
     "path": "lab-01.html",
-    "sha256": "a6cfb60fcd4fd7f3648a92e9912332def2bd956afaf6c7541c52399c0574277c",
-    "bytes": 13392
+    "sha256": "735c2858e7234316eb5e8cd6d0fe703d26a698f590c9a9a990a7e156e99751e5",
+    "bytes": 13432
   },
   {
     "path": "lab-02.html",
-    "sha256": "29adf8013d2e5c4704012e7c558c1676180bf06f60e55d258028939948da8789",
-    "bytes": 28702
+    "sha256": "cd4494fb02223040413ec0e3af23ca4643a44d8302e70c322b43b765126db1ea",
+    "bytes": 28742
   },
   {
     "path": "lab-03.html",
-    "sha256": "716388b037745118a84dfba9bb045975dea01066dbb88932f2c8ef6f2462de20",
-    "bytes": 20726
+    "sha256": "4315bd079d86bfd8fb03ca5d3743fe26f343b63913126c6ce58b03ccc729e1ad",
+    "bytes": 20766
   },
   {
     "path": "lab-04.html",
-    "sha256": "70ab336d61911538eeb45d3ada4c7da1073afd306626cc36e0e5a7a58144f4ac",
-    "bytes": 36177
+    "sha256": "ab29d1721f5a3d3106a5fa2ea6bbadb0ea1c126cc62e145711b6dfa9e51c8928",
+    "bytes": 36217
   },
   {
     "path": "lab-05.html",
-    "sha256": "01d417df4897ebafa8ee25ae527f81174250984652d733184f58a2ffd0cbc587",
-    "bytes": 36204
+    "sha256": "78b3a91be255d85676a92dd987ea96365ab79166ff84caffa427264d49702a6f",
+    "bytes": 36244
   },
   {
     "path": "lab-06.html",
-    "sha256": "17678d9b1401f40ef4179852ecf7cdd69e2b7d556ebc36b83733f5e1af2952f2",
-    "bytes": 14572
+    "sha256": "e86825fe5da8f7540da1b9dba46d4fcec74692046f7b0e4efb1cbad2d3783005",
+    "bytes": 14612
   },
   {
     "path": "lab-07.html",
-    "sha256": "3a3e1c28141538325f26ee701cd90332ae676e53e3ecc5f051e026d7e32096ac",
-    "bytes": 17987
+    "sha256": "fe7904594b65cba23f02eb490c626d9f30fe485052397f58fabd4aebd6b29046",
+    "bytes": 18027
   },
   {
     "path": "lab-08.html",
-    "sha256": "969dc2adcbb5a1a7aab90e4f014e565f85df427e79c8a70d0e510a9c9f155b13",
-    "bytes": 16116
+    "sha256": "691fb7b075afbb548cbc0c3698ba61233b02063f6effa163fbb6ecf0e8120f90",
+    "bytes": 16156
   },
   {
     "path": "lab-09.html",
-    "sha256": "c936f931f837491fe4c42c174d6ec420adf82eb0da4e715be95534dedfc24608",
-    "bytes": 24192
+    "sha256": "4ada21fb8d27bee40b6ee9e8e84fb5765e22a718ab705ee1ab354a6e74f00a3e",
+    "bytes": 24232
   },
   {
     "path": "lab-10.html",
-    "sha256": "bb4fbda81c6af6d979902db75930224f64190f4b09afa50dfe5c4c281fc590d7",
-    "bytes": 16281
+    "sha256": "b12cd9f103cf4ba4eb20fd52ad825f371c4cf33abd6f47b55404a1af4f50dcaf",
+    "bytes": 16321
   },
   {
     "path": "lab-11.html",
-    "sha256": "6559d491b8a5e8f7a53a3308683ce4642e897514518ef38d41e071fcec04efb4",
-    "bytes": 24052
+    "sha256": "c646e5ea7ac33891dbcb2bc1b758d7a141036d56ec21098e1df732ebd338a888",
+    "bytes": 24092
   },
   {
     "path": "reference/approved-index.html",
@@ -881,8 +886,8 @@
   },
   {
     "path": "sdc-access.html",
-    "sha256": "a28b3f21169e7730ea64b2b48f4229fcffc389ab4c4e05c0596d63811e86c4d6",
-    "bytes": 9170
+    "sha256": "2544a9abaf63a2666dda1155f9d93edfabd5ea8c23d6de6d95253a54cb89a420",
+    "bytes": 9210
   },
   {
     "path": "templates/components/cloudshare-access-steps.html",
@@ -936,8 +941,8 @@
   },
   {
     "path": "templates/components/theme-topology.html",
-    "sha256": "5b3c93115169f8232fa605887ef21e2f2431fd61732ce41b0849200ef6199a43",
-    "bytes": 897
+    "sha256": "410519816dde4f169746fde72693a4496c668bee3c1525129735b9f69a9f704e",
+    "bytes": 518
   },
   {
     "path": "templates/components/warning-callout.html",
@@ -958,5 +963,10 @@
     "path": "templates/sdc-access-template.html",
     "sha256": "c2589024319f517878e879d0e219fccaa326ad64ecef3b33c9d6f0c3e2e901d8",
     "bytes": 8504
+  },
+  {
+    "path": "validation-report.json",
+    "sha256": "49d37c194e42fb1fdd4d0a047a51f8ecabdb78d7f0c13b9e7f7f6ddafee95c90",
+    "bytes": 128
   }
 ]
