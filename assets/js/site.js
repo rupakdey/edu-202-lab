@@ -141,7 +141,6 @@
     const startLinks = [
       navLink("Introduction", "index.html#overview", "⌂", page === "home"),
       navLink("Experience Center navigation", "index.html#navigation-guide", "↗"),
-      navLink("Course index", "index.html#contents", "≡"),
     ];
     if (raw.labAccess) {
       const access = raw.labAccess === true ? {} : raw.labAccess;
@@ -150,6 +149,8 @@
         page === "lab-access"
       ));
     }
+
+    startLinks.push(navLink("Course index", "index.html#contents", "≡"));
 
     const sdcBefore = sdc
       ? (sdc.beforeLab || labs.find((lab) => lab.sdc)?.number || 0)
@@ -222,6 +223,10 @@
     const value = theme === "dark" ? "dark" : "light";
     document.documentElement.dataset.theme = value;
     setStored(themeKey, value);
+    // One image per diagram prevents duplicate variants when styles are cached.
+    document.querySelectorAll("img[data-theme-light-src][data-theme-dark-src]").forEach((image) => {
+      image.src = value === "dark" ? image.dataset.themeDarkSrc : image.dataset.themeLightSrc;
+    });
     document.querySelectorAll("[data-theme-icon]").forEach((icon) => {
       icon.textContent = value === "dark" ? "☀" : "☾";
     });
@@ -302,7 +307,16 @@
       button.addEventListener("click", () => {
         const thumbnail = button.querySelector("img");
         if (!thumbnail) return;
-        modalImage.src = thumbnail.currentSrc || thumbnail.src;
+        if (thumbnail.dataset.themeLightSrc && thumbnail.dataset.themeDarkSrc) {
+          modalImage.dataset.themeLightSrc = thumbnail.dataset.themeLightSrc;
+          modalImage.dataset.themeDarkSrc = thumbnail.dataset.themeDarkSrc;
+          const dark = document.documentElement.dataset.theme === "dark";
+          modalImage.src = dark ? thumbnail.dataset.themeDarkSrc : thumbnail.dataset.themeLightSrc;
+        } else {
+          delete modalImage.dataset.themeLightSrc;
+          delete modalImage.dataset.themeDarkSrc;
+          modalImage.src = thumbnail.currentSrc || thumbnail.src;
+        }
         modalImage.alt = thumbnail.alt || "Expanded screenshot";
         if (caption) caption.textContent = button.dataset.caption || thumbnail.alt || "";
         if (typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
@@ -334,12 +348,12 @@
     const items = [
       { label: "Introduction", href: "index.html#overview" },
       { label: "Experience Center navigation", href: "index.html#navigation-guide" },
-      { label: "Course index", href: "index.html#contents" },
     ];
     if (raw.labAccess) {
       const access = raw.labAccess === true ? {} : raw.labAccess;
       items.push({ label: access.title || "Lab access", href: access.href || "lab-access.html" });
     }
+    items.push({ label: "Course index", href: "index.html#contents" });
     if (sdc) items.push({ label: sdc.title, href: sdc.href });
     labs.forEach((lab) => {
       items.push({ label: `Lab ${lab.number} — ${lab.title}`, href: lab.href, keywords: lab.keywords });
