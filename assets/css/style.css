@@ -667,3 +667,154 @@ p { margin:0 0 1rem; }
   max-width: none !important;
   width: 100%;
 }
+
+
+/* Reusable guide refinement: proportional screenshots + full-width topologies.
+   Both the width and height limits are applied; never force width/height
+   to fixed values, so the source aspect ratio and native detail are preserved. */
+:root {
+  --guide-image-max-height: 1490px;
+}
+.figure:not(.topology-figure) img,
+.reference-figure img,
+.media-grid .figure:not(.topology-figure) img,
+.sipa-flow-figure img,
+.concept-figure img,
+.zpa-concept-figure img,
+.access-example img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: min(var(--guide-image-max-height), 80vh) !important;
+  object-fit: contain;
+}
+/* A network topology is a technical diagram, not a typical UI screenshot.
+   Permit full guide width but never upscale raster diagrams. */
+.figure.topology-figure {
+  width: 100%;
+  max-width: 100%;
+}
+.figure.topology-figure > button {
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.figure.topology-figure img {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.resource-locator {
+  margin: 14px 0 19px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  font-size: .89rem;
+}
+.resource-locator p { margin: 5px 0; }
+.resource-locator .search-hint { margin: 7px 0 3px; }
+.resource-locator .source-route-note { line-height: 1.5; }
+/* Credentials/access inventory immediately below source topology. */
+.vm-access-table { margin: 12px 0 20px; }
+.vm-access-table code { overflow-wrap: anywhere; }
+.vm-access-table-wrap { overflow-x: auto; }
+@media (max-width: 760px) {
+  .vm-access-table { font-size: .8rem; }
+}
+
+/* Theme-matched topology diagrams: display only the appropriate SVG, including
+   in the lightbox (each image has its own existing data-lightbox button). */
+.figure.topology-figure.theme-topology > button.theme-topology-light { display: block; }
+.figure.topology-figure.theme-topology > button.theme-topology-dark { display: none; }
+html[data-theme="dark"] .figure.topology-figure.theme-topology > button.theme-topology-light { display: none; }
+html[data-theme="dark"] .figure.topology-figure.theme-topology > button.theme-topology-dark { display: block; }
+
+/* Reusable two-field footer: author left, adapted course label right. */
+.guide-footer { align-items: baseline; }
+.guide-footer .footer-author { text-align: left; }
+.guide-footer .footer-course { text-align: right; margin-left: auto; }
+@media (max-width: 680px) {
+  .guide-footer { flex-direction: column; gap: 5px; }
+  .guide-footer .footer-course { margin-left: 0; text-align: left; }
+}
+
+/* Experience Center navigation breadcrumbs: use ONLY for verified menu paths.
+   The labels remain readable in both themes; long paths scroll horizontally. */
+.ec-nav-path {
+  --ec-nav-bg: #eaf1ff;
+  --ec-nav-border: #afc9fb;
+  --ec-nav-ink: #0b4cc3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 7px 1px;
+  margin: 3px 0;
+  vertical-align: middle;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ec-nav-border) transparent;
+}
+.ec-nav-step {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--ec-nav-border);
+  border-radius: 12px;
+  padding: 7px 12px;
+  background: var(--ec-nav-bg);
+  color: var(--ec-nav-ink);
+  font-weight: 750;
+  font-size: .92rem;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.ec-nav-separator {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 1.45rem;
+  font-weight: 750;
+  line-height: 1;
+  user-select: none;
+}
+[data-theme="dark"] .ec-nav-path {
+  --ec-nav-bg: #172c4d;
+  --ec-nav-border: #4d78bd;
+  --ec-nav-ink: #a9ccff;
+}
+/* Keep breadcrumbs visually separated from the accompanying Search Menu
+   and documentation references; don't turn other arrows into pills. */
+.resource-locator .ec-nav-path { margin: 8px 0 7px; }
+@media (max-width: 760px) {
+  .ec-nav-path { gap: 7px; }
+  .ec-nav-step { padding: 7px 10px; border-radius: 10px; font-size: .83rem; }
+}
+
+/* Full-width technical concepts: SVG may scale; raster diagrams stay native-sized.
+   This exception never applies to UI/credential screenshots. */
+.figure.technical-diagram { display:block; width:100%; max-width:100%; margin:20px 0 24px; }
+.figure.technical-diagram > button { display:block; width:fit-content !important; max-width:100% !important; cursor:zoom-in; }
+.figure.technical-diagram img { display:block; width:auto !important; height:auto !important; max-width:100% !important; max-height:none !important; object-fit:contain; }
+.figure.technical-diagram.diagram-vector > button,
+.figure.technical-diagram.diagram-vector img { width:100% !important; }
+.figure.technical-diagram.theme-topology > button.theme-topology-light { display:block; }
+.figure.technical-diagram.theme-topology > button.theme-topology-dark { display:none; }
+html[data-theme="dark"] .figure.technical-diagram.theme-topology > button.theme-topology-light { display:none; }
+html[data-theme="dark"] .figure.technical-diagram.theme-topology > button.theme-topology-dark { display:block; }
+.figure.credentials-reference-figure { width:fit-content; max-width:min(100%, var(--guide-image-max-width)); margin:18px auto; }
+.figure.credentials-reference-figure img { width:auto !important; height:auto !important; max-width:100% !important; max-height:min(var(--guide-image-max-height), 80vh) !important; object-fit:contain; }
+
+/* Course content uses canonical layout; these wrappers prevent long task values overflowing. */
+.table-scroll { max-width:100%; overflow-x:auto; margin:12px 0; }
+.table-scroll .settings-table { width:100%; margin:0; }
+.command-block { display:flex; gap:12px; align-items:center; flex-wrap:wrap; max-width:100%; margin:12px 0; padding:12px 15px; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; }
+.command-block pre { flex:1; min-width:0; max-width:100%; margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.command-block .copy-btn { flex:none; }
+.figure img { display:block; }
