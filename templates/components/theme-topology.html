@@ -1,0 +1,15 @@
+<!-- Optional technical topology figure for courses with separate light/dark SVGs.
+     Both SVGs MUST depict identical facts and topology relationships.
+     The shared CSS selects one, and the existing lightbox opens that variant.
+     If the course only has one accessible topology, use an ordinary .topology-figure. -->
+<figure class="figure topology-figure technical-diagram diagram-vector theme-topology">
+  <button type="button" class="theme-topology-light" data-lightbox
+    data-caption="{{TOPOLOGY_CAPTION}} — light version">
+    <img src="{{TOPOLOGY_LIGHT_SVG}}" alt="{{TOPOLOGY_ALT}}" loading="lazy">
+  </button>
+  <button type="button" class="theme-topology-dark" data-lightbox
+    data-caption="{{TOPOLOGY_CAPTION}} — dark version">
+    <img src="{{TOPOLOGY_DARK_SVG}}" alt="{{TOPOLOGY_ALT}}" loading="lazy">
+  </button>
+  <figcaption>{{TOPOLOGY_CAPTION}}</figcaption>
+</figure>
