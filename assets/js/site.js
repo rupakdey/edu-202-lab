@@ -1,14 +1,439 @@
-const COURSE_NAV = [{"n": 1, "title": "Connect to the Virtual Lab", "href": "lab-01.html", "sdc": false, "tasks": [["1.1", "Test Your Lab Access and Start Your Environment", "lab-01.html#task-1-1"], ["1.2", "Sign In to the Experience Center Landing Page", "lab-01.html#task-1-2"]]}, {"n": 2, "title": "Configure Browser Access for Third Parties", "href": "lab-02.html", "sdc": false, "tasks": [["2.1", "Provision an App Connector", "lab-02.html#task-2-1"], ["2.2", "Activate the App Connector", "lab-02.html#task-2-2"], ["2.3", "Create the HVAC Application and Access Policy", "lab-02.html#task-2-3"], ["2.4", "Test Browser Access to the HVAC Application", "lab-02.html#task-2-4"]]}, {"n": 3, "title": "Configure Log Streaming", "href": "lab-03.html", "sdc": false, "tasks": [["3.1", "Provision a Dedicated App Connector for Log Streaming", "lab-03.html#task-3-1"], ["3.2", "Add a Log Receiver", "lab-03.html#task-3-2"], ["3.3", "Add SSH Access to the SIEM Server", "lab-03.html#task-3-3"], ["3.4", "Verify the Log Feed", "lab-03.html#task-3-4"]]}, {"n": 4, "title": "Zero Trust Browser ZIA", "href": "lab-04.html", "sdc": false, "tasks": [["4.1", "Build an Isolation Profile", "lab-04.html#task-4-1"], ["4.2", "Implement an Isolation Policy", "lab-04.html#task-4-2"], ["4.3", "Add a Cloud App Policy Exception", "lab-04.html#task-4-3"]]}, {"n": 5, "title": "Understand Privileged Remote Access", "href": "lab-05.html", "sdc": false, "tasks": [["5.1", "Create the Application Segment", "lab-05.html#task-5-1"], ["5.2", "Create the Portal", "lab-05.html#task-5-2"], ["5.3", "Create the Consoles", "lab-05.html#task-5-3"], ["5.4", "Create Privileged Credentials", "lab-05.html#task-5-4"], ["5.5", "Create the Privileged Credential Policy", "lab-05.html#task-5-5"], ["5.6", "Create the Consoles Policy", "lab-05.html#task-5-6"], ["5.7", "Test and Verify", "lab-05.html#task-5-7"]]}, {"n": 6, "title": "Configure AppProtection in ZPA", "href": "lab-06.html", "sdc": false, "tasks": [["6.1", "Create the Application Segment", "lab-06.html#task-6-1"], ["6.2", "Set Up AppProtection Profiles", "lab-06.html#task-6-2"], ["6.3", "Set Up AppProtection Policies", "lab-06.html#task-6-3"], ["6.4", "Test and Verify", "lab-06.html#task-6-4"]]}, {"n": 7, "title": "Zero Trust Browser ZPA", "href": "lab-07.html", "sdc": false, "tasks": [["7.1", "Create Isolation Profiles", "lab-07.html#task-7-1"], ["7.2", "Create Isolation Policies", "lab-07.html#task-7-2"], ["7.3", "Test and Verify", "lab-07.html#task-7-3"]]}, {"n": 8, "title": "Configure Cloud Applications Monitoring", "href": "lab-08.html", "sdc": false, "tasks": [["8.1", "Add an End User Collection", "lab-08.html#task-8-1"], ["8.2", "Create a Custom Application", "lab-08.html#task-8-2"], ["8.3", "Create Custom Probes", "lab-08.html#task-8-3"]]}, {"n": 9, "title": "Zscaler Digital Experience — Configure Alerts & Diagnostics", "href": "lab-09.html", "sdc": false, "tasks": [["9.1", "Create an Alert Rule", "lab-09.html#task-9-1"], ["9.2", "Configure a Diagnostic Session", "lab-09.html#task-9-2"]]}, {"n": 10, "title": "Automation Using Zscaler APIs", "href": "lab-10.html", "sdc": false, "tasks": [["10.1", "Access Postman to Call an API", "lab-10.html#task-10-1"], ["10.2", "Import the OneAPI Collection into Postman", "lab-10.html#task-10-2"], ["10.3", "Gather Variables for OneAPI Authentication", "lab-10.html#task-10-3"], ["10.4", "Authenticate and Test OneAPI Endpoints with Postman", "lab-10.html#task-10-4"], ["10.5", "Add an App Connector Group Using the OneAPI Endpoint", "lab-10.html#task-10-5"]]}, {"n": 11, "title": "Analyze Data and View Integrated Reports and Snapshots", "href": "lab-11.html", "sdc": true, "tasks": [["11.1", "Analyze Data Explorer for Application and Network Performance", "lab-11.html#task-11-1"], ["11.2", "View QBR Reports for ZDX User Insights", "lab-11.html#task-11-2"], ["11.3", "View Integrated Reports and Generate Snapshots", "lab-11.html#task-11-3"]]}, {"n": 12, "title": "Manage Incidents with Zscaler Workflow Automation", "href": "lab-12.html", "sdc": true, "tasks": [["12.1", "Enroll with Zscaler Client Connector", "lab-12.html#task-12-1"], ["12.2", "View Current DLP Incidents", "lab-12.html#task-12-2"], ["12.3", "Modify Incident Metadata", "lab-12.html#task-12-3"], ["12.4", "Test User Notification and Escalation Workflows", "lab-12.html#task-12-4"], ["12.5", "Configure Automated Workflows", "lab-12.html#task-12-5"]]}];
-const TOTAL_TASKS=COURSE_NAV.reduce((s,l)=>s+(l.tasks?.length||0),0);
-function currentPage(){return document.body.dataset.page||"home";}
-function renderNav(){const holder=document.getElementById("course-nav");if(!holder)return;const page=currentPage();const labs=COURSE_NAV.map(lab=>{const active=page===`lab-${String(lab.n).padStart(2,"0")}`;const explainers={2:["lab-02.html#browser-access-explainer","Browser Access explained"],5:["lab-05.html#pra-explainer","PRA concepts"],6:["lab-06.html#appprotection-explainer","AppProtection explained"]};const concept=active&&explainers[lab.n]?`<a class="nav-link" href="${explainers[lab.n][0]}"><span class="num">i</span><span>${explainers[lab.n][1]}</span></a>`:"";const sub=active?`<div class="nav-sub">${concept}${lab.tasks.map(t=>`<a class="nav-link" href="${t[2]}"><span class="num">${t[0]}</span><span>${t[1]}</span></a>`).join("")}</div>`:"";const checkpoint=lab.n===11?`<div class="nav-label nav-label-sdc">Solutions Demo Center</div><a class="nav-link ${page==="sdc-access"?"active":""}" href="sdc-access.html"><span class="num">SDC</span><span>Access checkpoint</span></a>`:"";const badge=lab.sdc?'<span class="nav-badge">SDC</span>':'';return `${checkpoint}<a class="nav-link ${active?"active":""}" href="${lab.href}"><span class="num">${String(lab.n).padStart(2,"0")}</span><span>${lab.title}</span>${badge}</a>${sub}`;}).join("");holder.innerHTML=`<aside class="sidebar" aria-label="Course navigation"><div class="brand"><img class="brand-mark" src="assets/images/zscaler-logo.svg" alt="Zscaler logo"><div class="brand-copy"><strong>EDU-202</strong><span>Engineer Lab Guide</span></div></div><div class="sidebar-scroll"><div class="nav-label">Start here</div><a class="nav-link ${page==="home"?"active":""}" href="index.html#overview"><span class="num">⌂</span><span>Introduction</span></a><a class="nav-link" href="index.html#navigation-guide"><span class="num">↗</span><span>Navigation guide</span></a><a class="nav-link" href="index.html#contents"><span class="num">≡</span><span>Course contents</span></a><div class="nav-label">Hands-on labs</div>${labs}</div><div class="sidebar-footer"><div class="progress-card"><div class="progress-row"><span>Course progress</span><span id="progress-label">0/${TOTAL_TASKS} tasks</span></div><div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div></div></div></aside>`;}
-function applyTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("edu202-theme",theme);document.querySelectorAll("[data-theme-icon]").forEach(el=>el.textContent=theme==="dark"?"☀":"☾");}
-function initTheme(){const stored=localStorage.getItem("edu202-theme");const pref=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";applyTheme(stored||pref);document.querySelectorAll("[data-theme-toggle]").forEach(btn=>btn.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark")));}
-function initCopy(){document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{const v=btn.dataset.copy;try{await navigator.clipboard.writeText(v);const old=btn.textContent;btn.textContent="Copied";setTimeout(()=>btn.textContent=old,1200)}catch{btn.textContent=v}}));}
-function progress(){const ids=COURSE_NAV.flatMap(l=>l.tasks.map(t=>t[0]));const done=ids.filter(id=>localStorage.getItem(`edu202-task-${id}`)==="1").length;const label=document.getElementById("progress-label"),bar=document.getElementById("progress-bar");if(label)label.textContent=`${done}/${TOTAL_TASKS} tasks`;if(bar)bar.style.width=`${Math.round(done/TOTAL_TASKS*100)}%`;}
-function initTasks(){document.querySelectorAll("[data-task-check]").forEach(input=>{const id=input.dataset.taskCheck;input.checked=localStorage.getItem(`edu202-task-${id}`)==="1";input.addEventListener("change",()=>{localStorage.setItem(`edu202-task-${id}`,input.checked?"1":"0");progress();});});progress();}
-function initLightbox(){const dlg=document.getElementById("image-modal");if(!dlg)return;const img=dlg.querySelector("img"),cap=dlg.querySelector("[data-modal-caption]");document.querySelectorAll("[data-lightbox]").forEach(btn=>btn.addEventListener("click",()=>{const i=btn.querySelector("img");img.src=i.src;img.alt=i.alt;cap.textContent=btn.dataset.caption||i.alt;dlg.showModal();}));dlg.querySelector("[data-modal-close]")?.addEventListener("click",()=>dlg.close());dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});}
-function initMenu(){document.querySelectorAll("[data-menu-toggle]").forEach(btn=>btn.addEventListener("click",()=>document.body.classList.toggle("nav-open")));}
-function initSearch(){const input=document.getElementById("global-search-input"),box=document.getElementById("global-search-results");if(!input||!box)return;const items=[{label:"SDC access checkpoint",href:"sdc-access.html"},{label:"Lab 2 concept — ZPA Browser Access and certificates",href:"lab-02.html#browser-access-explainer"},{label:"Lab 5 concept — Privileged Remote Access (PRA)",href:"lab-05.html#pra-explainer"},{label:"Lab 6 concept — ZPA AppProtection, OWASP controls and paranoia levels",href:"lab-06.html#appprotection-explainer"},];COURSE_NAV.forEach(l=>{items.push({label:`Lab ${l.n} — ${l.title}`,href:l.href});l.tasks.forEach(t=>items.push({label:`${t[0]} ${t[1]}`,href:t[2]}));});const render=()=>{const q=input.value.trim().toLowerCase();if(!q){box.innerHTML="";box.classList.remove("open");return;}const hits=items.filter(i=>i.label.toLowerCase().includes(q)).slice(0,8);box.innerHTML=hits.map(h=>`<a href="${h.href}">${h.label}</a>`).join("")||'<span class="no-results">No matches</span>';box.classList.add("open");};input.addEventListener("input",render);input.addEventListener("focus",render);document.addEventListener("click",e=>{if(!e.target.closest(".global-search"))box.classList.remove("open");});}
-function initIndexFilter(){const input=document.getElementById("lab-filter");if(!input)return;input.addEventListener("input",()=>{const q=input.value.trim().toLowerCase();document.querySelectorAll(".lab-card, .checkpoint-card").forEach(el=>{el.style.display=!q||el.textContent.toLowerCase().includes(q)?"":"none";});});}
-document.addEventListener("DOMContentLoaded",()=>{renderNav();initTheme();initCopy();initTasks();initLightbox();initMenu();initSearch();initIndexFilter();});
+/*
+ * Zscaler Web Lab Guide — course-neutral site behavior.
+ *
+ * A generated course may define window.LAB_GUIDE_COURSE before loading this
+ * script. Course data should contain its title, labs, tasks, optional SDC
+ * checkpoint, and optional explainer/search entries. This script never embeds
+ * lab titles, task lists, or a course identifier from an individual course.
+ *
+ * See the configuration example accompanying this replacement file.
+ */
+(() => {
+  "use strict";
+
+  const scriptUrl = document.currentScript?.src || "";
+  const logoUrl = scriptUrl
+    ? new URL("../images/shared/zscaler-logo.svg", scriptUrl).href
+    : "assets/images/shared/zscaler-logo.svg";
+
+  const body = document.body;
+  const raw = window.LAB_GUIDE_COURSE || {};
+  const courseId = String(raw.id || body?.dataset.courseId || "Lab Guide");
+  const courseTitle = String(raw.title || body?.dataset.courseTitle || courseId);
+  const courseSubtitle = String(raw.subtitle || raw.edition || "Web Lab Guide");
+  const storagePrefix = String(
+    body?.dataset.storagePrefix || raw.storagePrefix ||
+      courseId.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") ||
+      "zscaler-lab-guide"
+  );
+
+  // The course data format is deliberately tolerant of task objects and the
+  // older [number, title, href] arrays used by previous static guides.
+  function toTask(task, labNumber, labHref) {
+    const source = Array.isArray(task)
+      ? { number: task[0], title: task[1], href: task[2] }
+      : (task || {});
+    let number = String(source.number || source.label || source.id || "");
+    const id = String(source.id || "");
+    if (/^task-\d+-\d+$/.test(number)) {
+      number = number.replace(/^task-(\d+)-(\d+)$/, "$1.$2");
+    }
+    if (!number && /^task-\d+-\d+$/.test(id)) {
+      number = id.replace(/^task-(\d+)-(\d+)$/, "$1.$2");
+    }
+    const fragment = /^\d+\.\d+$/.test(number)
+      ? `task-${number.replace(".", "-")}`
+      : (id || "");
+    return {
+      number,
+      title: String(source.title || source.name || number || "Task"),
+      href: String(source.href || (fragment ? `${labHref}#${fragment}` : labHref)),
+      keywords: String(source.keywords || ""),
+    };
+  }
+
+  function toLab(lab) {
+    const number = Number(lab.number ?? lab.n ?? lab.lab ?? 0);
+    const href = String(lab.href || `lab-${String(number).padStart(2, "0")}.html`);
+    return {
+      number,
+      title: String(lab.title || `Lab ${number}`),
+      href,
+      sdc: Boolean(lab.sdc),
+      optional: Boolean(lab.optional),
+      keywords: String(lab.keywords || ""),
+      tasks: Array.isArray(lab.tasks)
+        ? lab.tasks.map((task) => toTask(task, number, href))
+        : [],
+      explainers: Array.isArray(lab.explainers) ? lab.explainers : [],
+    };
+  }
+
+  const labs = (Array.isArray(raw.labs) ? raw.labs : [])
+    .map(toLab)
+    .filter((lab) => lab.number > 0);
+
+  function normalizedCheckpoint() {
+    const source = raw.sdcAccess ?? raw.sdc ?? null;
+    if (!source || source === false) return null;
+    if (source === true) {
+      return { title: "SDC access checkpoint", href: "sdc-access.html" };
+    }
+    if (source.enabled === false) return null;
+    return {
+      title: String(source.title || "SDC access checkpoint"),
+      href: String(source.href || "sdc-access.html"),
+      beforeLab: Number(source.beforeLab || source.startLab || 0),
+    };
+  }
+
+  const sdc = normalizedCheckpoint();
+  const taskNumbers = [...new Set(labs.flatMap((lab) => lab.tasks.map((task) => task.number).filter(Boolean)))];
+  const totalTasks = taskNumbers.length;
+
+  const keyForTask = (number) => {
+    let value = String(number || "");
+    if (/^task-\d+-\d+$/.test(value)) {
+      value = value.replace(/^task-(\d+)-(\d+)$/, "$1.$2");
+    }
+    return `${storagePrefix}-task-${value}`;
+  };
+  const themeKey = `${storagePrefix}-theme`;
+
+  function getStored(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+  function setStored(key, value) {
+    try { localStorage.setItem(key, value); } catch { /* storage disabled */ }
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    })[char]);
+  }
+
+  function safeHref(value) {
+    const href = String(value || "#").trim();
+    if (/^(https?:\/\/|\/\/|\.\.?\/|#)/i.test(href)) return escapeHtml(href);
+    if (/^[\w.\-/]+(?:#[\w.\-]+)?$/.test(href)) return escapeHtml(href);
+    return "#";
+  }
+
+  function pageName() {
+    if (body?.dataset.page) return body.dataset.page;
+    const filename = location.pathname.split("/").pop() || "index.html";
+    return filename === "index.html" ? "home" : filename.replace(/\.html$/i, "");
+  }
+
+  function navLink(label, href, marker, active = false, extraClass = "") {
+    return `<a class="nav-link ${extraClass}${active ? " active" : ""}" ` +
+      `href="${safeHref(href)}"${active ? ' aria-current="page"' : ""}>` +
+      `<span class="num">${escapeHtml(marker)}</span>` +
+      `<span>${escapeHtml(label)}</span></a>`;
+  }
+
+  function renderNav() {
+    const holder = document.getElementById("course-nav");
+    if (!holder) return;
+    const page = pageName();
+
+    const startLinks = [
+      navLink("Introduction", "index.html#overview", "⌂", page === "home"),
+      navLink("Experience Center navigation", "index.html#navigation-guide", "↗"),
+      navLink("Course index", "index.html#contents", "≡"),
+    ];
+    if (raw.labAccess) {
+      const access = raw.labAccess === true ? {} : raw.labAccess;
+      startLinks.push(navLink(
+        access.title || "Lab access", access.href || "lab-access.html", "◎",
+        page === "lab-access"
+      ));
+    }
+
+    const sdcBefore = sdc
+      ? (sdc.beforeLab || labs.find((lab) => lab.sdc)?.number || 0)
+      : 0;
+    const checkpoint = sdc
+      ? `<div class="nav-label nav-label-sdc">Solutions Demo Center</div>` +
+        navLink(sdc.title, sdc.href, "SDC", page === "sdc-access")
+      : "";
+
+    let checkpointInserted = false;
+    const labLinks = labs.map((lab) => {
+      const active = page === `lab-${String(lab.number).padStart(2, "0")}` ||
+        page === `lab-${lab.number}`;
+      let section = "";
+      if (sdc && !checkpointInserted && sdcBefore && lab.number >= sdcBefore) {
+        section += checkpoint;
+        checkpointInserted = true;
+      }
+
+      section += navLink(
+        `${lab.title}${lab.optional ? " (Optional)" : ""}`,
+        lab.href,
+        String(lab.number).padStart(2, "0"),
+        active
+      );
+      if (lab.sdc) {
+        // Keep the existing approved-design SDC badge on applicable labs.
+        section = section.replace(/<\/a>$/, '<span class="nav-badge">SDC</span></a>');
+      }
+      if (active) {
+        const explainerLinks = lab.explainers.map((explainer) =>
+          navLink(
+            explainer.title || "Technical context",
+            explainer.href || (explainer.id ? `${lab.href}#${explainer.id}` : lab.href),
+            "i"
+          )
+        ).join("");
+        const taskLinks = lab.tasks.map((task) =>
+          navLink(task.title, task.href, task.number)
+        ).join("");
+        if (explainerLinks || taskLinks) {
+          section += `<div class="nav-sub">${explainerLinks}${taskLinks}</div>`;
+        }
+      }
+      return section;
+    }).join("");
+
+    // Courses with an SDC checkpoint but no marked SDC lab can still display it.
+    const finalCheckpoint = sdc && !checkpointInserted ? checkpoint : "";
+    const progressMarkup = totalTasks
+      ? `<div class="sidebar-footer"><div class="progress-card">` +
+        `<div class="progress-row"><span>Course progress</span>` +
+        `<span id="progress-label">0/${totalTasks} tasks</span></div>` +
+        `<div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>` +
+        `</div></div>`
+      : "";
+
+    holder.innerHTML = `<aside class="sidebar" aria-label="Course navigation">` +
+      `<div class="brand"><img class="brand-mark" src="${escapeHtml(logoUrl)}" ` +
+      `alt="Zscaler logo"><div class="brand-copy">` +
+      `<strong>${escapeHtml(courseId)}</strong>` +
+      `<span>${escapeHtml(courseSubtitle)}</span></div></div>` +
+      `<div class="sidebar-scroll"><div class="nav-label">Start here</div>` +
+      startLinks.join("") +
+      (labs.length || sdc ? `<div class="nav-label">Hands-on labs</div>` : "") +
+      labLinks + finalCheckpoint + `</div>${progressMarkup}</aside>`;
+  }
+
+  function applyTheme(theme) {
+    const value = theme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = value;
+    setStored(themeKey, value);
+    document.querySelectorAll("[data-theme-icon]").forEach((icon) => {
+      icon.textContent = value === "dark" ? "☀" : "☾";
+    });
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.setAttribute("aria-label", `Switch to ${value === "dark" ? "light" : "dark"} mode`);
+    });
+  }
+
+  function initTheme() {
+    let prefersDark = false;
+    try { prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches; }
+    catch { /* matchMedia not supported */ }
+    const saved = getStored(themeKey);
+    applyTheme(saved === "light" || saved === "dark"
+      ? saved : (prefersDark ? "dark" : "light"));
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.addEventListener("click", () => applyTheme(
+        document.documentElement.dataset.theme === "dark" ? "light" : "dark"
+      ));
+    });
+  }
+
+  function initCopy() {
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const text = button.dataset.copy || "";
+        const previous = button.textContent;
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error("Clipboard not available");
+          await navigator.clipboard.writeText(text);
+          button.textContent = "Copied";
+          window.setTimeout(() => { button.textContent = previous; }, 1200);
+        } catch {
+          // Selection remains possible when Clipboard API is unavailable.
+          button.textContent = text;
+          window.setTimeout(() => { button.textContent = previous; }, 2000);
+        }
+      });
+    });
+  }
+
+  function updateProgress() {
+    if (!totalTasks) return;
+    const completed = taskNumbers.filter((number) => getStored(keyForTask(number)) === "1").length;
+    const label = document.getElementById("progress-label");
+    const bar = document.getElementById("progress-bar");
+    if (label) label.textContent = `${completed}/${totalTasks} tasks`;
+    if (bar) {
+      bar.style.width = `${Math.round(100 * completed / totalTasks)}%`;
+      bar.setAttribute("role", "progressbar");
+      bar.setAttribute("aria-valuemin", "0");
+      bar.setAttribute("aria-valuemax", String(totalTasks));
+      bar.setAttribute("aria-valuenow", String(completed));
+      bar.setAttribute("aria-label", "Course progress");
+    }
+  }
+
+  function initTasks() {
+    document.querySelectorAll("[data-task-check]").forEach((input) => {
+      const key = keyForTask(input.dataset.taskCheck);
+      input.checked = getStored(key) === "1";
+      input.addEventListener("change", () => {
+        setStored(key, input.checked ? "1" : "0");
+        updateProgress();
+      });
+    });
+    updateProgress();
+  }
+
+  function initLightbox() {
+    const dialog = document.getElementById("image-modal");
+    if (!dialog) return;
+    const modalImage = dialog.querySelector("img");
+    const caption = dialog.querySelector("[data-modal-caption]");
+    if (!modalImage) return;
+
+    document.querySelectorAll("[data-lightbox]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const thumbnail = button.querySelector("img");
+        if (!thumbnail) return;
+        modalImage.src = thumbnail.currentSrc || thumbnail.src;
+        modalImage.alt = thumbnail.alt || "Expanded screenshot";
+        if (caption) caption.textContent = button.dataset.caption || thumbnail.alt || "";
+        if (typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
+      });
+    });
+
+    dialog.querySelector("[data-modal-close]")?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+
+  function initMenu() {
+    document.querySelectorAll("[data-menu-toggle]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const open = body.classList.toggle("nav-open");
+        button.setAttribute("aria-expanded", String(open));
+      });
+    });
+    document.getElementById("course-nav")?.addEventListener("click", (event) => {
+      if (event.target.closest("a")) body.classList.remove("nav-open");
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") body.classList.remove("nav-open");
+    });
+  }
+
+  function searchEntries() {
+    const items = [
+      { label: "Introduction", href: "index.html#overview" },
+      { label: "Experience Center navigation", href: "index.html#navigation-guide" },
+      { label: "Course index", href: "index.html#contents" },
+    ];
+    if (raw.labAccess) {
+      const access = raw.labAccess === true ? {} : raw.labAccess;
+      items.push({ label: access.title || "Lab access", href: access.href || "lab-access.html" });
+    }
+    if (sdc) items.push({ label: sdc.title, href: sdc.href });
+    labs.forEach((lab) => {
+      items.push({ label: `Lab ${lab.number} — ${lab.title}`, href: lab.href, keywords: lab.keywords });
+      lab.tasks.forEach((task) => items.push({
+        label: `${task.number} ${task.title}`, href: task.href, keywords: task.keywords,
+      }));
+      lab.explainers.forEach((explainer) => items.push({
+        label: explainer.title || "Technical context",
+        href: explainer.href || (explainer.id ? `${lab.href}#${explainer.id}` : lab.href),
+        keywords: explainer.keywords || "",
+      }));
+    });
+    if (Array.isArray(raw.search)) {
+      raw.search.forEach((entry) => {
+        if (entry?.label && entry?.href) items.push(entry);
+      });
+    }
+    return items;
+  }
+
+  function initSearch() {
+    const input = document.getElementById("global-search-input");
+    const results = document.getElementById("global-search-results");
+    if (!input || !results) return;
+    const entries = searchEntries();
+
+    function hideResults() {
+      results.hidden = true;
+      results.classList.remove("open");
+      input.setAttribute("aria-expanded", "false");
+    }
+    function renderResults() {
+      const query = input.value.trim().toLocaleLowerCase();
+      if (!query) {
+        results.innerHTML = "";
+        hideResults();
+        return;
+      }
+      const hits = entries.filter((entry) =>
+        `${entry.label} ${entry.keywords || ""}`.toLocaleLowerCase().includes(query)
+      ).slice(0, 8);
+      results.innerHTML = hits.length
+        ? hits.map((entry) => `<a href="${safeHref(entry.href)}">${escapeHtml(entry.label)}</a>`).join("")
+        : '<div class="search-empty">No matches</div>';
+      results.hidden = false;
+      results.classList.add("open");
+      input.setAttribute("aria-expanded", "true");
+    }
+
+    results.hidden = true;
+    input.setAttribute("aria-expanded", "false");
+    input.addEventListener("input", renderResults);
+    input.addEventListener("focus", renderResults);
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") hideResults();
+      if (event.key === "Enter") {
+        const first = results.querySelector("a");
+        if (first && !results.hidden) {
+          event.preventDefault();
+          window.location.href = first.href;
+        }
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".global-search")) hideResults();
+    });
+  }
+
+  function initIndexFilter() {
+    const input = document.getElementById("lab-filter");
+    if (!input) return;
+    input.addEventListener("input", () => {
+      const query = input.value.trim().toLocaleLowerCase();
+      document.querySelectorAll(".lab-card, .checkpoint-card").forEach((card) => {
+        const searchable = `${card.textContent} ${card.dataset.keywords || ""}`.toLocaleLowerCase();
+        card.style.display = !query || searchable.includes(query) ? "" : "none";
+      });
+    });
+  }
+
+  function initialize() {
+    renderNav();
+    initTheme();
+    initCopy();
+    initTasks();
+    initLightbox();
+    initMenu();
+    initSearch();
+    initIndexFilter();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize, { once: true });
+  } else {
+    initialize();
+  }
+})();
