@@ -1,90 +1,502 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 11 — Analyze Data and View Integrated Reports and Snapshots | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-11"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 11</strong> / Analyze Data and View Integrated Reports and Snapshots</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 11 · Solutions Demo Center</div><h1>Analyze Data and View Integrated Reports and Snapshots</h1><p>Use the pre-populated Solutions Demo Center to analyze ZDX data and reporting. You will explore Data Explorer, download a QBR report, interact with system-generated reports, and open a shareable ZDX Snapshot.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span><span class="fact"><strong>Approx. 15 Minutes</strong></span><span class="fact"><strong>Read-only SDC</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Analyze user experience and performance data using Data Explorer.</li><li>Download and review QBR reports for trend insights.</li><li>Review system-generated reports and create ZDX Snapshots to share view-only findings.</li></ul></div></section><section class="task" id="task-11-1">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="description"
+    content="Unofficial EDU-202 web lab guide — Lab 11: Manage Incidents with Workflow Automation"
+  >
+
+  <title>
+    Lab 11 — Manage Incidents with Workflow Automation | EDU-202
+  </title>
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/images/shared/favicon.svg"
+  >
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    try {
+      const t = localStorage.getItem('edu202-rev35-theme');
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <!-- Render verified menu paths using templates/components/navigation-path.html.
+       Search Menu keywords retain their separate search-hint styling. -->
+</head>
+
+
+<body
+  data-page="lab-11"
+  data-course-id="EDU-202"
+  data-storage-prefix="edu202-rev35"
+>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Built by site.js -->
+<div id="course-nav"></div>
+
+
+<header class="topbar">
+
+  <div class="topbar-left">
+
+    <button
+      class="icon-btn mobile-menu"
+      data-menu-toggle
+      aria-label="Open course navigation"
+    >☰</button>
+
+    <div class="breadcrumb">
+      <a href="index.html">EDU-202</a>
+      /
+      <strong>Lab 11</strong>
+      /
+      Manage Incidents with Workflow Automation
+    </div>
+
+  </div>
+
+
+  <div class="topbar-actions">
+
+    <div class="global-search">
+
+      <input
+        id="global-search-input"
+        type="search"
+        placeholder="Search labs or tasks…"
+        aria-label="Search course"
+      >
+
+      <div
+        id="global-search-results"
+        class="global-search-results"
+      ></div>
+
+    </div>
+
+
+    <button
+      class="icon-btn"
+      data-theme-toggle
+      aria-label="Toggle dark or light mode"
+    >
+      <span data-theme-icon>☾</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="main" id="main">
+<div class="content">
+
+
+  <!-- =========================================================
+       LAB HERO
+
+       Important:
+       The description must use the full available page width.
+       ========================================================= -->
+
+  <section class="lab-hero">
+
+    <div>
+
+      <div class="eyebrow">
+        Lab 11 · SDC · guided review
+      </div>
+
+      <h1>Manage Incidents with Workflow Automation</h1>
+
+      <p>Inspect DLP incidents and understand the source lab’s metadata, notification, escalation and automated-workflow actions.</p>
+
+      <div class="lab-facts">
+        <span class="fact">
+          <strong>5 tasks</strong>
+        </span>
+
+        <span class="fact">Approx. 20 minutes</span>
+
+        
+
+        <span class="fact">SDC · permission-dependent actions</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       LAB OBJECTIVES
+
+       Rewrite source objectives concisely.
+       Do not paste long scenario text.
+       ========================================================= -->
+
+  <section class="section">
+
+    <div class="section-head stacked">
+      <div class="eyebrow">Lab objectives</div>
+      <h2>What you will accomplish</h2>
+    </div>
+
+    <div class="card pad">
+      <ul class="clean-list">
+        <li>Enroll the workstation using the supplied SDC IT identity.</li><li>Inspect incident metadata, violation details and state history.</li><li>Review update/notification/escalation actions subject to SDC permissions.</li><li>Explore workflow templates and mapping conditions without saving changes.</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       OPTIONAL TECHNICAL EXPLAINER
+
+       Insert only when it materially improves learner understanding.
+
+       Use:
+         templates/components/technical-explainer.html
+
+       Keep it visually separate from hands-on instructions.
+       ========================================================= -->
+
+  
+
+
+<div class="callout warning"><div class="callout-symbol">!</div><div><div class="callout-title">SDC permissions determine the exercise mode</div><p>The source describes SDC as read-only but also includes incident-update and notification tasks. Use an instructor-approved training incident. If the assigned account cannot save or send, inspect the controls and follow the instructor demonstration; do not treat disabled actions as a fault.</p></div></div>
+  <!-- =========================================================
+       TASKS
+
+       Every task must use templates/components/task.html.
+
+       Required rules:
+       - simple numbered steps only
+       - no PDF a/b/c/i/ii hierarchy
+       - configuration tables where useful
+       - screenshot immediately after the step it illustrates
+       - current navigation or Search Menu keyword
+       - Expected Result at the end of every task
+       ========================================================= -->
+
+  <!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-11-1">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">11.1</div>
-      <div><h2>Analyze Data Explorer for Application and Network Performance</h2><p>Build a query and inspect the resulting application and network metrics.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="11.1"> Mark complete</label>
+
+      <div class="task-num">
+        11.1
+      </div>
+
+      <div>
+        <h2>Enroll ZCC with the SDC IT Identity</h2>
+        <p>Switch the endpoint from the dedicated learner tenant to SDC.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="11.1"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Using the SDC administrator session, open ZDX <strong>Data Explorer</strong>. If prompted, enable <strong>Switch to Existing Reports</strong>.<div class="search-hint">Search menu → <strong>Data Explorer</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open Data Explorer in the SDC environment.">
-        <img src="assets/images/reference/edu202-p225-x798.jpg" alt="ZDX Data Explorer">
-      </button>
-      <figcaption>Open Data Explorer in the SDC environment.</figcaption>
-    </figure><ol class="steps" start="2"><li><div class="step-content">Select <strong>View</strong> and build a custom view by choosing the data source, probes, metrics, filters, operations, view type, and overlays you want to analyze. Select <strong>Run Query</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Configure the Data Explorer view and run the query.">
-        <img src="assets/images/reference/edu202-p226-x802.jpg" alt="ZDX Data Explorer query builder">
-      </button>
-      <figcaption>Configure the Data Explorer view and run the query.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Review the resulting application/network charts. Drag across a chart to zoom into a specific time range and inspect the details.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Review the charts returned by the query.">
-        <img src="assets/images/reference/edu202-p228-x808.jpg" alt="ZDX Data Explorer charts">
-      </button>
-      <figcaption>Review the charts returned by the query.</figcaption>
-    </figure><figure class="figure">
-      <button data-lightbox data-caption="Zoom into a time range to inspect performance details.">
-        <img src="assets/images/reference/edu202-p229-x811.jpg" alt="ZDX Data Explorer zoom">
-      </button>
-      <figcaption>Zoom into a time range to inspect performance details.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>You can create a Data Explorer view, run a query, and inspect application/network performance over a selected time range.</p></div></div></div>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">On <strong>Corp Client PC 1</strong>, open ZCC and <strong>Log Out</strong> of the learner tenant.<figure class="figure" data-source-page="222"><button type="button" data-lightbox data-caption="Log out of the previous ZCC identity"><img src="assets/images/rev35/p222-1.png" alt="Log out of the previous ZCC identity" width="747" height="567" loading="lazy"></button><figcaption>Log out of the previous ZCC identity <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">In <strong>CloudShare → Credentials</strong>, find the SDC <strong>IT department</strong> identity. Sign in to ZCC with that username and its corresponding SDC password; complete the IdP prompt.</div></li><li><div class="step-content">Wait several minutes if needed. Verify the Internet Security service reports <strong>ON</strong> and the network type is <strong>Off-Trusted Network</strong> in this lab.<figure class="figure" data-source-page="223"><button type="button" data-lightbox data-caption="SDC IT identity and service status"><img src="assets/images/rev35/p223-1.png" alt="SDC IT identity and service status" width="937" height="528" loading="lazy"></button><figcaption>SDC IT identity and service status <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>ZCC is enrolled with the assigned SDC IT identity and Internet Security is ON.</p></div></div>
+
+    </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-11-2">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">11.2</div>
-      <div><h2>View QBR Reports for ZDX User Insights</h2><p>Download and review an existing Quarterly Business Review report.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="11.2"> Mark complete</label>
+
+      <div class="task-num">
+        11.2
+      </div>
+
+      <div>
+        <h2>Inspect a DLP Incident</h2>
+        <p>Examine the event and the data that triggered it.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="11.2"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Quarterly Business Reviews</strong> in ZDX and review the available reports.<div class="search-hint">Search menu → <strong>Quarterly Business Reviews</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open the QBR report list.">
-        <img src="assets/images/reference/edu202-p230-x814.jpg" alt="ZDX Quarterly Business Review reports">
-      </button>
-      <figcaption>Open the QBR report list.</figcaption>
-    </figure><ol class="steps" start="2"><li><div class="step-content">Select the <strong>Download</strong> icon for a report, open the downloaded PowerPoint, and review the report contents.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Download a QBR report from the SDC tenant.">
-        <img src="assets/images/reference/edu202-p231-x818.jpg" alt="Download ZDX QBR report">
-      </button>
-      <figcaption>Download a QBR report from the SDC tenant.</figcaption>
-    </figure><figure class="figure">
-      <button data-lightbox data-caption="Review the generated QBR presentation.">
-        <img src="assets/images/reference/edu202-p232-x821.jpg" alt="ZDX QBR PowerPoint">
-      </button>
-      <figcaption>Review the generated QBR presentation.</figcaption>
-    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
-      <div class="callout-title">QBR generation</div><p>The source guide notes that a new QBR report is generated on the first weekend of each month and stored as a PowerPoint file in the Zscaler cloud.</p></div></div><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>You can download and review a pre-generated ZDX QBR report.</p></div></div></div>
+
+    <div class="task-body">
+
+      <div class="resource-locator"><div class="search-hint">Search Menu → <strong>Incidents</strong></div><a href="https://help.zscaler.com/workflow-automation/managing-incidents" target="_blank" rel="noopener noreferrer">Zscaler Help: Incidents ↗</a></div><ol class="steps"><li><div class="step-content">Sign in to the <strong>Experience Center with the SDC administrator account</strong>. Open <strong>Incidents</strong> and select the instructor-designated training incident by <strong>Transaction ID</strong>.<figure class="figure" data-source-page="224"><button type="button" data-lightbox data-caption="DLP incident list"><img src="assets/images/rev35/p224-1.png" alt="DLP incident list" width="1512" height="694" loading="lazy"></button><figcaption>DLP incident list <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Review <strong>Overview</strong> and <strong>Violation Details</strong>. Note the user, policy/rule, time, status and available incident metadata.<figure class="figure" data-source-page="225"><button type="button" data-lightbox data-caption="Incident overview and violation details"><img src="assets/images/rev35/p225-1.png" alt="Incident overview and violation details" width="1263" height="789" loading="lazy"></button><figcaption>Incident overview and violation details <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">In <strong>Violation Content</strong>, expand <strong>View Trigger Data</strong> and inspect the matched content.<figure class="figure" data-source-page="226"><button type="button" data-lightbox data-caption="Violation content and trigger data"><img src="assets/images/rev35/p226-1.png" alt="Violation content and trigger data" width="1272" height="616" loading="lazy"></button><figcaption>Violation content and trigger data <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>You can identify the training incident, its metadata, and the content associated with the DLP trigger.</p></div></div>
+
+    </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-11-3">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">11.3</div>
-      <div><h2>View Integrated Reports and Generate Snapshots</h2><p>Explore system-generated reports and share a view-only Snapshot.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="11.3"> Mark complete</label>
+
+      <div class="task-num">
+        11.3
+      </div>
+
+      <div>
+        <h2>Review or Update Incident Metadata</h2>
+        <p>Understand status, priority and the audit history.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="11.3"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>System Generated Reports</strong> and select the <strong>View</strong> icon for a report.<div class="search-hint">Search menu → <strong>System Generated Reports</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open a system-generated ZDX report.">
-        <img src="assets/images/reference/edu202-p233-x825.jpg" alt="ZDX system generated reports">
-      </button>
-      <figcaption>Open a system-generated ZDX report.</figcaption>
-    </figure><ol class="steps" start="2"><li><div class="step-content">For a Cloud Path End-to-End report, experiment with available filters such as Departments, Zscaler Locations, Geolocations, or Applications. Select graph points to view latency tooltips, drag across a range to zoom, and use <strong>Zoom Out</strong> to reset.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Interact with the report filters and Cloud Path graph.">
-        <img src="assets/images/reference/edu202-p234-x829.jpg" alt="ZDX Cloud Path report">
-      </button>
-      <figcaption>Interact with the report filters and Cloud Path graph.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Open <strong>ZDX Snapshots</strong>, copy the link for an active snapshot, and paste it into a new browser window.<div class="search-hint">Search menu → <strong>ZDX Snapshots</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Copy the link for an active ZDX Snapshot.">
-        <img src="assets/images/reference/edu202-p236-x835.jpg" alt="ZDX Snapshot link">
-      </button>
-      <figcaption>Copy the link for an active ZDX Snapshot.</figcaption>
-    </figure><ol class="steps" start="4"><li><div class="step-content">Confirm the snapshot opens with the green Snapshot indicator. Snapshot pages provide view-only sharing with some interactive controls disabled.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="The green indicator identifies a ZDX Snapshot view.">
-        <img src="assets/images/reference/edu202-p237-x838.jpg" alt="ZDX Snapshot view">
-      </button>
-      <figcaption>The green indicator identifies a ZDX Snapshot view.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>You can interact with system-generated reports and open a view-only ZDX Snapshot through its shareable link.</p></div></div></div>
+
+    <div class="task-body">
+
+      <div class="callout warning"><div class="callout-symbol">!</div><div><div class="callout-title">SDC permissions determine the exercise mode</div><p>The source describes SDC as read-only but also includes incident-update and notification tasks. Use an instructor-approved training incident. If the assigned account cannot save or send, inspect the controls and follow the instructor demonstration; do not treat disabled actions as a fault.</p></div></div><ol class="steps"><li><div class="step-content">Open the incident’s <strong>Actions</strong> menu. Review the status controls. If your instructor enables updates, set <strong>Status → Investigating</strong> and enter <strong>Test</strong> in the note field.<figure class="figure" data-source-page="227"><button type="button" data-lightbox data-caption="Incident status action"><img src="assets/images/rev35/p227-1.png" alt="Incident status action" width="1264" height="691" loading="lazy"></button><figcaption>Incident status action <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Select <strong>Assign Priority</strong>. If permitted, set <strong>High</strong> unless it is already selected.<figure class="figure" data-source-page="228"><button type="button" data-lightbox data-caption="Assign incident priority"><img src="assets/images/rev35/p228-1.png" alt="Assign incident priority" width="1267" height="774" loading="lazy"></button><figcaption>Assign incident priority <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Refresh and inspect <strong>State Changes</strong>. Verify the demonstrated or permitted status/priority changes are recorded.<figure class="figure" data-source-page="229"><button type="button" data-lightbox data-caption="Incident state history"><img src="assets/images/rev35/p229-1.png" alt="Incident state history" width="1273" height="585" loading="lazy"></button><figcaption>Incident state history <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>You can explain how status and priority updates appear in State Changes; if authorized and permitted, the saved values are Investigating and High.</p></div></div>
+
+    </div>
+
   </article>
 </section>
-<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 11 complete</div><p>You have completed the activities defined for <strong>Analyze Data and View Integrated Reports and Snapshots</strong>.</p></div></div><div class="page-nav"><a href="sdc-access.html"><small>Previous</small><strong>← SDC Access</strong></a><a class="next" href="lab-12.html"><small>Next</small><strong>Lab 12 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-11-4">
+  <article class="card task-shell">
+
+    <header class="task-head">
+
+      <div class="task-num">
+        11.4
+      </div>
+
+      <div>
+        <h2>Review Notification and Escalation Workflows</h2>
+        <p>Follow the training incident through user notification and approval.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="11.4"
+        >
+        Mark complete
+      </label>
+
+    </header>
+
+    <div class="task-body">
+
+      <div class="callout warning"><div class="callout-symbol">!</div><div><div class="callout-title">SDC permissions determine the exercise mode</div><p>The source describes SDC as read-only but also includes incident-update and notification tasks. Use an instructor-approved training incident. If the assigned account cannot save or send, inspect the controls and follow the instructor demonstration; do not treat disabled actions as a fault.</p></div></div><ol class="steps"><li><div class="step-content">Open <strong>Actions → Notify User</strong>. Select the demonstrated language/time zone and enter the source note below. Submit only when the instructor has approved sending to the training user.<div class="command-block"><pre><code>Please justify uploading this document for testing purposes of HandsOnLab</code></pre><button type="button" class="copy-btn" data-copy="Please justify uploading this document for testing purposes of HandsOnLab">Copy</button></div><figure class="figure" data-source-page="231"><button type="button" data-lightbox data-caption="Notify User dialog"><img src="assets/images/rev35/p231-1.png" alt="Notify User dialog" width="1264" height="793" loading="lazy"></button><figcaption>Notify User dialog <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Review <strong>State Changes</strong> for a notification event. A user response may not arrive during the session; continue with the instructor demonstration.<figure class="figure" data-source-page="233"><button type="button" data-lightbox data-caption="Notification event in State Changes"><img src="assets/images/rev35/p233-1.png" alt="Notification event in State Changes" width="1261" height="393" loading="lazy"></button><figcaption>Notification event in State Changes <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Use <strong>Search Menu → Approvers</strong>. If the instructor permits creating a training approver, select <strong>Add more (+)</strong>, enter your approved name/email, and <strong>Save</strong>. Otherwise inspect an existing training approver.<figure class="figure" data-source-page="234"><button type="button" data-lightbox data-caption="Approver configuration"><img src="assets/images/rev35/p234-1.png" alt="Approver configuration" width="1309" height="771" loading="lazy"></button><figcaption>Approver configuration <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Return to the same incident. Open <strong>Actions → Escalate</strong>, choose the approved training approver, and <strong>Save</strong> only when permitted.<figure class="figure" data-source-page="236"><button type="button" data-lightbox data-caption="Escalation approver selection"><img src="assets/images/rev35/p236-1.png" alt="Escalation approver selection" width="1234" height="778" loading="lazy"></button><figcaption>Escalation approver selection <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">If an escalation email is delivered to your approved address, open its incident link. Select <strong>Approved</strong> for <strong>Justification Type</strong>, enter a reason, and <strong>Submit</strong>. Review the incident’s <strong>State Changes</strong> for the outcome. In read-only mode, inspect the source example with the instructor.<figure class="figure" data-source-page="237"><button type="button" data-lightbox data-caption="Escalation approval response"><img src="assets/images/rev35/p237-1.png" alt="Escalation approval response" width="1143" height="466" loading="lazy"></button><figcaption>Escalation approval response <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>You can trace notification and escalation through the incident history. Sending and approval are confirmed only if the permitted training workflow actually completes.</p></div></div>
+
+    </div>
+
+  </article>
+</section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-11-5">
+  <article class="card task-shell">
+
+    <header class="task-head">
+
+      <div class="task-num">
+        11.5
+      </div>
+
+      <div>
+        <h2>Inspect Automated Workflows</h2>
+        <p>Review templates and their matching conditions without saving changes.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="11.5"
+        >
+        Mark complete
+      </label>
+
+    </header>
+
+    <div class="task-body">
+
+      <div class="resource-locator"><div class="search-hint">Search Menu → <strong>Workflow Templates</strong></div><a href="https://help.zscaler.com/workflow-automation/understanding-workflows-workflow-automation" target="_blank" rel="noopener noreferrer">Zscaler Help: Workflow Templates ↗</a></div><ol class="steps"><li><div class="step-content">Open <strong>Workflow Templates</strong>. For <strong>Auto Escalate</strong>, select <strong>View Workflow Template</strong>.<figure class="figure" data-source-page="239"><button type="button" data-lightbox data-caption="Workflow template list"><img src="assets/images/rev35/p239-1.png" alt="Workflow template list" width="1503" height="637" loading="lazy"></button><figcaption>Workflow template list <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Follow the displayed sequence and branches to understand which action occurs and when the workflow waits for a response.<figure class="figure" data-source-page="240"><button type="button" data-lightbox data-caption="Existing automated workflow logic"><img src="assets/images/rev35/p240-1.png" alt="Existing automated workflow logic" width="1498" height="744" loading="lazy"></button><figcaption>Existing automated workflow logic <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Open <strong>Workflow Mappings</strong>. Expand the first mapping and inspect its triggering attributes and conditions.<figure class="figure" data-source-page="242"><button type="button" data-lightbox data-caption="Workflow mapping criteria"><img src="assets/images/rev35/p242-1.png" alt="Workflow mapping criteria" width="1255" height="793" loading="lazy"></button><figcaption>Workflow mapping criteria <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Explore the available logic without saving changes. Select <strong>Reset</strong> when finished. A workflow runs only when an incident matches its mapping.</div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>You can identify the actions in an existing workflow and the conditions that trigger it; no mapping changes are saved.</p></div></div>
+
+    </div>
+
+  </article>
+</section>
+
+
+
+  <!-- =========================================================
+       LAB COMPLETION
+       ========================================================= -->
+
+  <div class="callout success">
+
+    <div class="callout-symbol">✓</div>
+
+    <div>
+
+      <div class="callout-title">
+        Lab 11 complete
+      </div>
+
+      <p>
+        You have completed the activities defined for
+        <strong>Manage Incidents with Workflow Automation</strong>.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PREVIOUS / NEXT
+       ========================================================= -->
+
+  <div class="page-nav">
+
+    <a href="lab-10.html"><small>Previous</small><strong>Lab 10 ←</strong></a>
+
+    <a class="next" href="index.html#contents"><small>Next</small><strong>Course index →</strong></a>
+
+  </div>
+
+
+  <footer class="footer guide-footer">
+    <span class="footer-author">Author: <strong>Rupak Dey</strong></span>
+    <span class="footer-course">Adapted EDU-202 Lab Guide</span>
+  </footer>
+
+</div>
+</main>
+
+
+<a
+  class="floating-logo"
+  href="#main"
+  aria-label="Back to top"
+>
+  <img
+    src="assets/images/shared/zscaler-logo.svg"
+    alt="Zscaler"
+  >
+</a>
+
+
+<dialog class="modal" id="image-modal">
+
+  <img alt="Expanded lab screenshot">
+
+  <div class="modal-bar">
+
+    <span data-modal-caption></span>
+
+    <button
+      class="modal-close"
+      data-modal-close
+    >
+      Close
+    </button>
+
+  </div>
+
+</dialog>
+
+
+<!-- Course data must load before the reusable site behavior. -->
+<script src="assets/js/course-data.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

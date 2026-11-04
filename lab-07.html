@@ -1,90 +1,411 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 7 — Zero Trust Browser ZPA | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-07"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 7</strong> / Zero Trust Browser ZPA</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 7 · Hands-on</div><h1>Zero Trust Browser ZPA</h1><p>Apply ZPA Browser Isolation to the DVWA private application. You will build a render-only profile, target DVWA with an isolation policy, and compare user behavior before and after isolation.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Create an Isolation Profile configured for render-only access.</li><li>Create an Isolation Policy that applies the profile to a specific application segment.</li><li>Validate that users can view content in isolation, but cannot perform restricted actions.</li></ul></div></section><section class="task" id="task-7-1">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="description"
+    content="Unofficial EDU-202 web lab guide — Lab 7: Configure Cloud Application Monitoring"
+  >
+
+  <title>
+    Lab 7 — Configure Cloud Application Monitoring | EDU-202
+  </title>
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/images/shared/favicon.svg"
+  >
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    try {
+      const t = localStorage.getItem('edu202-rev35-theme');
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <!-- Render verified menu paths using templates/components/navigation-path.html.
+       Search Menu keywords retain their separate search-hint styling. -->
+</head>
+
+
+<body
+  data-page="lab-07"
+  data-course-id="EDU-202"
+  data-storage-prefix="edu202-rev35"
+>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Built by site.js -->
+<div id="course-nav"></div>
+
+
+<header class="topbar">
+
+  <div class="topbar-left">
+
+    <button
+      class="icon-btn mobile-menu"
+      data-menu-toggle
+      aria-label="Open course navigation"
+    >☰</button>
+
+    <div class="breadcrumb">
+      <a href="index.html">EDU-202</a>
+      /
+      <strong>Lab 7</strong>
+      /
+      Configure Cloud Application Monitoring
+    </div>
+
+  </div>
+
+
+  <div class="topbar-actions">
+
+    <div class="global-search">
+
+      <input
+        id="global-search-input"
+        type="search"
+        placeholder="Search labs or tasks…"
+        aria-label="Search course"
+      >
+
+      <div
+        id="global-search-results"
+        class="global-search-results"
+      ></div>
+
+    </div>
+
+
+    <button
+      class="icon-btn"
+      data-theme-toggle
+      aria-label="Toggle dark or light mode"
+    >
+      <span data-theme-icon>☾</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="main" id="main">
+<div class="content">
+
+
+  <!-- =========================================================
+       LAB HERO
+
+       Important:
+       The description must use the full available page width.
+       ========================================================= -->
+
+  <section class="lab-hero">
+
+    <div>
+
+      <div class="eyebrow">
+        Lab 7 · Hands-on
+      </div>
+
+      <h1>Configure Cloud Application Monitoring</h1>
+
+      <p>Create a ZDX end-user collection and Mail Server application with Web and Cloud Path probes.</p>
+
+      <div class="lab-facts">
+        <span class="fact">
+          <strong>3 tasks</strong>
+        </span>
+
+        <span class="fact">Approx. 20 minutes</span>
+
+        
+
+        <span class="fact">Dedicated tenant</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       LAB OBJECTIVES
+
+       Rewrite source objectives concisely.
+       Do not paste long scenario text.
+       ========================================================= -->
+
+  <section class="section">
+
+    <div class="section-head stacked">
+      <div class="eyebrow">Lab objectives</div>
+      <h2>What you will accomplish</h2>
+    </div>
+
+    <div class="card pad">
+      <ul class="clean-list">
+        <li>Create the Custom Application end-user collection.</li><li>Monitor mail.google.com using Web and Cloud Path probes.</li><li>Enable the application and allow time for metrics to arrive.</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       OPTIONAL TECHNICAL EXPLAINER
+
+       Insert only when it materially improves learner understanding.
+
+       Use:
+         templates/components/technical-explainer.html
+
+       Keep it visually separate from hands-on instructions.
+       ========================================================= -->
+
+  
+
+
+  <!-- =========================================================
+       TASKS
+
+       Every task must use templates/components/task.html.
+
+       Required rules:
+       - simple numbered steps only
+       - no PDF a/b/c/i/ii hierarchy
+       - configuration tables where useful
+       - screenshot immediately after the step it illustrates
+       - current navigation or Search Menu keyword
+       - Expected Result at the end of every task
+       ========================================================= -->
+
+  <!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-7-1">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">7.1</div>
-      <div><h2>Create the Isolation Profile</h2><p>Build the render-only isolation profile used for the private application.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="7.1"> Mark complete</label>
+
+      <div class="task-num">
+        7.1
+      </div>
+
+      <div>
+        <h2>Create the End-User Collection</h2>
+        <p>Choose the users and devices that will run the probes.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="7.1"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><div class="callout info"><div class="callout-symbol">i</div><div>
-      <div class="callout-title">Before you isolate DVWA</div><p>Open DVWA once before applying the isolation policy and note that copy/paste and file upload work normally. You will repeat the same actions after isolation is enabled.</p></div></div><ol class="steps"><li><div class="step-content">Open the Private Access <strong>Browser Isolation Profiles</strong> page and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Isolation profile</strong></div></div></li>
-<li><div class="step-content">Set <strong>Name = render_only_profile</strong> and continue. ZPA isolation profile names cannot include special characters and cannot duplicate ZIA isolation profile names.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Create the &lt;strong&gt;render_only_profile&lt;/strong&gt;.">
-        <img src="assets/images/reference/edu202-p142-x529.jpg" alt="ZPA isolation profile general settings">
-      </button>
-      <figcaption>Create the <strong>render_only_profile</strong>.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">On <strong>Company Settings</strong>, leave the defaults.</div></li>
-<li><div class="step-content">On the render-only settings page, enable <strong>View Office Files in Isolation</strong> only.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Enable the render-only behavior required by the lab.">
-        <img src="assets/images/reference/edu202-p144-x535.jpg" alt="ZPA isolation render-only settings">
-      </button>
-      <figcaption>Enable the render-only behavior required by the lab.</figcaption>
-    </figure><ol class="steps" start="5"><li><div class="step-content">On <strong>Regions</strong>, select all regions and continue.</div></li>
-<li><div class="step-content">On the Isolation Banner page, leave the defaults. Watermarking is optional.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Apply the profile to all isolation regions and keep the banner defaults.">
-        <img src="assets/images/reference/edu202-p146-x543.jpg" alt="ZPA isolation region and banner settings">
-      </button>
-      <figcaption>Apply the profile to all isolation regions and keep the banner defaults.</figcaption>
-    </figure><ol class="steps" start="7"><li><div class="step-content">Review the profile, select <strong>Save</strong>, and confirm <strong>render_only_profile</strong> appears in the profile list.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Confirm the render-only profile is created.">
-        <img src="assets/images/reference/edu202-p148-x551.jpg" alt="ZPA isolation profile list">
-      </button>
-      <figcaption>Confirm the render-only profile is created.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>The <strong>render_only_profile</strong> is ready to apply to a private application.</p></div></div></div>
+
+    <div class="task-body">
+
+      <div class="resource-locator"><div class="search-hint">Search Menu → <strong>Probes</strong></div><a href="https://help.zscaler.com/zdx/configuring-probe" target="_blank" rel="noopener noreferrer">Zscaler Help: Probes ↗</a></div><ol class="steps"><li><div class="step-content">In the end-user collection area, select <strong>Add</strong>. Configure the collection.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Custom Application</strong></td></tr><tr><td>Exclusion Criteria</td><td>User Groups, Users, Location Groups, Zscaler Locations, Departments and Devices: <strong>None</strong></td></tr><tr><td>Probing Criteria</td><td>User Groups, Users, Location Groups, Zscaler Locations, Departments and Devices: <strong>All</strong></td></tr></tbody></table></div><figure class="figure" data-source-page="141"><button type="button" data-lightbox data-caption="Custom Application collection settings"><img src="assets/images/rev35/p141-1.png" alt="Custom Application collection settings" width="1189" height="759" loading="lazy"></button><figcaption>Custom Application collection settings <span class="micro-note">Source example; use your session values.</span></figcaption></figure><figure class="figure" data-source-page="143"><button type="button" data-lightbox data-caption="Collection probing criteria"><img src="assets/images/rev35/p143-1.png" alt="Collection probing criteria" width="1261" height="757" loading="lazy"></button><figcaption>Collection probing criteria <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Select <strong>Add</strong> and verify <strong>Custom Application</strong> appears.<figure class="figure" data-source-page="144"><button type="button" data-lightbox data-caption="Saved end-user collection"><img src="assets/images/rev35/p144-1.png" alt="Saved end-user collection" width="1317" height="585" loading="lazy"></button><figcaption>Saved end-user collection <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>Custom Application exists with the source lab’s all-user probing scope and no exclusions.</p></div></div>
+
+    </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-7-2">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">7.2</div>
-      <div><h2>Create the Isolation Policy</h2><p>Apply the render-only profile to the DVWA application.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="7.2"> Mark complete</label>
+
+      <div class="task-num">
+        7.2
+      </div>
+
+      <div>
+        <h2>Create the Mail Server Application</h2>
+        <p>Add a custom application before configuring its probes.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="7.2"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Open <strong>Isolation Policy</strong> for Private Access and select <strong>Add</strong>.<div class="search-hint">Search menu → <strong>Isolation Policy</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Start a new ZPA isolation policy.">
-        <img src="assets/images/reference/edu202-p149-x554.jpg" alt="ZPA isolation policy page">
-      </button>
-      <figcaption>Start a new ZPA isolation policy.</figcaption>
-    </figure><ol class="steps" start="2"><li><div class="step-content">Configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Policy Name</td><td><strong>isolate_policy_render_only</strong></td></tr><tr><td>Isolation Profile</td><td><strong>render_only_profile</strong></td></tr><tr><td>Application criteria</td><td>Select the <strong>DVWA</strong> application segment</td></tr></tbody></table> Select <strong>Save</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Apply &lt;strong&gt;render_only_profile&lt;/strong&gt; to the DVWA application segment.">
-        <img src="assets/images/reference/edu202-p150-x557.jpg" alt="ZPA isolation policy settings">
-      </button>
-      <figcaption>Apply <strong>render_only_profile</strong> to the DVWA application segment.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Confirm <strong>isolate_policy_render_only</strong> appears in the policy list with DVWA in its criteria.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Verify the isolation policy is present and targets DVWA.">
-        <img src="assets/images/reference/edu202-p151-x560.jpg" alt="ZPA isolation policy list">
-      </button>
-      <figcaption>Verify the isolation policy is present and targets DVWA.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>DVWA is targeted by the render-only ZPA isolation policy.</p></div></div></div>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">Open the <strong>Custom Application</strong> collection and select <strong>Add Application</strong>.<figure class="figure" data-source-page="145"><button type="button" data-lightbox data-caption="Add an application to the collection"><img src="assets/images/rev35/p145-1.png" alt="Add an application to the collection" width="1317" height="585" loading="lazy"></button><figcaption>Add an application to the collection <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Configure the application and select <strong>Add</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server</strong></td></tr><tr><td>Status</td><td>Disabled initially</td></tr><tr><td>Application Type</td><td>Custom</td></tr></tbody></table></div><figure class="figure" data-source-page="146"><button type="button" data-lightbox data-caption="Mail Server custom application settings"><img src="assets/images/rev35/p146-1.png" alt="Mail Server custom application settings" width="1314" height="760" loading="lazy"></button><figcaption>Mail Server custom application settings <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Verify <strong>Mail Server</strong> appears under the collection. Keep it disabled until the Web probe is created in Task 7.3.</div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>Mail Server is listed under Custom Application, ready for probe configuration.</p></div></div>
+
+    </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-7-3">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">7.3</div>
-      <div><h2>Test and Verify</h2><p>Confirm that DVWA remains viewable while restricted actions are blocked.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="7.3"> Mark complete</label>
+
+      <div class="task-num">
+        7.3
+      </div>
+
+      <div>
+        <h2>Create Web and Cloud Path Probes</h2>
+        <p>Measure the web transaction and its network path.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="7.3"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Disconnect from Zscaler Client Connector to simulate a third-party browser-only user.</div></li>
-<li><div class="step-content">Open DVWA using either <span class="value">dvwa.patraining.safemarch.com</span> or the DVWA External Domain from <strong>Browser Access</strong>. Authenticate through the IdP if prompted.<div class="search-hint">Search menu → <strong>Browser Access</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open DVWA as a browser-only user after the isolation policy is active.">
-        <img src="assets/images/reference/edu202-p152-x564.jpg" alt="DVWA through ZPA Browser Isolation">
-      </button>
-      <figcaption>Open DVWA as a browser-only user after the isolation policy is active.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Sign in to DVWA and repeat the actions you tested before isolation: copy/paste text and attempt a file upload/download or print action.</div></li>
-<li><div class="step-content">Confirm the application remains viewable, but restricted actions such as download, upload, copy, paste, and print are unavailable.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Verify the isolated DVWA session remains usable for viewing.">
-        <img src="assets/images/reference/edu202-p153-x568.jpg" alt="DVWA isolated session">
-      </button>
-      <figcaption>Verify the isolated DVWA session remains usable for viewing.</figcaption>
-    </figure><figure class="figure">
-      <button data-lightbox data-caption="Restricted data-transfer actions should be unavailable in the isolated session.">
-        <img src="assets/images/reference/edu202-p153-x570.jpg" alt="DVWA render-only restrictions">
-      </button>
-      <figcaption>Restricted data-transfer actions should be unavailable in the isolated session.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>DVWA opens through Browser Isolation and is usable for viewing, while the configured data-transfer actions are restricted.</p></div></div></div>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">Under <strong>Mail Server</strong>, select <strong>Add Probe → End User Web → Next</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server_Web</strong></td></tr><tr><td>Application</td><td>Mail Server</td></tr><tr><td>Run Frequency</td><td>5 minutes</td></tr><tr><td>Destination URL</td><td><strong>https://mail.google.com</strong></td></tr><tr><td>Probing Criteria</td><td>Users, User Groups, Locations, Location Groups, Departments, OS: All</td></tr><tr><td>Exclusion Criteria</td><td>Same fields: None</td></tr><tr><td>Number of Attempts</td><td>2</td></tr><tr><td>Timeout</td><td>60 seconds</td></tr><tr><td>Follow Redirect / Maximum redirect</td><td>Enabled / 5</td></tr></tbody></table></div><figure class="figure" data-source-page="150"><button type="button" data-lightbox data-caption="Web probe frequency and destination"><img src="assets/images/rev35/p150-1.png" alt="Web probe frequency and destination" width="1096" height="778" loading="lazy"></button><figcaption>Web probe frequency and destination <span class="micro-note">Source example; use your session values.</span></figcaption></figure><figure class="figure" data-source-page="152"><button type="button" data-lightbox data-caption="Web probe additional parameters"><img src="assets/images/rev35/p152-1.png" alt="Web probe additional parameters" width="1102" height="775" loading="lazy"></button><figcaption>Web probe additional parameters <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Review and <strong>Submit</strong>. Edit <strong>Mail Server</strong>, set <strong>Status → Enabled</strong>, then <strong>Update</strong>.<figure class="figure" data-source-page="155"><button type="button" data-lightbox data-caption="Enable the monitored application"><img src="assets/images/rev35/p155-1.png" alt="Enable the monitored application" width="1341" height="778" loading="lazy"></button><figcaption>Enable the monitored application <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Select <strong>Add Probe → End User Cloud Path → Next</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server_Cloud</strong></td></tr><tr><td>Status / Application</td><td>Enabled / Mail Server</td></tr><tr><td>Probe Type</td><td>Cloud Path</td></tr><tr><td>Follow Web Probe</td><td>Mail Server_Web</td></tr><tr><td>Run Frequency</td><td>5 minutes</td></tr><tr><td>Cloud Path Host</td><td><strong>mail.google.com</strong></td></tr><tr><td>Probing Criteria</td><td>Users, User Groups, Locations, Location Groups, Departments, Devices: All</td></tr><tr><td>Exclusion Criteria</td><td>Same fields: None</td></tr><tr><td>Protocol</td><td>ICMP</td></tr><tr><td>Packet Count</td><td>5</td></tr><tr><td>Interval / Timeout</td><td>1000 ms / 1000 ms</td></tr></tbody></table></div><figure class="figure" data-source-page="157"><button type="button" data-lightbox data-caption="Cloud Path probe and associated Web probe"><img src="assets/images/rev35/p157-1.png" alt="Cloud Path probe and associated Web probe" width="1012" height="778" loading="lazy"></button><figcaption>Cloud Path probe and associated Web probe <span class="micro-note">Source example; use your session values.</span></figcaption></figure><figure class="figure" data-source-page="160"><button type="button" data-lightbox data-caption="ICMP Cloud Path probe settings"><img src="assets/images/rev35/p160-1.png" alt="ICMP Cloud Path probe settings" width="1066" height="728" loading="lazy"></button><figcaption>ICMP Cloud Path probe settings <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Review and <strong>Submit</strong>. Confirm both probes appear under <strong>Mail Server</strong>.<figure class="figure" data-source-page="161"><button type="button" data-lightbox data-caption="Web and Cloud Path probes listed"><img src="assets/images/rev35/p161-2.png" alt="Web and Cloud Path probes listed" width="1327" height="540" loading="lazy"></button><figcaption>Web and Cloud Path probes listed <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol><div class="callout info"><div class="callout-symbol">i</div><div><div class="callout-title">Metrics are not immediate</div><p>The source allows 15–30 minutes for a new application’s metrics, depending on the ZDX plan. Keep ZCC enrolled and connected for user/device data. Continue to Lab 8 and return later to review results.</p></div></div>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>Mail Server is enabled with Mail Server_Web and Mail Server_Cloud at five-minute intervals; metrics appear after eligible devices run the probes.</p></div></div>
+
+    </div>
+
   </article>
 </section>
-<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 7 complete</div><p>You have completed the activities defined for <strong>Zero Trust Browser ZPA</strong>.</p></div></div><div class="page-nav"><a href="lab-06.html"><small>Previous</small><strong>← Lab 6</strong></a><a class="next" href="lab-08.html"><small>Next</small><strong>Lab 8 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>
+
+
+
+  <!-- =========================================================
+       LAB COMPLETION
+       ========================================================= -->
+
+  <div class="callout success">
+
+    <div class="callout-symbol">✓</div>
+
+    <div>
+
+      <div class="callout-title">
+        Lab 7 complete
+      </div>
+
+      <p>
+        You have completed the activities defined for
+        <strong>Configure Cloud Application Monitoring</strong>.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PREVIOUS / NEXT
+       ========================================================= -->
+
+  <div class="page-nav">
+
+    <a href="lab-06.html"><small>Previous</small><strong>Lab 6 ←</strong></a>
+
+    <a class="next" href="lab-08.html"><small>Next</small><strong>Lab 8 →</strong></a>
+
+  </div>
+
+
+  <footer class="footer guide-footer">
+    <span class="footer-author">Author: <strong>Rupak Dey</strong></span>
+    <span class="footer-course">Adapted EDU-202 Lab Guide</span>
+  </footer>
+
+</div>
+</main>
+
+
+<a
+  class="floating-logo"
+  href="#main"
+  aria-label="Back to top"
+>
+  <img
+    src="assets/images/shared/zscaler-logo.svg"
+    alt="Zscaler"
+  >
+</a>
+
+
+<dialog class="modal" id="image-modal">
+
+  <img alt="Expanded lab screenshot">
+
+  <div class="modal-bar">
+
+    <span data-modal-caption></span>
+
+    <button
+      class="modal-close"
+      data-modal-close
+    >
+      Close
+    </button>
+
+  </div>
+
+</dialog>
+
+
+<!-- Course data must load before the reusable site behavior. -->
+<script src="assets/js/course-data.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

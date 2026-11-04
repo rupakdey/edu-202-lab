@@ -1,37 +1,39 @@
-# EDU-202 Engineer Web Lab Guide
+# EDU-202 Engineer web lab guide — October 2026 Rev. 3.5
 
-Unofficial web adaptation of **Zscaler for Users – Engineer (EDU-202) Hands-on Lab Guide**, using the established EDU-200 Web Guide v7 visual and interaction pattern.
+First rebuilt web edition, November 4, 2026. Independent web adaptation by Rupak Dey.
 
-## Included
+- 11 labs / 42 tasks; SDC checkpoint before Lab 10.
+- Instructor-provided CloudShare access link/passphrase; corporate email required.
+- Tenant and SDC accounts from CloudShare Credentials; no invitation/credential emails.
+- Short numbered steps, configuration tables, contextual screenshots and Expected Results.
+- Latest course-neutral runtime, sidebar/search, theme controls, local progress and lightbox.
+- Existing Browser Access, PRA and AppProtection explanations retained. Additional
+  topics are deferred until review of this first version.
 
-- Introduction and course index
-- 12 lab pages / 45 tasks
-- Persistent left navigation and global search
-- Light/dark mode
-- Browser-local task completion tracking
-- Copy controls for commands and reusable values
-- Screenshot lightbox
-- Source-guide screenshots used as configuration references
-- Dedicated SDC checkpoint before Lab 11
-- Static HTML/CSS/JS suitable for GitHub Pages
+Extract the full archive into a new folder and open `index.html`. For a local server:
 
-## Navigation note
+```sh
+python3 -m http.server 8000
+```
 
-The June 2026 source guide contains screenshots and paths from an earlier Experience Center menu layout. This first export preserves the source task intent and feature names. Where menu placement differs, learners should use Experience Center **Search Menu** to locate the named feature. A later revision can normalize individual paths after current-tenant validation.
+Open `http://localhost:8000`. Browser progress is stored locally using the new
+`edu202-rev35` prefix so the previous course numbering does not corrupt completion.
 
-## Publishing
+This replaces the old 12-lab edition. Avoid overlaying it over the old directory;
+remove obsolete root `lab-12.html` when updating an existing repository.
 
-Place `index.html` at the repository root and deploy the repository root with GitHub Pages.
+See [REV35_REBUILD_REVIEW.md](REV35_REBUILD_REVIEW.md) for the source corrections,
+retained explainers, validation results and delivery limitations. Source screenshot
+provenance is in `SOURCE_SCREENSHOT_MAP.json`; current Help/keyword choices are in
+`NAVIGATION_REFERENCE_REVIEW.json`.
 
-## Disclaimer
+Checks:
 
-This is an independent learning adaptation authored by Rupak Dey and is not an official Zscaler lab guide. Source materials contain Zscaler proprietary/confidential notices; confirm redistribution rights before publishing outside an authorized audience.
-- v2 design pass: rebuilt the Introduction, Experience Center navigation section, session/environment foundation, and Course Index to match the EDU-200 v7 visual pattern. Lab content was intentionally left unchanged.
-- v3 design pass: fixed the Course Index Quick filter presentation and rebuilt the SDC checkpoint to match the EDU-200 v7 layout, including the watermarked sample SDC credential image.
-- v4 content pass: Labs 1–2 were rewritten to use the EDU-200 v7 task pattern (simple numbered steps, concise language, settings tables, contextual screenshots, and Expected Result callouts). Screenshots are now placed immediately after the steps they support.
-- v5 content pass: Labs 3–12 now use the same task-writing pattern approved for Labs 1–2. PDF-style nested numbering was removed, instructions were shortened/rephrased, settings were converted to tables where useful, and screenshots were moved directly beside the steps they support.
-- v6 design pass: screenshots no longer exceed 1120px (two-thirds of the 1680px maximum guide width), remain centered, and are never upscaled beyond their native resolution.
-- v7 concept pass: added concise technical explainers for ZPA Browser Access (including Managed vs Unmanaged/Custom certificates) and Privileged Remote Access (PRA core objects and policies).
-- v8 technical-context pass: Lab 6 now explains ZIA vs ZPA inspection behavior, AppProtection purpose and control/profile/policy model, OWASP CRS and paranoia levels, application-centric threat protection, and the DVWA 10.0.0.128 DNS/backend flow using the supplied diagram.
-- v9 navigation/design pass: lab subtitles now use the full content width. Experience Center navigation was audited across Labs 2–12 and concise Search menu keywords were added wherever a learner opens a policy/resource page. Lab 4 now uses 'Isolation profile', explicit URL Filtering navigation, and 'Cloud App Policy'.
-- v10 cosmetic pass: normal explanatory paragraphs under stacked section headings now use the full available page width instead of wrapping at a fixed text-width limit.
+```sh
+python scripts/test_template_access.py
+python scripts/validate.py --strict
+```
+
+No live-tenant walkthrough or successful browser interaction pass was performed.
+No hosting/deployment changes were made. Keep source-derived course content within
+its authorized training audience.

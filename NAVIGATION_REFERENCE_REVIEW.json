@@ -1,0 +1,137 @@
+[
+  {
+    "keyword": "App Connector Groups",
+    "url": "https://help.zscaler.com/zpa/configuring-app-connector-groups",
+    "path": [
+      "Infrastructure",
+      "Private Access",
+      "Component",
+      "App Connector Groups"
+    ]
+  },
+  {
+    "keyword": "App Connectors",
+    "url": "https://help.zscaler.com/zpa/configuring-connectors",
+    "path": [
+      "Infrastructure",
+      "Private Access",
+      "Component",
+      "App Connectors"
+    ]
+  },
+  {
+    "keyword": "Application Segments",
+    "url": "https://help.zscaler.com/zpa/configuring-defined-application-segments",
+    "path": [
+      "Policies",
+      "Access Control",
+      "Private Applications",
+      "Defined Application Segments"
+    ]
+  },
+  {
+    "keyword": "Browser Access",
+    "url": "https://help.zscaler.com/zpa/configuring-defined-application-segments",
+    "path": []
+  },
+  {
+    "keyword": "Log Receivers",
+    "url": "https://help.zscaler.com/zpa/about-log-streaming",
+    "path": []
+  },
+  {
+    "keyword": "Privileged Portals",
+    "url": "https://help.zscaler.com/zpa/understanding-privileged-remote-access",
+    "path": []
+  },
+  {
+    "keyword": "Privileged Consoles",
+    "url": "https://help.zscaler.com/zpa/understanding-privileged-remote-access",
+    "path": []
+  },
+  {
+    "keyword": "Privileged Credentials",
+    "url": "https://help.zscaler.com/zpa/about-privileged-credentials",
+    "path": []
+  },
+  {
+    "keyword": "Credentials Policy",
+    "url": "https://help.zscaler.com/zpa/configuring-privileged-credentials-policies",
+    "path": []
+  },
+  {
+    "keyword": "Consoles Policy",
+    "url": "https://help.zscaler.com/zpa/configuring-privileged-capabilities-policies",
+    "path": [
+      "Zero Trust Browser",
+      "Privileged Remote Access",
+      "Consoles Policy"
+    ]
+  },
+  {
+    "keyword": "Live Sessions",
+    "url": "https://help.zscaler.com/zpa/understanding-privileged-remote-access",
+    "path": []
+  },
+  {
+    "keyword": "Protection Profiles",
+    "url": "https://help.zscaler.com/zpa/edit-appprotection-profiles",
+    "path": [
+      "Private Access",
+      "Private App Protection",
+      "Policy",
+      "Protection Profiles",
+      "AppProtection"
+    ]
+  },
+  {
+    "keyword": "App Protection Policy",
+    "url": "https://help.zscaler.com/zpa/about-appprotection-policy",
+    "path": []
+  },
+  {
+    "keyword": "Isolation Profile",
+    "url": "https://help.zscaler.com/legacy-zero-trust-browser/creating-isolation-profiles-zpa",
+    "path": []
+  },
+  {
+    "keyword": "Isolation Policy",
+    "url": "https://help.zscaler.com/zpa/configuring-isolation-policies",
+    "path": []
+  },
+  {
+    "keyword": "Probes",
+    "url": "https://help.zscaler.com/zdx/configuring-probe",
+    "path": []
+  },
+  {
+    "keyword": "Alerts Overview",
+    "url": "https://help.zscaler.com/zdx/configuring-alert-rule",
+    "path": []
+  },
+  {
+    "keyword": "Diagnostics",
+    "url": "https://help.zscaler.com/zdx/starting-new-diagnostics-session",
+    "path": []
+  },
+  {
+    "keyword": "API Clients",
+    "url": "https://help.zscaler.com/legacy-authentication-service/adding-api-client",
+    "path": []
+  },
+  {
+    "keyword": "Data Explorer",
+    "url": "https://help.zscaler.com/zdx/configuring-data-explorer-views",
+    "path": []
+  },
+  {
+    "keyword": "Incidents",
+    "url": "https://help.zscaler.com/workflow-automation/managing-incidents",
+    "path": []
+  },
+  {
+    "keyword": "Workflow Templates",
+    "url": "https://help.zscaler.com/workflow-automation/understanding-workflows-workflow-automation",
+    "path": []
+  }
+]

@@ -1,96 +1,366 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 8 — Configure Cloud Applications Monitoring | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-08"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 8</strong> / Configure Cloud Applications Monitoring</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 8 · Hands-on</div><h1>Configure Cloud Applications Monitoring</h1><p>Create repeatable ZDX monitoring for a custom cloud application. You will define the target population, create a Mail Server application, and attach both Web and Cloud Path probes.</p><div class="lab-facts"><span class="fact"><strong>3 tasks</strong></span><span class="fact"><strong>Approx. 20 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Configure a custom application in your Experience Center tenant to monitor a business-critical SaaS</li><li>destination used by remote users.</li><li>Provision a Web probe for the custom application to measure application availability and web transaction</li><li>performance.</li><li>Provision a Cloud Path probe for the same custom application to measure network-path health (latency,</li><li>loss, and jitter).</li></ul></div></section><section class="task" id="task-8-1">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="description"
+    content="Unofficial EDU-202 web lab guide — Lab 8: Configure ZDX Alerts and Diagnostics"
+  >
+
+  <title>
+    Lab 8 — Configure ZDX Alerts and Diagnostics | EDU-202
+  </title>
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/images/shared/favicon.svg"
+  >
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    try {
+      const t = localStorage.getItem('edu202-rev35-theme');
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <!-- Render verified menu paths using templates/components/navigation-path.html.
+       Search Menu keywords retain their separate search-hint styling. -->
+</head>
+
+
+<body
+  data-page="lab-08"
+  data-course-id="EDU-202"
+  data-storage-prefix="edu202-rev35"
+>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Built by site.js -->
+<div id="course-nav"></div>
+
+
+<header class="topbar">
+
+  <div class="topbar-left">
+
+    <button
+      class="icon-btn mobile-menu"
+      data-menu-toggle
+      aria-label="Open course navigation"
+    >☰</button>
+
+    <div class="breadcrumb">
+      <a href="index.html">EDU-202</a>
+      /
+      <strong>Lab 8</strong>
+      /
+      Configure ZDX Alerts and Diagnostics
+    </div>
+
+  </div>
+
+
+  <div class="topbar-actions">
+
+    <div class="global-search">
+
+      <input
+        id="global-search-input"
+        type="search"
+        placeholder="Search labs or tasks…"
+        aria-label="Search course"
+      >
+
+      <div
+        id="global-search-results"
+        class="global-search-results"
+      ></div>
+
+    </div>
+
+
+    <button
+      class="icon-btn"
+      data-theme-toggle
+      aria-label="Toggle dark or light mode"
+    >
+      <span data-theme-icon>☾</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="main" id="main">
+<div class="content">
+
+
+  <!-- =========================================================
+       LAB HERO
+
+       Important:
+       The description must use the full available page width.
+       ========================================================= -->
+
+  <section class="lab-hero">
+
+    <div>
+
+      <div class="eyebrow">
+        Lab 8 · Hands-on
+      </div>
+
+      <h1>Configure ZDX Alerts and Diagnostics</h1>
+
+      <p>Create a threshold-based alert for Mail Server and run a five-minute Deep Tracing session.</p>
+
+      <div class="lab-facts">
+        <span class="fact">
+          <strong>2 tasks</strong>
+        </span>
+
+        <span class="fact">Approx. 15 minutes</span>
+
+        
+
+        <span class="fact">Dedicated tenant</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       LAB OBJECTIVES
+
+       Rewrite source objectives concisely.
+       Do not paste long scenario text.
+       ========================================================= -->
+
+  <section class="section">
+
+    <div class="section-head stacked">
+      <div class="eyebrow">Lab objectives</div>
+      <h2>What you will accomplish</h2>
+    </div>
+
+    <div class="card pad">
+      <ul class="clean-list">
+        <li>Configure application alert thresholds and notification settings.</li><li>Check hostname collection when diagnostics are unavailable.</li><li>Run Deep Tracing and inspect the completed report.</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       OPTIONAL TECHNICAL EXPLAINER
+
+       Insert only when it materially improves learner understanding.
+
+       Use:
+         templates/components/technical-explainer.html
+
+       Keep it visually separate from hands-on instructions.
+       ========================================================= -->
+
+  
+
+
+  <!-- =========================================================
+       TASKS
+
+       Every task must use templates/components/task.html.
+
+       Required rules:
+       - simple numbered steps only
+       - no PDF a/b/c/i/ii hierarchy
+       - configuration tables where useful
+       - screenshot immediately after the step it illustrates
+       - current navigation or Search Menu keyword
+       - Expected Result at the end of every task
+       ========================================================= -->
+
+  <!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-8-1">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">8.1</div>
-      <div><h2>Add an End User Collection</h2><p>Define which users and devices will run the custom probes.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="8.1"> Mark complete</label>
+
+      <div class="task-num">
+        8.1
+      </div>
+
+      <div>
+        <h2>Create the Mail Server Alert Rule</h2>
+        <p>Configure the source lab’s alert thresholds.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="8.1"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, sign in to the Experience Center with your assigned tenant account.</div></li>
-<li><div class="step-content">Open ZDX <strong>End User</strong> probe collections.<div class="search-hint">Search menu → <strong>End User</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open the End User probe collection configuration.">
-        <img src="assets/images/reference/edu202-p155-x575.jpg" alt="ZDX End User collection page">
-      </button>
-      <figcaption>Open the End User probe collection configuration.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Select <strong>Add</strong> and create an End User Collection named <strong>Custom Application</strong>.</div></li>
-<li><div class="step-content">Leave all <strong>Exclusion Criteria</strong> as <strong>None</strong>.</div></li>
-<li><div class="step-content">Set all <strong>Probing Criteria</strong> to All: User Groups, Users, Location Groups, Zscaler Locations, Departments, and Devices. Select <strong>Add</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Configure the &lt;strong&gt;Custom Application&lt;/strong&gt; End User Collection.">
-        <img src="assets/images/reference/edu202-p157-x582.jpg" alt="ZDX End User collection settings">
-      </button>
-      <figcaption>Configure the <strong>Custom Application</strong> End User Collection.</figcaption>
-    </figure><figure class="figure">
-      <button data-lightbox data-caption="Use All for the probing criteria and None for exclusion criteria.">
-        <img src="assets/images/reference/edu202-p158-x585.jpg" alt="ZDX probing and exclusion criteria">
-      </button>
-      <figcaption>Use All for the probing criteria and None for exclusion criteria.</figcaption>
-    </figure><ol class="steps" start="6"><li><div class="step-content">Confirm <strong>Custom Application</strong> appears in the End User Collections list.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Verify the End User Collection is created.">
-        <img src="assets/images/reference/edu202-p160-x591.jpg" alt="ZDX End User collection list">
-      </button>
-      <figcaption>Verify the End User Collection is created.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>The <strong>Custom Application</strong> End User Collection targets all users/devices with no exclusions.</p></div></div></div>
+
+    <div class="task-body">
+
+      <div class="resource-locator"><div class="search-hint">Search Menu → <strong>Alerts Overview</strong></div><a href="https://help.zscaler.com/zdx/configuring-alert-rule" target="_blank" rel="noopener noreferrer">Zscaler Help: Alerts Overview ↗</a></div><ol class="steps"><li><div class="step-content">Sign in to <strong>Zscaler Client Connector</strong> on Corp Client PC 1 with the student account. In the Experience Center open <strong>Alerts Overview → Alert Rules and Templates</strong>, then <strong>Add Alert Rule</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>alert_mailserver</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Type</td><td>Application</td></tr><tr><td>Severity</td><td>Medium</td></tr></tbody></table></div><figure class="figure" data-source-page="164"><button type="button" data-lightbox data-caption="Mail Server alert rule settings"><img src="assets/images/rev35/p164-1.png" alt="Mail Server alert rule settings" width="1300" height="601" loading="lazy"></button><figcaption>Mail Server alert rule settings <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">On <strong>Filters</strong>, choose <strong>Mail Server</strong> and its <strong>Mail Server_Web</strong> probe. Add a <strong>Geolocation</strong> filter and choose the relevant region (the source example is Asia → India).<figure class="figure" data-source-page="165"><button type="button" data-lightbox data-caption="Application and probe filter"><img src="assets/images/rev35/p165-1.png" alt="Application and probe filter" width="1057" height="577" loading="lazy"></button><figcaption>Application and probe filter <span class="micro-note">Source example; use your session values.</span></figcaption></figure><figure class="figure" data-source-page="166"><button type="button" data-lightbox data-caption="Geolocation filter"><img src="assets/images/rev35/p166-1.png" alt="Geolocation filter" width="1066" height="604" loading="lazy"></button><figcaption>Geolocation filter <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Set the criteria, then continue to Actions.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Page Fetch Time</td><td><strong>&gt; 800 ms</strong></td></tr><tr><td>ZDX Score</td><td><strong>&lt; 50</strong></td></tr></tbody></table></div><figure class="figure" data-source-page="167"><button type="button" data-lightbox data-caption="Alert criteria thresholds"><img src="assets/images/rev35/p167-1.png" alt="Alert criteria thresholds" width="1053" height="610" loading="lazy"></button><figcaption>Alert criteria thresholds <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Configure notification settings, review, and <strong>Save</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Alert Only if Repeated</td><td>2</td></tr><tr><td>Number of Active Devices</td><td>1</td></tr><tr><td>Alert Delivery Method</td><td>Email</td></tr><tr><td>Alert recipient</td><td>Use an instructor-approved test address; example: learner@example.com</td></tr></tbody></table></div><figure class="figure" data-source-page="168"><button type="button" data-lightbox data-caption="Alert actions and delivery settings"><img src="assets/images/rev35/p168-1.png" alt="Alert actions and delivery settings" width="1045" height="691" loading="lazy"></button><figcaption>Alert actions and delivery settings <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Confirm <strong>alert_mailserver</strong> is listed. The rule need not trigger during the session; an example.com placeholder will not deliver a real email.<figure class="figure" data-source-page="170"><button type="button" data-lightbox data-caption="Saved alert rule"><img src="assets/images/rev35/p170-1.png" alt="Saved alert rule" width="1300" height="517" loading="lazy"></button><figcaption>Saved alert rule <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>alert_mailserver is saved with the configured application, region, thresholds and action settings; no alert delivery is claimed unless a real qualifying event is observed.</p></div></div>
+
+    </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-8-2">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">8.2</div>
-      <div><h2>Create a Custom Application</h2><p>Create the Mail Server application that the probes will monitor.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="8.2"> Mark complete</label>
+
+      <div class="task-num">
+        8.2
+      </div>
+
+      <div>
+        <h2>Run a Diagnostic Session</h2>
+        <p>Capture a five-minute view of the student device and probes.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="8.2"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Open the <strong>Custom Application</strong> collection from Task 8.1 and select <strong>Add Application</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Add an application to the Custom Application End User Collection.">
-        <img src="assets/images/reference/edu202-p161-x594.jpg" alt="ZDX Add Application">
-      </button>
-      <figcaption>Add an application to the Custom Application End User Collection.</figcaption>
-    </figure><ol class="steps" start="2"><li><div class="step-content">Create the application:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server</strong></td></tr><tr><td>Status</td><td><strong>Disabled</strong></td></tr><tr><td>Application Type</td><td><strong>Custom</strong></td></tr></tbody></table> Select <strong>Add</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Create the disabled custom application named &lt;strong&gt;Mail Server&lt;/strong&gt;.">
-        <img src="assets/images/reference/edu202-p162-x597.jpg" alt="ZDX custom Mail Server application">
-      </button>
-      <figcaption>Create the disabled custom application named <strong>Mail Server</strong>.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Confirm <strong>Mail Server</strong> is listed under the collection.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Verify the Mail Server application is present.">
-        <img src="assets/images/reference/edu202-p163-x600.jpg" alt="ZDX Mail Server application list">
-      </button>
-      <figcaption>Verify the Mail Server application is present.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>The disabled <strong>Mail Server</strong> custom application exists and is ready for probe configuration.</p></div></div></div>
+
+    <div class="task-body">
+
+      <div class="resource-locator"><div class="search-hint">Search Menu → <strong>Diagnostics</strong></div><a href="https://help.zscaler.com/zdx/starting-new-diagnostics-session" target="_blank" rel="noopener noreferrer">Zscaler Help: Diagnostics ↗</a></div><ol class="steps"><li><div class="step-content">Select <strong>Start New Diagnostic Session</strong>. If unavailable, search <strong>User Privacy</strong>, enable <strong>Collect Machine Hostname Information</strong>, <strong>Save</strong>, refresh and return to Diagnostics.<figure class="figure" data-source-page="172"><button type="button" data-lightbox data-caption="Machine hostname collection setting"><img src="assets/images/rev35/p172-1.png" alt="Machine hostname collection setting" width="1231" height="786" loading="lazy"></button><figcaption>Machine hostname collection setting <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Configure the session and select <strong>Next</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>diagnostics_session_student&lt;StudentID&gt;</strong> (example: diagnostics_session_student000205)</td></tr><tr><td>User</td><td>Your student administrator user</td></tr><tr><td>Device</td><td>The enrolled device for that user</td></tr><tr><td>Mode / Duration</td><td><strong>Deep Tracing / 5 minutes</strong></td></tr></tbody></table></div><figure class="figure" data-source-page="173"><button type="button" data-lightbox data-caption="Diagnostic session user, device and duration"><img src="assets/images/rev35/p173-1.png" alt="Diagnostic session user, device and duration" width="1558" height="748" loading="lazy"></button><figcaption>Diagnostic session user, device and duration <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Choose <strong>Mail Server</strong> with <strong>Mail Server_Web</strong> and <strong>Mail Server_Cloud</strong>. Set <strong>Packet Loss = 20%</strong> and <strong>Latency = 10 ms</strong>, then <strong>Save</strong>.<figure class="figure" data-source-page="174"><button type="button" data-lightbox data-caption="Diagnostic probes and Cloud Path thresholds"><img src="assets/images/rev35/p174-1.png" alt="Diagnostic probes and Cloud Path thresholds" width="1141" height="723" loading="lazy"></button><figcaption>Diagnostic probes and Cloud Path thresholds <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Find the session in the progress table. After five minutes, return to <strong>History</strong> and select <strong>View</strong> for the completed session. Review the application, device and path results.<figure class="figure" data-source-page="177"><button type="button" data-lightbox data-caption="Completed diagnostic report"><img src="assets/images/rev35/p177-1.png" alt="Completed diagnostic report" width="1919" height="1079" loading="lazy"></button><figcaption>Completed diagnostic report <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>The diagnostic session completes and its report shows the selected student device, Web probe and Cloud Path data where available.</p></div></div>
+
+    </div>
+
   </article>
 </section>
-<section class="task" id="task-8-3">
-  <article class="card task-shell">
-    <header class="task-head">
-      <div class="task-num">8.3</div>
-      <div><h2>Create Custom Probes</h2><p>Add Web and Cloud Path probes to measure application and network experience.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="8.3"> Mark complete</label>
-    </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Under <strong>Mail Server</strong>, select <strong>Add Probe → End User Web</strong>, then select <strong>Next</strong>.</div></li>
-<li><div class="step-content">Configure the Web probe:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server_Web</strong></td></tr><tr><td>Application</td><td>Mail Server</td></tr><tr><td>Run Frequency</td><td>5 minutes</td></tr><tr><td>Probing Criteria</td><td>All users, groups, locations, location groups, departments, devices</td></tr><tr><td>Exclusion Criteria</td><td>None</td></tr><tr><td>Destination URL</td><td><span class='value'>https://mail.google.com</span></td></tr><tr><td>Number of Attempts</td><td>2</td></tr><tr><td>Timeout</td><td>60 seconds</td></tr><tr><td>Follow Redirect</td><td>Enabled</td></tr><tr><td>Maximum Redirects</td><td>5</td></tr></tbody></table> Continue through the wizard.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Create the &lt;strong&gt;Mail Server_Web&lt;/strong&gt; End User Web probe.">
-        <img src="assets/images/reference/edu202-p164-x603.jpg" alt="ZDX Mail Server web probe settings">
-      </button>
-      <figcaption>Create the <strong>Mail Server_Web</strong> End User Web probe.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Review the Web probe and select <strong>Submit</strong>.</div></li>
-<li><div class="step-content">Edit the <strong>Mail Server</strong> application, set <strong>Status = Enabled</strong>, and select <strong>Update</strong>. ZDX enables the associated Web probe automatically.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Submit the Web probe and enable the custom application.">
-        <img src="assets/images/reference/edu202-p170-x620.jpg" alt="ZDX web probe review and application enablement">
-      </button>
-      <figcaption>Submit the Web probe and enable the custom application.</figcaption>
-    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
-      <div class="callout-title">Metrics can take time</div><p>Depending on the ZDX plan and environment, a newly enabled application can take roughly <strong>15–30 minutes</strong> before metrics appear. Continue with the lab and return later if needed.</p></div></div><ol class="steps" start="5"><li><div class="step-content">Add a second probe: <strong>Add Probe → End User Cloud Path</strong>.</div></li>
-<li><div class="step-content">Configure the Cloud Path probe:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>Mail Server_Cloud</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Application</td><td>Mail Server</td></tr><tr><td>Probe Type</td><td>Cloud Path</td></tr><tr><td>Follow Web Probe</td><td><strong>Mail Server_Web</strong></td></tr><tr><td>Run Frequency</td><td>5 minutes</td></tr><tr><td>Probing Criteria</td><td>All</td></tr><tr><td>Exclusion Criteria</td><td>None</td></tr><tr><td>Protocol</td><td>ICMP</td></tr><tr><td>Packet Count</td><td>5</td></tr><tr><td>Interval</td><td>1000 ms</td></tr><tr><td>Timeout</td><td>1000 ms</td></tr><tr><td>Cloud Path Host</td><td><span class='value'>mail.google.com</span></td></tr></tbody></table></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Configure the &lt;strong&gt;Mail Server_Cloud&lt;/strong&gt; Cloud Path probe.">
-        <img src="assets/images/reference/edu202-p175-x635.jpg" alt="ZDX Mail Server cloud path probe">
-      </button>
-      <figcaption>Configure the <strong>Mail Server_Cloud</strong> Cloud Path probe.</figcaption>
-    </figure><ol class="steps" start="7"><li><div class="step-content">Review and select <strong>Submit</strong>. Confirm both <strong>Mail Server_Web</strong> and <strong>Mail Server_Cloud</strong> appear under Mail Server.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Confirm both Web and Cloud Path probes exist for Mail Server.">
-        <img src="assets/images/reference/edu202-p180-x650.jpg" alt="ZDX Mail Server probes list">
-      </button>
-      <figcaption>Confirm both Web and Cloud Path probes exist for Mail Server.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>Mail Server has an enabled Web probe and Cloud Path probe, providing application and network-path monitoring.</p></div></div></div>
-  </article>
-</section>
-<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 8 complete</div><p>You have completed the activities defined for <strong>Configure Cloud Applications Monitoring</strong>.</p></div></div><div class="page-nav"><a href="lab-07.html"><small>Previous</small><strong>← Lab 7</strong></a><a class="next" href="lab-09.html"><small>Next</small><strong>Lab 9 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>
+
+
+
+  <!-- =========================================================
+       LAB COMPLETION
+       ========================================================= -->
+
+  <div class="callout success">
+
+    <div class="callout-symbol">✓</div>
+
+    <div>
+
+      <div class="callout-title">
+        Lab 8 complete
+      </div>
+
+      <p>
+        You have completed the activities defined for
+        <strong>Configure ZDX Alerts and Diagnostics</strong>.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PREVIOUS / NEXT
+       ========================================================= -->
+
+  <div class="page-nav">
+
+    <a href="lab-07.html"><small>Previous</small><strong>Lab 7 ←</strong></a>
+
+    <a class="next" href="lab-09.html"><small>Next</small><strong>Lab 9 →</strong></a>
+
+  </div>
+
+
+  <footer class="footer guide-footer">
+    <span class="footer-author">Author: <strong>Rupak Dey</strong></span>
+    <span class="footer-course">Adapted EDU-202 Lab Guide</span>
+  </footer>
+
+</div>
+</main>
+
+
+<a
+  class="floating-logo"
+  href="#main"
+  aria-label="Back to top"
+>
+  <img
+    src="assets/images/shared/zscaler-logo.svg"
+    alt="Zscaler"
+  >
+</a>
+
+
+<dialog class="modal" id="image-modal">
+
+  <img alt="Expanded lab screenshot">
+
+  <div class="modal-bar">
+
+    <span data-modal-caption></span>
+
+    <button
+      class="modal-close"
+      data-modal-close
+    >
+      Close
+    </button>
+
+  </div>
+
+</dialog>
+
+
+<!-- Course data must load before the reusable site behavior. -->
+<script src="assets/js/course-data.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

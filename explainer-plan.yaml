@@ -1,0 +1,36 @@
+settings:
+  generation: specified_only
+  suggest_additional_topics: true
+  default_depth: standard
+  prefer_visuals: true
+explainers:
+- id: browser-access-explainer
+  enabled: true
+  lab: 2
+  topic: Why ZPA Browser Access exists
+  placement: lab_intro
+  depth: detailed
+  visual: flow_diagram
+  cover:
+  - Preserve the approved existing technical context
+  - Update references to the revised lab numbering
+- id: pra-explainer
+  enabled: true
+  lab: 4
+  topic: Privileged Remote Access in one view
+  placement: lab_intro
+  depth: detailed
+  visual: flow_diagram
+  cover:
+  - Preserve the approved existing technical context
+  - Update references to the revised lab numbering
+- id: appprotection-explainer
+  enabled: true
+  lab: 5
+  topic: What AppProtection adds to ZPA
+  placement: lab_intro
+  depth: detailed
+  visual: flow_diagram
+  cover:
+  - Preserve the approved existing technical context
+  - Update references to the revised lab numbering

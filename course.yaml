@@ -1,0 +1,23 @@
+course:
+  id: EDU-202
+  title: Zscaler for Users – Engineer
+  subtitle: October 2026 · Rev. 3.5
+  author: Rupak Dey
+labs:
+  count: 11
+  sdc_start: 10
+environment:
+  dedicated_tenant: true
+  platform: cloudshare
+  access_link_source: instructor
+  passphrase_source: instructor
+  login_email: corporate
+  personal_email_allowed: false
+  invitation_email_sent: false
+  credential_email_sent: false
+  tenant_credentials_source: cloudshare_credentials_panel
+  sdc_credentials_source: cloudshare_credentials_panel
+design:
+  screenshot_max_page_fraction: 0.6667
+  allow_image_upscaling: false
+  current_navigation: true

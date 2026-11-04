@@ -1,123 +1,366 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 1 — Connect to the Virtual Lab | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-01"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 1</strong> / Connect to the Virtual Lab</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 1 · Hands-on</div><h1>Connect to the Virtual Lab</h1><p>Connect to your Skytap environment, start the lab systems, and sign in to the Zscaler Experience Center. You will also become familiar with the Skytap credential helper used throughout the course.</p><div class="lab-facts"><span class="fact"><strong>2 tasks</strong></span><span class="fact"><strong>Approx. 10 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Connect to Skytap and start all VMs.</li><li>Use the Skytap sign-in and credential helper.</li><li>Sign in to the Experience Center with your session-specific Zscaler administrator account.</li></ul></div></section><section class="task" id="task-1-1">
-  <article class="card task-shell">
-    <header class="task-head">
-      <div class="task-num">1.1</div>
-      <div>
-        <h2>Test Your Lab Access and Start Your Environment</h2>
-        <p>Open your assigned Skytap pod and confirm the lab systems are ready.</p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="description"
+    content="Unofficial EDU-202 web lab guide — Lab 1: Connect to the Virtual Lab"
+  >
+
+  <title>
+    Lab 1 — Connect to the Virtual Lab | EDU-202
+  </title>
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/images/shared/favicon.svg"
+  >
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    try {
+      const t = localStorage.getItem('edu202-rev35-theme');
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <!-- Render verified menu paths using templates/components/navigation-path.html.
+       Search Menu keywords retain their separate search-hint styling. -->
+</head>
+
+
+<body
+  data-page="lab-01"
+  data-course-id="EDU-202"
+  data-storage-prefix="edu202-rev35"
+>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Built by site.js -->
+<div id="course-nav"></div>
+
+
+<header class="topbar">
+
+  <div class="topbar-left">
+
+    <button
+      class="icon-btn mobile-menu"
+      data-menu-toggle
+      aria-label="Open course navigation"
+    >☰</button>
+
+    <div class="breadcrumb">
+      <a href="index.html">EDU-202</a>
+      /
+      <strong>Lab 1</strong>
+      /
+      Connect to the Virtual Lab
+    </div>
+
+  </div>
+
+
+  <div class="topbar-actions">
+
+    <div class="global-search">
+
+      <input
+        id="global-search-input"
+        type="search"
+        placeholder="Search labs or tasks…"
+        aria-label="Search course"
+      >
+
+      <div
+        id="global-search-results"
+        class="global-search-results"
+      ></div>
+
+    </div>
+
+
+    <button
+      class="icon-btn"
+      data-theme-toggle
+      aria-label="Toggle dark or light mode"
+    >
+      <span data-theme-icon>☾</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="main" id="main">
+<div class="content">
+
+
+  <!-- =========================================================
+       LAB HERO
+
+       Important:
+       The description must use the full available page width.
+       ========================================================= -->
+
+  <section class="lab-hero">
+
+    <div>
+
+      <div class="eyebrow">
+        Lab 1 · Hands-on
       </div>
-      <label class="task-complete"><input type="checkbox" data-task-check="1.1"> Mark complete</label>
+
+      <h1>Connect to the Virtual Lab</h1>
+
+      <p>Join the CloudShare session, locate the lab VMs and credentials, and open the Experience Center.</p>
+
+      <div class="lab-facts">
+        <span class="fact">
+          <strong>2 tasks</strong>
+        </span>
+
+        <span class="fact">Approx. 10 minutes</span>
+
+        
+
+        <span class="fact">Dedicated tenant</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       LAB OBJECTIVES
+
+       Rewrite source objectives concisely.
+       Do not paste long scenario text.
+       ========================================================= -->
+
+  <section class="section">
+
+    <div class="section-head stacked">
+      <div class="eyebrow">Lab objectives</div>
+      <h2>What you will accomplish</h2>
+    </div>
+
+    <div class="card pad">
+      <ul class="clean-list">
+        <li>Join using the instructor-shared CloudShare link and passphrase.</li><li>Use CloudShare clipboard controls and find the assigned tenant credentials.</li><li>Sign in to the Experience Center and locate features with Search Menu.</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       OPTIONAL TECHNICAL EXPLAINER
+
+       Insert only when it materially improves learner understanding.
+
+       Use:
+         templates/components/technical-explainer.html
+
+       Keep it visually separate from hands-on instructions.
+       ========================================================= -->
+
+  
+
+
+  <!-- =========================================================
+       TASKS
+
+       Every task must use templates/components/task.html.
+
+       Required rules:
+       - simple numbered steps only
+       - no PDF a/b/c/i/ii hierarchy
+       - configuration tables where useful
+       - screenshot immediately after the step it illustrates
+       - current navigation or Search Menu keyword
+       - Expected Result at the end of every task
+       ========================================================= -->
+
+  <!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-1-1">
+  <article class="card task-shell">
+
+    <header class="task-head">
+
+      <div class="task-num">
+        1.1
+      </div>
+
+      <div>
+        <h2>Open Your CloudShare Environment</h2>
+        <p>Join the session and prepare your lab workspace.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="1.1"
+        >
+        Mark complete
+      </label>
+
     </header>
 
     <div class="task-body">
-      <ol class="steps">
-        <li><div class="step-content"><strong>Open the unique Skytap Portal URL</strong> supplied with your lab access information.</div></li>
-        <li><div class="step-content"><strong>Select all VMs</strong> and click <strong>Play</strong> if they are not already running.</div></li>
-        <li><div class="step-content"><strong>Wait for the lab systems to show Running.</strong> The environment starts systems in stages, so this can take a few minutes.</div></li>
-      </ol>
 
-      <figure class="figure compact">
-        <button data-lightbox data-caption="Skytap pod with the EDU-202 lab systems selected and running.">
-          <img src="assets/images/lab01/skytap-vms-running.jpg" alt="Skytap portal showing the EDU-202 virtual machines">
-        </button>
-        <figcaption>Select the required VMs and confirm they reach the <strong>Running</strong> state.</figcaption>
-      </figure>
+      <ol class="steps"><li><div class="step-content">Open the <strong>CloudShare link</strong> displayed or shared by your instructor. Join with your <strong>corporate/work email</strong> and the instructor-provided <strong>passphrase</strong>. Free personal accounts such as Gmail or Yahoo are not accepted.<figure class="figure" data-source-page="14"><button type="button" data-lightbox data-caption="CloudShare session sign-in"><img src="assets/images/rev35/p014-1.png" alt="CloudShare session sign-in" width="1125" height="752" loading="lazy"></button><figcaption>CloudShare session sign-in <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Wait for the environment to become ready. Select <strong>Go to My VM List</strong> or <strong>VM List</strong>, then open <strong>Corp Client PC 1</strong>.<figure class="figure" data-source-page="17"><button type="button" data-lightbox data-caption="Open the assigned VM list"><img src="assets/images/rev35/p017-1.png" alt="Open the assigned VM list" width="878" height="433" loading="lazy"></button><figcaption>Open the assigned VM list <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">To transfer text into a VM, choose <strong>Actions → Send Text</strong>, paste the text, then select <strong>Send</strong>.<figure class="figure" data-source-page="19"><button type="button" data-lightbox data-caption="CloudShare Actions menu and Send Text"><img src="assets/images/rev35/p019-1.png" alt="CloudShare Actions menu and Send Text" width="1887" height="946" loading="lazy"></button><figcaption>CloudShare Actions menu and Send Text <span class="micro-note">Source example; use your session values.</span></figcaption></figure><figure class="figure" data-source-page="20"><button type="button" data-lightbox data-caption="Send text to the selected VM"><img src="assets/images/rev35/p020-1.png" alt="Send text to the selected VM" width="1919" height="942" loading="lazy"></button><figcaption>Send text to the selected VM <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Use <strong>Lab Guide</strong> for course materials. Open <strong>Credentials</strong> in the left panel for your tenant and SDC accounts. No invitation or separate credential email is sent.<figure class="figure credentials-reference-figure"><button type="button" data-lightbox data-caption="Sample only — CloudShare Credentials"><img src="assets/images/samples/sample-cloudshare-credentials.png" alt="Sample CloudShare Credentials panel" loading="lazy"></button><figcaption>Sample only. Use the credentials in your assigned environment.</figcaption></figure></div></li></ol>
 
-      <ol class="steps" start="4">
-        <li><div class="step-content">Open a VM from the Skytap portal. In the VM toolbar, select the <strong>Keys / Credentials</strong> icon to view the stored username and password.</div></li>
-        <li><div class="step-content">Use the <strong>Insert Credentials</strong> control when you want Skytap to enter the stored credentials into the foreground sign-in screen.</div></li>
-      </ol>
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>Your CloudShare workspace opens, the lab VM is available, and you can locate the tenant and SDC credential sections.</p></div></div>
 
-      <figure class="figure compact">
-        <button data-lightbox data-caption="Skytap credential helper. Use the insert control beside the credential to populate the active VM sign-in screen.">
-          <img src="assets/images/lab01/skytap-keys-credentials.jpg" alt="Skytap Keys and Credentials panel">
-        </button>
-        <figcaption>Skytap credential helper.</figcaption>
-      </figure>
-
-      <div class="callout success">
-        <div class="callout-symbol">✓</div>
-        <div>
-          <div class="callout-title">Expected result</div>
-          <p>The Skytap pod is accessible, the required lab systems are running, and you can open a VM and use the Skytap credential helper.</p>
-        </div>
-      </div>
     </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-1-2">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">1.2</div>
+
+      <div class="task-num">
+        1.2
+      </div>
+
       <div>
         <h2>Sign In to the Experience Center</h2>
-        <p>Sign in to Corp: Client PC 1 and authenticate to your assigned Zscaler tenant.</p>
+        <p>Use the assigned tenant administrator account from the lab workstation.</p>
       </div>
-      <label class="task-complete"><input type="checkbox" data-task-check="1.2"> Mark complete</label>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="1.2"
+        >
+        Mark complete
+      </label>
+
     </header>
 
     <div class="task-body">
-      <ol class="steps">
-        <li><div class="step-content">Open <strong>Corp: Client PC 1</strong>. Use the Skytap toolbar to send <strong>Ctrl-Alt-Del</strong>, then open the <strong>Keys / Credentials</strong> panel and insert the local <strong>student</strong> credentials.</div></li>
-      </ol>
 
-      <figure class="figure compact">
-        <button data-lightbox data-caption="Corp Client PC 1 sign-in with the Skytap credential helper open.">
-          <img src="assets/images/lab01/client-pc-insert-credentials.jpg" alt="Windows student sign-in with the Skytap credentials panel">
-        </button>
-        <figcaption>Use the Skytap credential helper to sign in to the Windows client.</figcaption>
-      </figure>
+      <ol class="steps"><li><div class="step-content">In <strong>Corp Client PC 1</strong>, use <strong>Actions → Send Password</strong> to unlock Windows. The local username is <strong>student</strong>; the documented lab default is <strong>Admin-123!</strong>.<figure class="figure" data-source-page="25"><button type="button" data-lightbox data-caption="Send Password to unlock the lab workstation"><img src="assets/images/rev35/p025-1.png" alt="Send Password to unlock the lab workstation" width="1909" height="940" loading="lazy"></button><figcaption>Send Password to unlock the lab workstation <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Open <a href="https://console.zscaler.com" target="_blank" rel="noopener noreferrer">https://console.zscaler.com ↗</a>. Sign in with the administrator account and password shown in <strong>CloudShare → Credentials</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Username format</td><td><strong>student@&lt;Student FQDN&gt;</strong></td></tr><tr><td>Example only</td><td>student@zs000834.labtenant.com</td></tr><tr><td>Password</td><td>Assigned tenant password from CloudShare</td></tr></tbody></table></div><figure class="figure" data-source-page="26"><button type="button" data-lightbox data-caption="Experience Center administrator sign-in"><img src="assets/images/rev35/p026-1.png" alt="Experience Center administrator sign-in" width="937" height="710" loading="lazy"></button><figcaption>Experience Center administrator sign-in <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Explore the available services. Use <strong>Search Menu</strong> to find the features named in the following labs.<figure class="figure" data-source-page="28"><button type="button" data-lightbox data-caption="Use Search Menu in the Experience Center"><img src="assets/images/rev35/p028-1.png" alt="Use Search Menu in the Experience Center" width="1374" height="328" loading="lazy"></button><figcaption>Use Search Menu in the Experience Center <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
 
-      <ol class="steps" start="2">
-        <li><div class="step-content">Open a browser and go to <span class="inline-value"><span class="value">https://console.zscaler.com</span><button class="copy-btn" data-copy="https://console.zscaler.com">Copy</button></span>.</div></li>
-        <li><div class="step-content">Sign in with your session-specific Zscaler administrator account:
-          <table class="credentials settings-table">
-            <tbody>
-              <tr><td>Username</td><td><span class="value">student@&lt;Student FQDN&gt;</span></td></tr>
-              <tr><td>Password</td><td>Use the password supplied with your lab access information.</td></tr>
-            </tbody>
-          </table>
-          <p class="micro-note"><strong>&lt;Student FQDN&gt;</strong> is your assigned lab domain. Example: if the FQDN is <span class="value">zs000834.labtenant.com</span>, the login is <span class="value">student@zs000834.labtenant.com</span>.</p>
-        </div></li>
-      </ol>
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>The Experience Center opens for your assigned tenant and Search Menu is available.</p></div></div>
 
-      <figure class="figure compact">
-        <button data-lightbox data-caption="ZIdentity sign-in page using the learner-specific student administrator account.">
-          <img src="assets/images/lab01/zidentity-student-signin.jpg" alt="Zscaler identity sign-in page with student administrator account">
-        </button>
-        <figcaption>Authenticate with the administrator account assigned to your session.</figcaption>
-      </figure>
-
-      <ol class="steps" start="4">
-        <li><div class="step-content">Confirm that the <strong>Experience Center</strong> loads successfully.</div></li>
-      </ol>
-
-      <figure class="figure">
-        <button data-lightbox data-caption="Experience Center landing page from the source guide. Menu placement may differ in the current Experience Center; use the written guidance in this web edition.">
-          <img src="assets/images/lab01/experience-center-dashboard.jpg" alt="Experience Center landing page">
-        </button>
-        <figcaption>Experience Center landing page. <span>Source UI shown; menu placement may differ in the current navigation.</span></figcaption>
-      </figure>
-
-      <ol class="steps" start="5">
-        <li><div class="step-content">Use <strong>Search menu</strong> when you need to locate a feature quickly. This is especially useful when a source-guide screenshot shows the older menu layout.</div></li>
-      </ol>
-
-      <figure class="figure">
-        <button data-lightbox data-caption="Experience Center Search menu. Search by feature name when menu placement differs from the source guide.">
-          <img src="assets/images/lab01/experience-center-search.jpg" alt="Experience Center search menu">
-        </button>
-        <figcaption>Search by feature name instead of relying on an older screenshot's menu location.</figcaption>
-      </figure>
-
-      <div class="callout success">
-        <div class="callout-symbol">✓</div>
-        <div>
-          <div class="callout-title">Expected result</div>
-          <p>You are signed in to <strong>Corp: Client PC 1</strong> and the Zscaler Experience Center for your assigned tenant is open and ready for the remaining labs.</p>
-        </div>
-      </div>
     </div>
+
   </article>
 </section>
-<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 1 complete</div><p>You have completed the activities defined for <strong>Connect to the Virtual Lab</strong>.</p></div></div><div class="page-nav"><a href="index.html"><small>Previous</small><strong>← Course Index</strong></a><a class="next" href="lab-02.html"><small>Next</small><strong>Lab 2 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>
+
+
+
+  <!-- =========================================================
+       LAB COMPLETION
+       ========================================================= -->
+
+  <div class="callout success">
+
+    <div class="callout-symbol">✓</div>
+
+    <div>
+
+      <div class="callout-title">
+        Lab 1 complete
+      </div>
+
+      <p>
+        You have completed the activities defined for
+        <strong>Connect to the Virtual Lab</strong>.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PREVIOUS / NEXT
+       ========================================================= -->
+
+  <div class="page-nav">
+
+    <a href="index.html"><small>Previous</small><strong>Introduction ←</strong></a>
+
+    <a class="next" href="lab-02.html"><small>Next</small><strong>Lab 2 →</strong></a>
+
+  </div>
+
+
+  <footer class="footer guide-footer">
+    <span class="footer-author">Author: <strong>Rupak Dey</strong></span>
+    <span class="footer-course">Adapted EDU-202 Lab Guide</span>
+  </footer>
+
+</div>
+</main>
+
+
+<a
+  class="floating-logo"
+  href="#main"
+  aria-label="Back to top"
+>
+  <img
+    src="assets/images/shared/zscaler-logo.svg"
+    alt="Zscaler"
+  >
+</a>
+
+
+<dialog class="modal" id="image-modal">
+
+  <img alt="Expanded lab screenshot">
+
+  <div class="modal-bar">
+
+    <span data-modal-caption></span>
+
+    <button
+      class="modal-close"
+      data-modal-close
+    >
+      Close
+    </button>
+
+  </div>
+
+</dialog>
+
+
+<!-- Course data must load before the reusable site behavior. -->
+<script src="assets/js/course-data.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

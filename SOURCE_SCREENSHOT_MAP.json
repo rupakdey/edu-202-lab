@@ -1,0 +1,632 @@
+[
+  {
+    "file": "assets/images/rev35/p014-1.png",
+    "pdf_page": 14,
+    "caption": "CloudShare session sign-in"
+  },
+  {
+    "file": "assets/images/rev35/p017-1.png",
+    "pdf_page": 17,
+    "caption": "Open the assigned VM list"
+  },
+  {
+    "file": "assets/images/rev35/p019-1.png",
+    "pdf_page": 19,
+    "caption": "CloudShare Actions menu and Send Text"
+  },
+  {
+    "file": "assets/images/rev35/p020-1.png",
+    "pdf_page": 20,
+    "caption": "Send text to the selected VM"
+  },
+  {
+    "file": "assets/images/rev35/p025-1.png",
+    "pdf_page": 25,
+    "caption": "Send Password to unlock the lab workstation"
+  },
+  {
+    "file": "assets/images/rev35/p026-1.png",
+    "pdf_page": 26,
+    "caption": "Experience Center administrator sign-in"
+  },
+  {
+    "file": "assets/images/rev35/p028-1.png",
+    "pdf_page": 28,
+    "caption": "Use Search Menu in the Experience Center"
+  },
+  {
+    "file": "assets/images/rev35/p031-1.png",
+    "pdf_page": 31,
+    "caption": "OnPrem App Connector Group settings"
+  },
+  {
+    "file": "assets/images/rev35/p033-1.png",
+    "pdf_page": 33,
+    "caption": "Saved App Connector Group"
+  },
+  {
+    "file": "assets/images/rev35/p034-1.png",
+    "pdf_page": 34,
+    "caption": "Corp ZPA Connector console"
+  },
+  {
+    "file": "assets/images/rev35/p037-1.png",
+    "pdf_page": 37,
+    "caption": "Enroll an App Connector into OnPrem"
+  },
+  {
+    "file": "assets/images/rev35/p039-1.png",
+    "pdf_page": 39,
+    "caption": "App Connector details"
+  },
+  {
+    "file": "assets/images/rev35/p041-1.png",
+    "pdf_page": 41,
+    "caption": "HVAC Browser Access and port settings"
+  },
+  {
+    "file": "assets/images/rev35/p042-1.png",
+    "pdf_page": 42,
+    "caption": "Segment and server group association"
+  },
+  {
+    "file": "assets/images/rev35/p045-1.png",
+    "pdf_page": 45,
+    "caption": "Allow HVAC rule criteria"
+  },
+  {
+    "file": "assets/images/rev35/p046-2.png",
+    "pdf_page": 46,
+    "caption": "Copy the HVAC External Domain"
+  },
+  {
+    "file": "assets/images/rev35/p047-1.png",
+    "pdf_page": 47,
+    "caption": "DNS lookup of the external Browser Access domain"
+  },
+  {
+    "file": "assets/images/rev35/p048-1.png",
+    "pdf_page": 48,
+    "caption": "HVAC opened through Browser Access"
+  },
+  {
+    "file": "assets/images/rev35/p051-1.png",
+    "pdf_page": 51,
+    "caption": "Log Streaming Connector console"
+  },
+  {
+    "file": "assets/images/rev35/p053-1.png",
+    "pdf_page": 53,
+    "caption": "Enroll the dedicated connector in Log Streaming"
+  },
+  {
+    "file": "assets/images/rev35/p055-1.png",
+    "pdf_page": 55,
+    "caption": "Log receiver destination and connector group"
+  },
+  {
+    "file": "assets/images/rev35/p056-1.png",
+    "pdf_page": 56,
+    "caption": "User Activity CSV log stream"
+  },
+  {
+    "file": "assets/images/rev35/p057-1.png",
+    "pdf_page": 57,
+    "caption": "Review the log receiver"
+  },
+  {
+    "file": "assets/images/rev35/p059-1.png",
+    "pdf_page": 59,
+    "caption": "SSH to SIEM application segment"
+  },
+  {
+    "file": "assets/images/rev35/p062-1.png",
+    "pdf_page": 62,
+    "caption": "Access policy for SSH to SIEM"
+  },
+  {
+    "file": "assets/images/rev35/p064-1.png",
+    "pdf_page": 64,
+    "caption": "Client Connector service status"
+  },
+  {
+    "file": "assets/images/rev35/p065-1.png",
+    "pdf_page": 65,
+    "caption": "SSH connection and live syslog output"
+  },
+  {
+    "file": "assets/images/rev35/p069-1.png",
+    "pdf_page": 69,
+    "caption": "PRA RDP application and port configuration"
+  },
+  {
+    "file": "assets/images/rev35/p073-1.png",
+    "pdf_page": 73,
+    "caption": "Allow access to the PRA Windows target"
+  },
+  {
+    "file": "assets/images/rev35/p075-1.png",
+    "pdf_page": 75,
+    "caption": "PRA policy includes both administrative targets"
+  },
+  {
+    "file": "assets/images/rev35/p077-1.png",
+    "pdf_page": 77,
+    "caption": "Managed Privileged Portal settings"
+  },
+  {
+    "file": "assets/images/rev35/p078-1.png",
+    "pdf_page": 78,
+    "caption": "Associate PRA applications with the portal"
+  },
+  {
+    "file": "assets/images/rev35/p079-1.png",
+    "pdf_page": 79,
+    "caption": "PRA console protocol and connection settings"
+  },
+  {
+    "file": "assets/images/rev35/p082-1.png",
+    "pdf_page": 82,
+    "caption": "Saved privileged consoles"
+  },
+  {
+    "file": "assets/images/rev35/p084-1.png",
+    "pdf_page": 84,
+    "caption": "Privileged Windows credential"
+  },
+  {
+    "file": "assets/images/rev35/p086-1.png",
+    "pdf_page": 86,
+    "caption": "RDP privileged credential policy"
+  },
+  {
+    "file": "assets/images/rev35/p087-1.png",
+    "pdf_page": 87,
+    "caption": "SSH privileged credential policy"
+  },
+  {
+    "file": "assets/images/rev35/p090-1.png",
+    "pdf_page": 90,
+    "caption": "Consoles Policy capabilities and application criteria"
+  },
+  {
+    "file": "assets/images/rev35/p091-1.png",
+    "pdf_page": 91,
+    "caption": "Launch the privileged portal"
+  },
+  {
+    "file": "assets/images/rev35/p092-2.png",
+    "pdf_page": 92,
+    "caption": "Browser-based Windows RDP session"
+  },
+  {
+    "file": "assets/images/rev35/p093-2.png",
+    "pdf_page": 93,
+    "caption": "RDP session in Live Sessions"
+  },
+  {
+    "file": "assets/images/rev35/p094-1.png",
+    "pdf_page": 94,
+    "caption": "Browser-based SSH session to the Log Streaming Connector"
+  },
+  {
+    "file": "assets/images/rev35/p095-1.png",
+    "pdf_page": 95,
+    "caption": "SSH session shown in Live Sessions"
+  },
+  {
+    "file": "assets/images/rev35/p098-1.png",
+    "pdf_page": 98,
+    "caption": "DVWA Browser Access and AppProtection options"
+  },
+  {
+    "file": "assets/images/rev35/p099-1.png",
+    "pdf_page": 99,
+    "caption": "DVWA managed domain and backend port"
+  },
+  {
+    "file": "assets/images/rev35/p101-1.png",
+    "pdf_page": 101,
+    "caption": "DVWA access rule"
+  },
+  {
+    "file": "assets/images/rev35/p103-1.png",
+    "pdf_page": 103,
+    "caption": "Create a host record in the internal DNS zone"
+  },
+  {
+    "file": "assets/images/rev35/p104-1.png",
+    "pdf_page": 104,
+    "caption": "DVWA DNS A record"
+  },
+  {
+    "file": "assets/images/rev35/p106-1.png",
+    "pdf_page": 106,
+    "caption": "DVWA record in the DNS zone"
+  },
+  {
+    "file": "assets/images/rev35/p107-1.png",
+    "pdf_page": 107,
+    "caption": "AppProtection profile name"
+  },
+  {
+    "file": "assets/images/rev35/p108-1.png",
+    "pdf_page": 108,
+    "caption": "OWASP control selection"
+  },
+  {
+    "file": "assets/images/rev35/p109-1.png",
+    "pdf_page": 109,
+    "caption": "Additional AppProtection controls"
+  },
+  {
+    "file": "assets/images/rev35/p111-1.png",
+    "pdf_page": 111,
+    "caption": "Paranoia Level 3"
+  },
+  {
+    "file": "assets/images/rev35/p112-1.png",
+    "pdf_page": 112,
+    "caption": "Allow overrides for report-mode testing"
+  },
+  {
+    "file": "assets/images/rev35/p114-1.png",
+    "pdf_page": 114,
+    "caption": "Inspect policy linked to DVWA and its profile"
+  },
+  {
+    "file": "assets/images/rev35/p116-1.png",
+    "pdf_page": 116,
+    "caption": "DVWA application sign-in"
+  },
+  {
+    "file": "assets/images/rev35/p117-1.png",
+    "pdf_page": 117,
+    "caption": "Initialize the DVWA training database"
+  },
+  {
+    "file": "assets/images/rev35/p118-1.png",
+    "pdf_page": 118,
+    "caption": "SQL injection permitted during Allow-mode testing"
+  },
+  {
+    "file": "assets/images/rev35/p119-1.png",
+    "pdf_page": 119,
+    "caption": "Stored XSS test in the training application"
+  },
+  {
+    "file": "assets/images/rev35/p120-1.png",
+    "pdf_page": 120,
+    "caption": "AppProtection violations and transaction details"
+  },
+  {
+    "file": "assets/images/rev35/p122-1.png",
+    "pdf_page": 122,
+    "caption": "Change AppProtection actions to Block"
+  },
+  {
+    "file": "assets/images/rev35/p123-1.png",
+    "pdf_page": 123,
+    "caption": "Blocked request example"
+  },
+  {
+    "file": "assets/images/rev35/p124-1.png",
+    "pdf_page": 124,
+    "caption": "AppProtection Block events"
+  },
+  {
+    "file": "assets/images/rev35/p128-1.png",
+    "pdf_page": 128,
+    "caption": "ZPA isolation profile name"
+  },
+  {
+    "file": "assets/images/rev35/p130-1.png",
+    "pdf_page": 130,
+    "caption": "Render-only interaction controls"
+  },
+  {
+    "file": "assets/images/rev35/p131-1.png",
+    "pdf_page": 131,
+    "caption": "Regions selected for the profile"
+  },
+  {
+    "file": "assets/images/rev35/p133-1.png",
+    "pdf_page": 133,
+    "caption": "Review the render-only profile"
+  },
+  {
+    "file": "assets/images/rev35/p135-1.png",
+    "pdf_page": 135,
+    "caption": "Isolation policy for DVWA"
+  },
+  {
+    "file": "assets/images/rev35/p137-1.png",
+    "pdf_page": 137,
+    "caption": "DVWA running in an isolated session"
+  },
+  {
+    "file": "assets/images/rev35/p141-1.png",
+    "pdf_page": 141,
+    "caption": "Custom Application collection settings"
+  },
+  {
+    "file": "assets/images/rev35/p143-1.png",
+    "pdf_page": 143,
+    "caption": "Collection probing criteria"
+  },
+  {
+    "file": "assets/images/rev35/p144-1.png",
+    "pdf_page": 144,
+    "caption": "Saved end-user collection"
+  },
+  {
+    "file": "assets/images/rev35/p145-1.png",
+    "pdf_page": 145,
+    "caption": "Add an application to the collection"
+  },
+  {
+    "file": "assets/images/rev35/p146-1.png",
+    "pdf_page": 146,
+    "caption": "Mail Server custom application settings"
+  },
+  {
+    "file": "assets/images/rev35/p150-1.png",
+    "pdf_page": 150,
+    "caption": "Web probe frequency and destination"
+  },
+  {
+    "file": "assets/images/rev35/p152-1.png",
+    "pdf_page": 152,
+    "caption": "Web probe additional parameters"
+  },
+  {
+    "file": "assets/images/rev35/p155-1.png",
+    "pdf_page": 155,
+    "caption": "Enable the monitored application"
+  },
+  {
+    "file": "assets/images/rev35/p157-1.png",
+    "pdf_page": 157,
+    "caption": "Cloud Path probe and associated Web probe"
+  },
+  {
+    "file": "assets/images/rev35/p160-1.png",
+    "pdf_page": 160,
+    "caption": "ICMP Cloud Path probe settings"
+  },
+  {
+    "file": "assets/images/rev35/p161-2.png",
+    "pdf_page": 161,
+    "caption": "Web and Cloud Path probes listed"
+  },
+  {
+    "file": "assets/images/rev35/p164-1.png",
+    "pdf_page": 164,
+    "caption": "Mail Server alert rule settings"
+  },
+  {
+    "file": "assets/images/rev35/p165-1.png",
+    "pdf_page": 165,
+    "caption": "Application and probe filter"
+  },
+  {
+    "file": "assets/images/rev35/p166-1.png",
+    "pdf_page": 166,
+    "caption": "Geolocation filter"
+  },
+  {
+    "file": "assets/images/rev35/p167-1.png",
+    "pdf_page": 167,
+    "caption": "Alert criteria thresholds"
+  },
+  {
+    "file": "assets/images/rev35/p168-1.png",
+    "pdf_page": 168,
+    "caption": "Alert actions and delivery settings"
+  },
+  {
+    "file": "assets/images/rev35/p170-1.png",
+    "pdf_page": 170,
+    "caption": "Saved alert rule"
+  },
+  {
+    "file": "assets/images/rev35/p172-1.png",
+    "pdf_page": 172,
+    "caption": "Machine hostname collection setting"
+  },
+  {
+    "file": "assets/images/rev35/p173-1.png",
+    "pdf_page": 173,
+    "caption": "Diagnostic session user, device and duration"
+  },
+  {
+    "file": "assets/images/rev35/p174-1.png",
+    "pdf_page": 174,
+    "caption": "Diagnostic probes and Cloud Path thresholds"
+  },
+  {
+    "file": "assets/images/rev35/p177-1.png",
+    "pdf_page": 177,
+    "caption": "Completed diagnostic report"
+  },
+  {
+    "file": "assets/images/rev35/p180-1.png",
+    "pdf_page": 180,
+    "caption": "Postman training workspace"
+  },
+  {
+    "file": "assets/images/rev35/p182-2.png",
+    "pdf_page": 182,
+    "caption": "Find the verified Zscaler OneAPI collection"
+  },
+  {
+    "file": "assets/images/rev35/p184-1.png",
+    "pdf_page": 184,
+    "caption": "Fork the collection and environment"
+  },
+  {
+    "file": "assets/images/rev35/p188-1.png",
+    "pdf_page": 188,
+    "caption": "API client information and Secret authentication"
+  },
+  {
+    "file": "assets/images/rev35/p190-1.png",
+    "pdf_page": 190,
+    "caption": "API client resource roles"
+  },
+  {
+    "file": "assets/images/rev35/p192-2.png",
+    "pdf_page": 192,
+    "caption": "ZPA Customer ID in Linked Services"
+  },
+  {
+    "file": "assets/images/rev35/p197-1.png",
+    "pdf_page": 197,
+    "caption": "Successful device-list GET response"
+  },
+  {
+    "file": "assets/images/rev35/p198-1.png",
+    "pdf_page": 198,
+    "caption": "Device details CSV response"
+  },
+  {
+    "file": "assets/images/rev35/p201-1.png",
+    "pdf_page": 201,
+    "caption": "Enrollment certificate IDs in the API response"
+  },
+  {
+    "file": "assets/images/rev35/p205-1.png",
+    "pdf_page": 205,
+    "caption": "App Connector Group created through the API"
+  },
+  {
+    "file": "assets/images/rev35/p206-1.png",
+    "pdf_page": 206,
+    "caption": "New group visible in the administrator portal"
+  },
+  {
+    "file": "assets/images/rev35/p209-1.png",
+    "pdf_page": 209,
+    "caption": "Configured Data Explorer views"
+  },
+  {
+    "file": "assets/images/rev35/p210-1.png",
+    "pdf_page": 210,
+    "caption": "Data Explorer query options"
+  },
+  {
+    "file": "assets/images/rev35/p211-1.png",
+    "pdf_page": 211,
+    "caption": "Data Explorer result charts"
+  },
+  {
+    "file": "assets/images/rev35/p213-1.png",
+    "pdf_page": 213,
+    "caption": "Available ZDX QBR reports"
+  },
+  {
+    "file": "assets/images/rev35/p215-1.png",
+    "pdf_page": 215,
+    "caption": "Downloaded QBR PowerPoint example"
+  },
+  {
+    "file": "assets/images/rev35/p216-1.png",
+    "pdf_page": 216,
+    "caption": "Predefined report list"
+  },
+  {
+    "file": "assets/images/rev35/p218-1.png",
+    "pdf_page": 218,
+    "caption": "Cloud Path End-to-End report filters and graph"
+  },
+  {
+    "file": "assets/images/rev35/p219-1.png",
+    "pdf_page": 219,
+    "caption": "Copy an active ZDX Snapshot link"
+  },
+  {
+    "file": "assets/images/rev35/p220-1.png",
+    "pdf_page": 220,
+    "caption": "View-only snapshot indicator"
+  },
+  {
+    "file": "assets/images/rev35/p222-1.png",
+    "pdf_page": 222,
+    "caption": "Log out of the previous ZCC identity"
+  },
+  {
+    "file": "assets/images/rev35/p223-1.png",
+    "pdf_page": 223,
+    "caption": "SDC IT identity and service status"
+  },
+  {
+    "file": "assets/images/rev35/p224-1.png",
+    "pdf_page": 224,
+    "caption": "DLP incident list"
+  },
+  {
+    "file": "assets/images/rev35/p225-1.png",
+    "pdf_page": 225,
+    "caption": "Incident overview and violation details"
+  },
+  {
+    "file": "assets/images/rev35/p226-1.png",
+    "pdf_page": 226,
+    "caption": "Violation content and trigger data"
+  },
+  {
+    "file": "assets/images/rev35/p227-1.png",
+    "pdf_page": 227,
+    "caption": "Incident status action"
+  },
+  {
+    "file": "assets/images/rev35/p228-1.png",
+    "pdf_page": 228,
+    "caption": "Assign incident priority"
+  },
+  {
+    "file": "assets/images/rev35/p229-1.png",
+    "pdf_page": 229,
+    "caption": "Incident state history"
+  },
+  {
+    "file": "assets/images/rev35/p231-1.png",
+    "pdf_page": 231,
+    "caption": "Notify User dialog"
+  },
+  {
+    "file": "assets/images/rev35/p233-1.png",
+    "pdf_page": 233,
+    "caption": "Notification event in State Changes"
+  },
+  {
+    "file": "assets/images/rev35/p234-1.png",
+    "pdf_page": 234,
+    "caption": "Approver configuration"
+  },
+  {
+    "file": "assets/images/rev35/p236-1.png",
+    "pdf_page": 236,
+    "caption": "Escalation approver selection"
+  },
+  {
+    "file": "assets/images/rev35/p237-1.png",
+    "pdf_page": 237,
+    "caption": "Escalation approval response"
+  },
+  {
+    "file": "assets/images/rev35/p239-1.png",
+    "pdf_page": 239,
+    "caption": "Workflow template list"
+  },
+  {
+    "file": "assets/images/rev35/p240-1.png",
+    "pdf_page": 240,
+    "caption": "Existing automated workflow logic"
+  },
+  {
+    "file": "assets/images/rev35/p242-1.png",
+    "pdf_page": 242,
+    "caption": "Workflow mapping criteria"
+  }
+]

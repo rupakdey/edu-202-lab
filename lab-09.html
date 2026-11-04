@@ -1,66 +1,515 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Unofficial EDU-202 Engineer web lab guide"><title>Lab 9 — Zscaler Digital Experience — Configure Alerts &amp; Diagnostics | EDU-202</title><link rel="stylesheet" href="assets/css/style.css"><script>try{const t=localStorage.getItem('edu202-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script></head><body data-page="lab-09"><a class="skip-link" href="#main">Skip to content</a><div id="course-nav"></div><header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-menu-toggle aria-label="Open course navigation">☰</button><div class="breadcrumb"><a href="index.html">EDU-202</a> / <strong>Lab 9</strong> / Zscaler Digital Experience — Configure Alerts &amp; Diagnostics</div></div><div class="topbar-actions"><div class="global-search"><input id="global-search-input" type="search" placeholder="Search labs or tasks…" aria-label="Search course"><div id="global-search-results" class="global-search-results"></div></div><button class="icon-btn" data-theme-toggle aria-label="Toggle dark or light mode"><span data-theme-icon>☾</span></button></div></header><main class="main" id="main"><div class="content"><section class="lab-hero"><div><div class="eyebrow">Lab 9 · Hands-on</div><h1>Zscaler Digital Experience — Configure Alerts &amp; Diagnostics</h1><p>Use ZDX to detect and investigate degraded user experience. You will create an application alert with thresholds, then run a five-minute diagnostic session with Deep Tracing and the Mail Server probes.</p><div class="lab-facts"><span class="fact"><strong>2 tasks</strong></span><span class="fact"><strong>Approx. 15 minutes</strong></span></div></div></section><section class="section"><div class="section-head stacked"><div class="eyebrow">Lab objectives</div><h2>What you will accomplish</h2></div><div class="card pad"><ul class="clean-list"><li>Configure ZDX alerting in your Experience Center tenant to detect user experience degradation (e.g. Page</li><li>Fetch Time, ZDX score) for a business-critical application.</li><li>Validate that the alert rule and ZDX Diagnostics Session report provide actionable evidence for NOC</li><li>troubleshooting/escalation.:</li><li>○ Device resource health (CPU/memory),</li><li>○ Wi-Fi signal/roaming and local network details,</li><li>○ DNS resolution performance,</li><li>○ Application performance breakdown</li></ul></div></section><section class="task" id="task-9-1">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="description"
+    content="Unofficial EDU-202 web lab guide — Lab 9: Automate with Zscaler OneAPI"
+  >
+
+  <title>
+    Lab 9 — Automate with Zscaler OneAPI | EDU-202
+  </title>
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/images/shared/favicon.svg"
+  >
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    try {
+      const t = localStorage.getItem('edu202-rev35-theme');
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <!-- Render verified menu paths using templates/components/navigation-path.html.
+       Search Menu keywords retain their separate search-hint styling. -->
+</head>
+
+
+<body
+  data-page="lab-09"
+  data-course-id="EDU-202"
+  data-storage-prefix="edu202-rev35"
+>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Built by site.js -->
+<div id="course-nav"></div>
+
+
+<header class="topbar">
+
+  <div class="topbar-left">
+
+    <button
+      class="icon-btn mobile-menu"
+      data-menu-toggle
+      aria-label="Open course navigation"
+    >☰</button>
+
+    <div class="breadcrumb">
+      <a href="index.html">EDU-202</a>
+      /
+      <strong>Lab 9</strong>
+      /
+      Automate with Zscaler OneAPI
+    </div>
+
+  </div>
+
+
+  <div class="topbar-actions">
+
+    <div class="global-search">
+
+      <input
+        id="global-search-input"
+        type="search"
+        placeholder="Search labs or tasks…"
+        aria-label="Search course"
+      >
+
+      <div
+        id="global-search-results"
+        class="global-search-results"
+      ></div>
+
+    </div>
+
+
+    <button
+      class="icon-btn"
+      data-theme-toggle
+      aria-label="Toggle dark or light mode"
+    >
+      <span data-theme-icon>☾</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="main" id="main">
+<div class="content">
+
+
+  <!-- =========================================================
+       LAB HERO
+
+       Important:
+       The description must use the full available page width.
+       ========================================================= -->
+
+  <section class="lab-hero">
+
+    <div>
+
+      <div class="eyebrow">
+        Lab 9 · Hands-on
+      </div>
+
+      <h1>Automate with Zscaler OneAPI</h1>
+
+      <p>Configure an OAuth API client, authenticate Postman and create an App Connector Group through OneAPI.</p>
+
+      <div class="lab-facts">
+        <span class="fact">
+          <strong>5 tasks</strong>
+        </span>
+
+        <span class="fact">Approx. 20 minutes</span>
+
+        
+
+        <span class="fact">Dedicated tenant</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       LAB OBJECTIVES
+
+       Rewrite source objectives concisely.
+       Do not paste long scenario text.
+       ========================================================= -->
+
+  <section class="section">
+
+    <div class="section-head stacked">
+      <div class="eyebrow">Lab objectives</div>
+      <h2>What you will accomplish</h2>
+    </div>
+
+    <div class="card pad">
+      <ul class="clean-list">
+        <li>Fork the verified OneAPI collection and environment.</li><li>Create an API client and gather the required variables.</li><li>Test GET requests and create a connector group with POST.</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       OPTIONAL TECHNICAL EXPLAINER
+
+       Insert only when it materially improves learner understanding.
+
+       Use:
+         templates/components/technical-explainer.html
+
+       Keep it visually separate from hands-on instructions.
+       ========================================================= -->
+
+  
+
+
+  <!-- =========================================================
+       TASKS
+
+       Every task must use templates/components/task.html.
+
+       Required rules:
+       - simple numbered steps only
+       - no PDF a/b/c/i/ii hierarchy
+       - configuration tables where useful
+       - screenshot immediately after the step it illustrates
+       - current navigation or Search Menu keyword
+       - Expected Result at the end of every task
+       ========================================================= -->
+
+  <!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-9-1">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">9.1</div>
-      <div><h2>Create an Alert Rule</h2><p>Alert when Mail Server experience crosses the defined thresholds.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="9.1"> Mark complete</label>
+
+      <div class="task-num">
+        9.1
+      </div>
+
+      <div>
+        <h2>Prepare Postman</h2>
+        <p>Use the preinstalled desktop application or the web client.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="9.1"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">On <strong>Corp: Client PC 1</strong>, sign in to Zscaler Client Connector with your assigned student account.</div></li>
-<li><div class="step-content">Open ZDX <strong>Alerts</strong> and select <strong>Alert Rules and Templates</strong>.<div class="search-hint">Search menu → <strong>Alerts</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open ZDX Alert Rules and Templates.">
-        <img src="assets/images/reference/edu202-p182-x655.jpg" alt="ZDX Alerts page">
-      </button>
-      <figcaption>Open ZDX Alert Rules and Templates.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Select <strong>Add Alert Rule</strong> and configure:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>alert_mailserver</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Type</td><td>Application</td></tr><tr><td>Severity</td><td>Medium</td></tr></tbody></table> Select <strong>Next</strong>.</div></li>
-<li><div class="step-content">On Filters, select the <strong>Mail Server</strong> application and its probe. Add a <strong>Geolocation</strong> filter and choose a region in Asia (for example, India).</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Target the Mail Server application/probe and add the geolocation filter.">
-        <img src="assets/images/reference/edu202-p185-x664.jpg" alt="ZDX alert filters">
-      </button>
-      <figcaption>Target the Mail Server application/probe and add the geolocation filter.</figcaption>
-    </figure><ol class="steps" start="5"><li><div class="step-content">Set the alert criteria and actions:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Page Fetch Time</td><td><strong>&gt; 800 ms</strong></td></tr><tr><td>ZDX Score</td><td><strong>&lt; 50</strong></td></tr><tr><td>Alert Only if Repeated</td><td>2</td></tr><tr><td>Number of Active Devices</td><td>1</td></tr><tr><td>Delivery Method</td><td>Email</td></tr><tr><td>Recipient</td><td>Any dummy email address for the lab</td></tr></tbody></table> Continue to Review.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Configure the Mail Server alert thresholds and email action.">
-        <img src="assets/images/reference/edu202-p187-x670.jpg" alt="ZDX alert criteria and actions">
-      </button>
-      <figcaption>Configure the Mail Server alert thresholds and email action.</figcaption>
-    </figure><ol class="steps" start="6"><li><div class="step-content">Review and save the rule. Confirm <strong>alert_mailserver</strong> appears in the alert-rule list.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Verify the &lt;strong&gt;alert_mailserver&lt;/strong&gt; rule is present.">
-        <img src="assets/images/reference/edu202-p190-x679.jpg" alt="ZDX alert rule list">
-      </button>
-      <figcaption>Verify the <strong>alert_mailserver</strong> rule is present.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>The enabled <strong>alert_mailserver</strong> rule monitors Mail Server experience against the defined thresholds.</p></div></div></div>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">On <strong>Corp Client PC 1</strong>, launch the preinstalled <strong>Postman</strong> desktop app. Alternatively use <a href="https://www.postman.com/" target="_blank" rel="noopener noreferrer">Postman on the web ↗</a> or <a href="https://www.postman.com/downloads/" target="_blank" rel="noopener noreferrer">the official download page ↗</a>.</div></li><li><div class="step-content">Create a free account or sign in. Open your own training workspace.<figure class="figure" data-source-page="180"><button type="button" data-lightbox data-caption="Postman training workspace"><img src="assets/images/rev35/p180-1.png" alt="Postman training workspace" width="807" height="323" loading="lazy"></button><figcaption>Postman training workspace <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>Postman opens and you can use a personal training workspace.</p></div></div>
+
+    </div>
+
   </article>
 </section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
 <section class="task" id="task-9-2">
   <article class="card task-shell">
+
     <header class="task-head">
-      <div class="task-num">9.2</div>
-      <div><h2>Configure a Diagnostic Session</h2><p>Capture focused device, application, and network telemetry for troubleshooting.</p></div>
-      <label class="task-complete"><input type="checkbox" data-task-check="9.2"> Mark complete</label>
+
+      <div class="task-num">
+        9.2
+      </div>
+
+      <div>
+        <h2>Fork the OneAPI Collection</h2>
+        <p>Import both the collection and its environment.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="9.2"
+        >
+        Mark complete
+      </label>
+
     </header>
-    <div class="task-body"><ol class="steps"><li><div class="step-content">Open ZDX <strong>Diagnostics</strong> and select <strong>Start New Diagnostic Session</strong>.<div class="search-hint">Search menu → <strong>Diagnostics</strong></div></div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Start a new ZDX diagnostic session.">
-        <img src="assets/images/reference/edu202-p191-x682.jpg" alt="ZDX Diagnostics page">
-      </button>
-      <figcaption>Start a new ZDX diagnostic session.</figcaption>
-    </figure><div class="callout info"><div class="callout-symbol">i</div><div>
-      <div class="callout-title">If Start New Diagnostic Session is missing</div><p>Open Client Connector <strong>User Privacy</strong>, enable <strong>Collect Machine Hostname Information</strong>, refresh, and return to Diagnostics.</p></div></div><ol class="steps" start="2"><li><div class="step-content">Create the session:<table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>diagnostics_session_student&lt;StudentID&gt;</strong></td></tr><tr><td>User</td><td>Your assigned Student Admin user</td></tr><tr><td>Device</td><td>Select that user’s device</td></tr><tr><td>Tracing</td><td><strong>Deep Tracing</strong></td></tr><tr><td>Duration</td><td><strong>5 minutes</strong></td></tr></tbody></table> Select <strong>Next</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Configure the student diagnostic session and enable Deep Tracing.">
-        <img src="assets/images/reference/edu202-p193-x688.jpg" alt="ZDX diagnostic session settings">
-      </button>
-      <figcaption>Configure the student diagnostic session and enable Deep Tracing.</figcaption>
-    </figure><ol class="steps" start="3"><li><div class="step-content">Select <strong>Mail Server</strong>, then select <strong>Mail Server_Web</strong> and <strong>Mail Server_Cloud</strong>. Under Cloud Path thresholds, set <strong>Packet Loss = 20%</strong> and <strong>Latency = 10 ms</strong>. Select <strong>Save</strong>.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Attach the Mail Server probes and set the Cloud Path thresholds.">
-        <img src="assets/images/reference/edu202-p195-x694.jpg" alt="ZDX diagnostic probes and thresholds">
-      </button>
-      <figcaption>Attach the Mail Server probes and set the Cloud Path thresholds.</figcaption>
-    </figure><ol class="steps" start="4"><li><div class="step-content">Confirm the session appears in the progress table. Continue to the next lab; after approximately five minutes, return to Diagnostics, locate the completed session in History, and open its report.</div></li></ol><figure class="figure">
-      <button data-lightbox data-caption="Open the completed diagnostic-session report from History.">
-        <img src="assets/images/reference/edu202-p197-x700.jpg" alt="ZDX diagnostic session report">
-      </button>
-      <figcaption>Open the completed diagnostic-session report from History.</figcaption>
-    </figure><div class="callout success"><div class="callout-symbol">✓</div><div>
-      <div class="callout-title">Expected result</div><p>A completed diagnostics report is available for the selected student device and Mail Server probes.</p></div></div></div>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">Select <strong>Home → Public API Network</strong>. Search for <strong>Zscaler OneAPI</strong> and open the verified public collection.<figure class="figure" data-source-page="182"><button type="button" data-lightbox data-caption="Find the verified Zscaler OneAPI collection"><img src="assets/images/rev35/p182-2.png" alt="Find the verified Zscaler OneAPI collection" width="796" height="336" loading="lazy"></button><figcaption>Find the verified Zscaler OneAPI collection <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Right-click the collection and select <strong>Use / Fork</strong>. Enter a fork label and select the <strong>Zscaler OneAPI</strong> environment under <strong>Environments to Fork</strong>.<figure class="figure" data-source-page="184"><button type="button" data-lightbox data-caption="Fork the collection and environment"><img src="assets/images/rev35/p184-1.png" alt="Fork the collection and environment" width="723" height="777" loading="lazy"></button><figcaption>Fork the collection and environment <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Select <strong>Use / Fork Collection</strong>. Confirm both the collection and environment are present in your workspace.</div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>The Zscaler OneAPI collection and matching environment are available in Postman.</p></div></div>
+
+    </div>
+
   </article>
 </section>
-<div class="callout success"><div class="callout-symbol">✓</div><div><div class="callout-title">Lab 9 complete</div><p>You have completed the activities defined for <strong>Zscaler Digital Experience — Configure Alerts &amp; Diagnostics</strong>.</p></div></div><div class="page-nav"><a href="lab-08.html"><small>Previous</small><strong>← Lab 8</strong></a><a class="next" href="lab-10.html"><small>Next</small><strong>Lab 10 →</strong></a></div><footer class="footer"><span>Unofficial EDU-202 web edition · Author: Rupak Dey</span><span>Adapted from the June 2026 EDU-202 source lab guide</span></footer></div></main><a class="floating-logo" href="#main" aria-label="Back to top"><img src="assets/images/zscaler-logo.svg" alt="Zscaler"></a><dialog class="modal" id="image-modal"><img alt="Expanded lab screenshot"><div class="modal-bar"><span data-modal-caption></span><button class="modal-close" data-modal-close>Close</button></div></dialog><script src="assets/js/site.js"></script></body></html>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-9-3">
+  <article class="card task-shell">
+
+    <header class="task-head">
+
+      <div class="task-num">
+        9.3
+      </div>
+
+      <div>
+        <h2>Create the API Client and Gather Variables</h2>
+        <p>Obtain authentication values and the ZPA customer identifier.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="9.3"
+        >
+        Mark complete
+      </label>
+
+    </header>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">In the Experience Center, open <strong>Service Portal</strong>. Copy the Authentication Service origin from the address bar, such as <strong>https://zs000834.zslogin.net</strong>. Remove <strong>/portal</strong> and any path/query suffix.</div></li><li><div class="step-content">Open <strong>API Clients</strong> and select <strong>Add API Client</strong>.<div class="resource-locator"><div class="search-hint">Search Menu → <strong>API Clients</strong></div><a href="https://help.zscaler.com/legacy-authentication-service/adding-api-client" target="_blank" rel="noopener noreferrer">Zscaler Help: API Clients ↗</a></div><div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td><strong>TestClient</strong></td></tr><tr><td>Status</td><td>Enabled</td></tr><tr><td>Access Token Validity</td><td><strong>90 minutes</strong></td></tr><tr><td>Client Authentication → Validation Type</td><td><strong>Secret</strong></td></tr></tbody></table></div><figure class="figure" data-source-page="188"><button type="button" data-lightbox data-caption="API client information and Secret authentication"><img src="assets/images/rev35/p188-1.png" alt="API client information and Secret authentication" width="823" height="646" loading="lazy"></button><figcaption>API client information and Secret authentication <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Select <strong>Add</strong> to generate the client secret. Copy it immediately into a private local training note or Postman’s local secret storage. It is shown only on creation; do not place it in this guide or a shared workspace.</div></li><li><div class="step-content">On <strong>Resources</strong>, assign the source lab’s roles and <strong>Save</strong>.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>ZCC</td><td>Super Admin</td></tr><tr><td>ZIA</td><td>Super Admin</td></tr><tr><td>ZPA</td><td>API Full Access</td></tr></tbody></table></div><figure class="figure" data-source-page="190"><button type="button" data-lightbox data-caption="API client resource roles"><img src="assets/images/rev35/p190-1.png" alt="API client resource roles" width="619" height="694" loading="lazy"></button><figcaption>API client resource roles <span class="micro-note">Source example; use your session values.</span></figcaption></figure>These are broad roles for the dedicated lab; use narrowly scoped roles for a production integration.</div></li><li><div class="step-content">Copy the saved <strong>Client ID</strong>. Use <strong>Search Menu → Linked Services</strong> to find the <strong>ZPA Tenant ID / Customer ID</strong>.<figure class="figure" data-source-page="192"><button type="button" data-lightbox data-caption="ZPA Customer ID in Linked Services"><img src="assets/images/rev35/p192-2.png" alt="ZPA Customer ID in Linked Services" width="1522" height="352" loading="lazy"></button><figcaption>ZPA Customer ID in Linked Services <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol><div class="callout info"><div class="callout-symbol">i</div><div><div class="callout-title">Keep the four values distinct</div><p>Authentication Service base URL, Client ID and Client Secret authenticate the API client. The ZPA Customer ID identifies the tenant used in ZPA requests; it is not the client identifier.</p></div></div>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>You have the tenant Authentication Service base URL, Client ID, Client Secret and ZPA Customer ID without exposing them in shared files.</p></div></div>
+
+    </div>
+
+  </article>
+</section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-9-4">
+  <article class="card task-shell">
+
+    <header class="task-head">
+
+      <div class="task-num">
+        9.4
+      </div>
+
+      <div>
+        <h2>Authenticate and Test GET Requests</h2>
+        <p>Use the forked environment and a fresh OAuth token.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="9.4"
+        >
+        Mark complete
+      </label>
+
+    </header>
+
+    <div class="task-body">
+
+      <ol class="steps"><li><div class="step-content">Select the <strong>Zscaler OneAPI</strong> environment. Set the variables using Task 9.3; use the variable names exactly as defined in your fork.<div class="table-scroll"><table class="credentials settings-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>zIdentityBaseUrl</td><td>Authentication Service origin, with no /portal suffix</td></tr><tr><td>clientID</td><td>API Client ID</td></tr><tr><td>clientSecret</td><td>Generated client secret</td></tr><tr><td>customerid</td><td>ZPA Customer ID</td></tr></tbody></table></div></div></li><li><div class="step-content">On the collection <strong>Authorization</strong> tab, choose <strong>Get New Access Token</strong>. Complete authentication, then select <strong>Use Token</strong>.</div></li><li><div class="step-content">Use <strong>Search Menu → Tokens</strong> to confirm an active token for your Client ID; a recent <strong>Issued at</strong> filter can help locate it.</div></li><li><div class="step-content">In Postman, expand <strong>Zscaler Client Connector → Devices → Get all enrolled devices</strong>. Select <strong>Send</strong> and confirm <strong>200 OK</strong>.<figure class="figure" data-source-page="197"><button type="button" data-lightbox data-caption="Successful device-list GET response"><img src="assets/images/rev35/p197-1.png" alt="Successful device-list GET response" width="1201" height="577" loading="lazy"></button><figcaption>Successful device-list GET response <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Run the <strong>GET Download device details as a CSV file</strong> request and verify the successful response and CSV content.<figure class="figure" data-source-page="198"><button type="button" data-lightbox data-caption="Device details CSV response"><img src="assets/images/rev35/p198-1.png" alt="Device details CSV response" width="1222" height="748" loading="lazy"></button><figcaption>Device details CSV response <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>OAuth authentication succeeds and both read requests return successful responses for the assigned environment.</p></div></div>
+
+    </div>
+
+  </article>
+</section>
+
+<!--
+  Canonical lab-task component.
+
+  Rules:
+  - Use simple numbered steps inside TASK_CONTENT.
+  - Do not reproduce PDF a/b/c or i/ii/iii numbering.
+  - Screenshots belong immediately after the step they illustrate.
+  - Every task must include EXPECTED_RESULT_BLOCK.
+-->
+
+<section class="task" id="task-9-5">
+  <article class="card task-shell">
+
+    <header class="task-head">
+
+      <div class="task-num">
+        9.5
+      </div>
+
+      <div>
+        <h2>Create an App Connector Group through OneAPI</h2>
+        <p>Use the tenant’s enrollment certificate ID in the POST body.</p>
+      </div>
+
+      <label class="task-complete">
+        <input
+          type="checkbox"
+          data-task-check="9.5"
+        >
+        Mark complete
+      </label>
+
+    </header>
+
+    <div class="task-body">
+
+      <div class="resource-locator"><span class="ec-nav-path" role="group" aria-label="Experience Center navigation: Infrastructure &gt; Private Access &gt; Component &gt; App Connector Groups"><span class="ec-nav-step">Infrastructure</span><span class="ec-nav-separator" aria-hidden="true">›</span><span class="ec-nav-step">Private Access</span><span class="ec-nav-separator" aria-hidden="true">›</span><span class="ec-nav-step">Component</span><span class="ec-nav-separator" aria-hidden="true">›</span><span class="ec-nav-step">App Connector Groups</span></span><p class="source-route-note">Documented route; portal menu versions can differ. Search by the feature name if needed.</p><div class="search-hint">Search Menu → <strong>App Connector Groups</strong></div><a href="https://help.zscaler.com/zpa/configuring-app-connector-groups" target="_blank" rel="noopener noreferrer">Zscaler Help: App Connector Groups ↗</a></div><ol class="steps"><li><div class="step-content">Review the existing groups. In Postman, open <strong>Zscaler Private Access → Enrollment Certificate Controller → Get all configured enrollment certificate details for the specific customer</strong>. <strong>Send</strong> the GET request and copy the appropriate signing/enrollment certificate <strong>id</strong>.<figure class="figure" data-source-page="201"><button type="button" data-lightbox data-caption="Enrollment certificate IDs in the API response"><img src="assets/images/rev35/p201-1.png" alt="Enrollment certificate IDs in the API response" width="1225" height="667" loading="lazy"></button><figcaption>Enrollment certificate IDs in the API response <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Open <strong>Connector Group Controller → Add a new App Connector Group for Specified Customer</strong>. In <strong>Body</strong>, enter the source payload below and replace <code>&lt;Enrollment-Certificate-ID&gt;</code> with the ID returned by the previous request.<div class="command-block"><pre><code>{
+  &quot;name&quot;: &quot;ZPALAB APPC Group&quot;,
+  &quot;description&quot;: &quot;App Connector training Lab at San Jose&quot;,
+  &quot;latitude&quot;: &quot;37.3382032&quot;,
+  &quot;longitude&quot;: &quot;-121.886286&quot;,
+  &quot;location&quot;: &quot;San Jose, CA, USA&quot;,
+  &quot;signingCertId&quot;: &quot;&lt;Enrollment-Certificate-ID&gt;&quot;
+}</code></pre><button type="button" class="copy-btn" data-copy="{
+  &quot;name&quot;: &quot;ZPALAB APPC Group&quot;,
+  &quot;description&quot;: &quot;App Connector training Lab at San Jose&quot;,
+  &quot;latitude&quot;: &quot;37.3382032&quot;,
+  &quot;longitude&quot;: &quot;-121.886286&quot;,
+  &quot;location&quot;: &quot;San Jose, CA, USA&quot;,
+  &quot;signingCertId&quot;: &quot;&lt;Enrollment-Certificate-ID&gt;&quot;
+}">Copy</button></div></div></li><li><div class="step-content">Confirm the environment’s customer ID and active token, then <strong>Send</strong>. Verify <strong>201 Created</strong> and inspect the returned group name/ID.<figure class="figure" data-source-page="205"><button type="button" data-lightbox data-caption="App Connector Group created through the API"><img src="assets/images/rev35/p205-1.png" alt="App Connector Group created through the API" width="1108" height="625" loading="lazy"></button><figcaption>App Connector Group created through the API <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li><li><div class="step-content">Refresh <strong>App Connector Groups</strong> in the Experience Center and confirm <strong>ZPALAB APPC Group</strong> appears.<figure class="figure" data-source-page="206"><button type="button" data-lightbox data-caption="New group visible in the administrator portal"><img src="assets/images/rev35/p206-1.png" alt="New group visible in the administrator portal" width="1431" height="423" loading="lazy"></button><figcaption>New group visible in the administrator portal <span class="micro-note">Source example; use your session values.</span></figcaption></figure></div></li></ol><div class="callout info"><div class="callout-symbol">i</div><div><div class="callout-title">What this verifies</div><p>The POST creates an App Connector Group object; it does not enroll a connector or establish high availability by itself. <a href="https://help.zscaler.com/legacy-apis/app-connector-group-management" target="_blank" rel="noopener noreferrer">Official App Connector Group API reference ↗</a></p></div></div>
+
+      <div class="callout success expected-result"><div class="callout-symbol">✓</div><div><div class="callout-title">Expected result</div><p>OneAPI returns 201 Created and the named group appears in the UI. No connector enrollment or HA outcome is implied.</p></div></div>
+
+    </div>
+
+  </article>
+</section>
+
+
+
+  <!-- =========================================================
+       LAB COMPLETION
+       ========================================================= -->
+
+  <div class="callout success">
+
+    <div class="callout-symbol">✓</div>
+
+    <div>
+
+      <div class="callout-title">
+        Lab 9 complete
+      </div>
+
+      <p>
+        You have completed the activities defined for
+        <strong>Automate with Zscaler OneAPI</strong>.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PREVIOUS / NEXT
+       ========================================================= -->
+
+  <div class="page-nav">
+
+    <a href="lab-08.html"><small>Previous</small><strong>Lab 8 ←</strong></a>
+
+    <a class="next" href="sdc-access.html"><small>Next</small><strong>SDC access checkpoint →</strong></a>
+
+  </div>
+
+
+  <footer class="footer guide-footer">
+    <span class="footer-author">Author: <strong>Rupak Dey</strong></span>
+    <span class="footer-course">Adapted EDU-202 Lab Guide</span>
+  </footer>
+
+</div>
+</main>
+
+
+<a
+  class="floating-logo"
+  href="#main"
+  aria-label="Back to top"
+>
+  <img
+    src="assets/images/shared/zscaler-logo.svg"
+    alt="Zscaler"
+  >
+</a>
+
+
+<dialog class="modal" id="image-modal">
+
+  <img alt="Expanded lab screenshot">
+
+  <div class="modal-bar">
+
+    <span data-modal-caption></span>
+
+    <button
+      class="modal-close"
+      data-modal-close
+    >
+      Close
+    </button>
+
+  </div>
+
+</dialog>
+
+
+<!-- Course data must load before the reusable site behavior. -->
+<script src="assets/js/course-data.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

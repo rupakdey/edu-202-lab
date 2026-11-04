@@ -1,0 +1,16 @@
+{
+  "learner_pages": 13,
+  "labs": 11,
+  "tasks": 42,
+  "configuration_tables": 38,
+  "figure_placements": 132,
+  "retained_lab_explainers": 3,
+  "source_task_coverage": "42/42",
+  "structural_validator_errors": 0,
+  "structural_validator_warnings": 0,
+  "template_regression_tests": "6 passed",
+  "javascript_syntax": "passed",
+  "local_asset_and_raster_decode": "passed",
+  "browser_review": "blocked: cloud browser cannot reach local HTTP server; no local browser executable",
+  "live_tenant_walkthrough": "not performed"
+}

@@ -1,0 +1,27 @@
+course:
+  id: EDU-XXX
+  title: Course Name
+  subtitle: Course Subtitle
+  author: Rupak Dey
+
+labs:
+  count: 0
+  sdc_start: null
+
+environment:
+  dedicated_tenant: true
+  platform: cloudshare
+  access_link_source: instructor
+  passphrase_source: instructor
+  login_email: corporate
+  personal_email_allowed: false
+  invitation_email_sent: false
+  credential_email_sent: false
+  tenant_credentials_source: cloudshare_credentials_panel
+  sdc_credentials_source: cloudshare_credentials_panel
+  # Session URLs/passphrases/passwords belong in classroom delivery, not this file.
+
+design:
+  screenshot_max_page_fraction: 0.6667
+  allow_image_upscaling: false
+  current_navigation: true
